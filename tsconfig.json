@@ -25,7 +25,6 @@
     "typings/index.d.ts",
     "src/app/app.component.ts",
     "src/app/app.module.ts",
-    "src/app/cat.ts",
     "src/app/main.ts"
   ]
 }

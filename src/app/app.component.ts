@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Cat } from './cat';
 
 @Component({
     selector: 'my-app',
@@ -7,6 +6,5 @@ import { Cat } from './cat';
 })
 
 export class AppComponent {
-    title = 'Cats are awesome';
-    cat = new Cat();
+    title = 'CRM Builder';
 }

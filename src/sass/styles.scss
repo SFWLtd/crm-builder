@@ -34,17 +34,12 @@ body {
     font-size: 20px;
 }
 
-.top-banner {
-    background: linear-gradient(to top right, $sfw-teal, $sfw-blue);
-    border: none;
-    border-bottom: 8px $sfw-ruby solid;
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.5);
-    color: white;
-    white-space: nowrap;
-    padding: 20px 50px;
-    margin-bottom: 30px;
-    font-size: 30px;
-    font-family: 'Quicksand';
+.center-banner {
+    position:absolute;
+    margin-top:30vh;
+    margin-bottom:35vh;
+    height:30vh;
+    width:100%;
 }
 
 input[type=text]

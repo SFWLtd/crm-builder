@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-declare var $:JQueryStatic;
 
 @Component({
     selector: 'my-app',
@@ -8,8 +7,4 @@ declare var $:JQueryStatic;
 
 export class AppComponent {
     title = 'CRM Builder';
-
-    constructor() {
-        $('.ui.dropdown').dropdown();
-    }
 }

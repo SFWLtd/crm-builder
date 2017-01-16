@@ -25,6 +25,8 @@
     "typings/index.d.ts",
     "src/app/app.component.ts",
     "src/app/app.module.ts",
+    "src/app/jquery-components/semantic.component.ts",
+    "src/app/jquery-components/semantic.module.ts",
     "src/app/main.ts"
   ]
 }

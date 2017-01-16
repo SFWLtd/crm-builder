@@ -4,9 +4,6 @@ $primary-steel: #616161;
 
 $top-banner-height: 7;
 
-@import url('https://fonts.googleapis.com/css?family=Quicksand');
-@import url('https://fonts.googleapis.com/css?family=Noto+Serif');
-
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
      -moz-border-radius: $radius;
@@ -61,15 +58,29 @@ body {
 #sfw-logo {
     padding-top: ($top-banner-height / 8) + em;
     padding-bottom: ($top-banner-height / 8)  + em;
-    height: 75%;
+    height: 100%;
 }
 
 #title {
     position:absolute;
-    padding-top: ($top-banner-height / 3.5) + em;
+    padding-top: ($top-banner-height / 8) + em;
     margin-left: $top-banner-height + em;
     font-size: 25;
     color: $primary-teal;
+}
+
+.left-nav {
+    position: inherit;
+    width: 12em;
+}
+
+.left-nav-header {
+    font-size: larger;
+    margin-left: 0.8em;
+}
+
+.left-nav-sub-item {
+    margin-left: 0em;
 }
 
 .center-banner {

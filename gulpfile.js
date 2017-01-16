@@ -31,7 +31,7 @@ gulp.task("copy:libs", function () {
 
 // Copy assets
 gulp.task('copy:assets', function () {
-    return gulp.src(['index.html'], { base: './src', cwd: './src' })
+    return gulp.src(['index.html', 'assets/**/*'], { base: './src', cwd: './src' })
         .pipe(gulp.dest('dist'))
 });
 

@@ -1,8 +1,11 @@
 $primary-teal: #00a499;
-$secondary-teal:#7ED6D0;
+$secondary-teal:#48BBB3;
 $primary-steel: #616161;
+$secondary-steel: #e8e8e8;
+$ternary-steel:#d1d1d1; 
 
 $top-banner-height: 7;
+$left-nav-width: 12;
 
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
@@ -27,7 +30,7 @@ $top-banner-height: 7;
 
 body {
     margin: 0;
-    background-color: #efefef;
+    background-color: white;
     font-family: 'Noto Serif';
     font-size: 20px;
 }
@@ -35,16 +38,16 @@ body {
 .top-banner {
     position:relative;
     height: $top-banner-height + em;
-    background: $primary-teal; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(white, $secondary-teal); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(white, $secondary-teal); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(white, $secondary-teal); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(white, $secondary-teal); /* Standard syntax */
+    // background: $primary-teal; /* For browsers that do not support gradients */
+    // background: -webkit-linear-gradient(white, $secondary-teal); /* For Safari 5.1 to 6.0 */
+    // background: -o-linear-gradient(white, $secondary-teal); /* For Opera 11.1 to 12.0 */
+    // background: -moz-linear-gradient(white, $secondary-teal); /* For Firefox 3.6 to 15 */
+    // background: linear-gradient(white, $secondary-teal); /* Standard syntax */
 }
 
 .top-banner-content-container {
     position:relative;
-    margin-left:20%;
+    margin-left:1em;
     margin-right:20%;
     height:100%;
     float: left;
@@ -61,17 +64,37 @@ body {
     height: 100%;
 }
 
-#title {
-    position:absolute;
-    padding-top: ($top-banner-height / 8) + em;
-    margin-left: $top-banner-height + em;
-    font-size: 25;
-    color: $primary-teal;
+#root {
+    height: 100%;
+    min-height: 85vh;
+}
+
+.primary-color {
+    background-color: $primary-teal;
+}
+
+.nav-bar-icon {
+    margin-top: 10px;
+}
+
+.nav-img-link {
+    max-height: 65px;
+}
+
+.primary-background-color {
+    background-color: $secondary-teal;
 }
 
 .left-nav {
     position: inherit;
-    width: 12em;
+    width: $left-nav-width + em;
+    height: 100%;
+    display: inline-block;
+}
+
+.left-nav-box {
+    float: left;
+    width: 100%;
 }
 
 .left-nav-header {
@@ -94,8 +117,18 @@ body {
 .main {
     position: relative;
     height: 100%;
-    margin-top: 0.5em;
+    margin-top: 0.0em;
     display: inline-flex;
     float: left;
 }
+
+.wrap {
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
 

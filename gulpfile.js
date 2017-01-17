@@ -31,13 +31,13 @@ gulp.task("copy:libs", function () {
 
 // Copy assets
 gulp.task('copy:assets', function () {
-    return gulp.src(['index.html', 'assets/**/*'], { base: './src', cwd: './src' })
+    return gulp.src(['index.html', 'assets/**/*', 'fonts/**/*'], { base: './src', cwd: './src' })
         .pipe(gulp.dest('dist'))
 });
 
 // Sass compile
 gulp.task('sass', function () {
-    return gulp.src('./src/sass/*.scss')
+    return gulp.src('./src/sass/**/*.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('dist/css'));
 });

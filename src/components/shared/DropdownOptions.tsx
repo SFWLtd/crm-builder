@@ -36,30 +36,24 @@ export class DropdownOptions extends React.Component<DropdownOptionsProps, Dropd
         throw "Cannot initialize dropdown options element with no options to select"
     }
 
-    handleDropdownSelection = (option : DropdownOptionItem) => {
+    handleDropdownSelection = (option : IDropdownOptionItem) => {
         this.setState({ selectedOption : option});
         this.props.onSelection(option);
     }
 }
 
 export interface DropdownOptionsProps {
-    options: Array<DropdownOptionItem>;
-    onSelection : (selectedOption : DropdownOptionItem) => void;
+    options: Array<IDropdownOptionItem>;
+    onSelection : (selectedOption : IDropdownOptionItem) => void;
 }
 
 export interface DropdownOptionsState {
-    selectedOption : DropdownOptionItem;
+    selectedOption : IDropdownOptionItem;
 }
 
-export class DropdownOptionItem {
-
+export interface IDropdownOptionItem {
     displayName : string;
-    value: string;
-
-    constructor(displayName : string, value : string) {
-        this.displayName = displayName;
-        this.value = value;
-    }
+    value: any;
 }
 
 class DropdownOption extends React.Component<DropdownOptionProps, undefined> {
@@ -79,6 +73,6 @@ class DropdownOption extends React.Component<DropdownOptionProps, undefined> {
 }
 
 export interface DropdownOptionProps {
-    option : DropdownOptionItem;
-    onSelect : (option : DropdownOptionItem) => void;
+    option : IDropdownOptionItem;
+    onSelect : (option : IDropdownOptionItem) => void;
 }

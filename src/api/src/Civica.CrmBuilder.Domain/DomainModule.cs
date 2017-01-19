@@ -10,8 +10,6 @@ namespace Civica.CrmBuilder.Domain
             builder.RegisterType<InMemoryClientStore>()
                 .As<IClientStore>()
                 .SingleInstance();
-
-            base.Load(builder);
         }
     }
 }

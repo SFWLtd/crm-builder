@@ -1,20 +1,19 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
+using System.Linq;
+using System.Web.Http.Filters;
 
 namespace Civica.CrmBuilder.Api.Filters
 {
     public class GlobalActionFilter : ActionFilterAttribute
     {
-        public override void OnActionExecuted(ActionExecutedContext context)
+        public override void OnActionExecuted(HttpActionExecutedContext context)
         {
-            if (context.Result != null && context.Result.GetType() == typeof(ObjectResult))
-            {
-                var resultValue = ((ObjectResult)context.Result).Value;
+            var results = context.ActionContext.ActionArguments
+                .Where(arg => arg.Value.GetType().IsGenericType 
+                    && arg.Value.GetType().GetGenericTypeDefinition() == typeof(GlobalJsonResult<>));
 
-                if (resultValue.GetType().GetGenericTypeDefinition() == typeof(GlobalJsonResult<>))
-                {
-                    context.HttpContext.Response.StatusCode = (int)((dynamic)resultValue).StatusCode;
-                }
+            foreach (var result in results)
+            {
+                context.Response.StatusCode = ((dynamic)result).StatusCode;
             }
 
             base.OnActionExecuted(context);

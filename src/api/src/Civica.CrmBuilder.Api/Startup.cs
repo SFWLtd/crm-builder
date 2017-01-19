@@ -1,44 +1,49 @@
-﻿using Civica.CrmBuilder.Api.Filters;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Reflection;
+using System.Web.Http;
+using Autofac;
+using Autofac.Integration.WebApi;
+using Civica.CrmBuilder.Api;
+using Civica.CrmBuilder.Api.Filters;
+using Microsoft.Owin;
+using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.StaticFiles;
+using NJsonSchema;
+using NSwag.AspNet.Owin;
+using Owin;
 
+[assembly: OwinStartup(typeof(Startup))]
 namespace Civica.CrmBuilder.Api
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
-        }
-
-        public IConfigurationRoot Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            // Add framework services.
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(typeof(GlobalExceptionFilter), 1);
-                options.Filters.Add(typeof(GlobalActionFilter), 2);
-            });
-        }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configuration(IAppBuilder app)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            var config = new HttpConfiguration();
+            
+            config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new { id = RouteParameter.Optional });
+            config.Filters.Add(new GlobalExceptionFilter());
+            config.Filters.Add(new GlobalActionFilter());
 
-            app.UseMvc();
+            var builder = new ContainerBuilder();
+            builder.RegisterApiControllers(typeof(Startup).Assembly);
+            builder.RegisterWebApiFilterProvider(config);
+            builder.RegisterWebApiModelBinderProvider();
+            builder.RegisterModule<ApiModule>();
+
+            var container = builder.Build();
+
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
+            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, new SwaggerUiOwinSettings());
+
+            app.UseAutofacMiddleware(container);
+            app.UseAutofacWebApi(config);
+            app.UseWebApi(config);
+
+            config.MapHttpAttributeRoutes();
+            config.EnsureInitialized();
         }
     }
 }

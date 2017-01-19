@@ -1,11 +1,11 @@
-﻿using Civica.CrmBuilder.Api.ApiRequests;
+﻿using System.Web.Http;
+using Civica.CrmBuilder.Api.ApiRequests;
 using Civica.CrmBuilder.Api.ApiResults;
 using Civica.CrmBuilder.Domain.Authentication;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Civica.CrmBuilder.Api.Controllers
 {
-    public class AuthenticationController : Controller
+    public class AuthenticationController : ApiController
     {
         private readonly IClientStore clientStore;
 
@@ -14,7 +14,7 @@ namespace Civica.CrmBuilder.Api.Controllers
             this.clientStore = clientStore;
         }
 
-        [HttpPost("/Authenticate")]
+        [HttpPost()]
         public GlobalJsonResult<AuthenticateResult> Authenticate([FromBody]AuthenticateRequest request)
         {
             var client = request.Map();

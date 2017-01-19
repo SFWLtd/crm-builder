@@ -1,6 +1,8 @@
 const gulp = require('gulp');
+const gulpUtil = require('gulp-util');
 const del = require('del');
 const sass = require('gulp-sass');
+const shell = require('gulp-shell');
 const tslint = require('gulp-tslint');
 const typescript = require('gulp-typescript');
 const tscConfig = require('./tsconfig.json');
@@ -13,6 +15,7 @@ const fs = require('fs');
 const url = require('url');
 const path = require("path");
 const webpack = require('gulp-webpack');
+const msbuild = require('gulp-msbuild');
 
 // Clean the contents of the distribution directory
 gulp.task('clean', function () {
@@ -42,21 +45,29 @@ gulp.task('sass', function () {
         .pipe(gulp.dest('dist/css'));
 });
 
-// TSLint
-gulp.task('tslint', function () {
-    return gulp.src('src/app/**/*.ts')
-        .pipe(tslint({
-            formatter: "verbose"
-        }))
-        .pipe(tslint.report())
-});
-
 // Webpack typescript
 gulp.task('webpack', function() { 
     return gulp.src('src/**/*.jsx')
-        .pipe(webpack( require('./webpack.config.js') ))
+        .pipe(webpack(require('./webpack.config.js')))
         .pipe(gulp.dest('dist/'))
 });
+
+// Build API
+gulp.task('build:api', function() {
+    return gulp.src("src/api/src/Civica.CrmBuilder.sln")
+        .pipe(msbuild(
+            {
+                targets: ['Clean', 'Build'],
+                properties: { VisualStudioVersion : 14.0 },
+                toolsVersion : 14.0,
+                stdout : false
+            }));
+});
+
+// Run CodeGen
+gulp.task('run:apicodegen', shell.task([
+    'cd src/api/src/Civica.CrmBuilder.CodeGen/bin/debug && Civica.CrmBuilder.CodeGen.exe'
+]));
 
 // TSConfig glob
 gulp.task('tsconfig-glob', function () {
@@ -79,7 +90,7 @@ gulp.task('serve', ['build'], function () {
         }
     });
 
-    gulp.watch(['src/**/*'], ['recompile']);
+    gulp.watch(['src/**/*', 'src/api/**/*.ts', '!src/api/**/*'], ['recompile']);
 });
 
 // Reload browsersync
@@ -91,13 +102,14 @@ gulp.task('reload', function () {
 gulp.task('build', function (callback) {
     runSequence(
         'tsconfig-glob',
-        'tslint',
         'clean',
+        'build:api',
+        'run:apicodegen',
         ['sass', 'copy:libs', 'copy:assets', 'webpack'],
         callback);
 });
 
-// Recompile Angular (TS and HTML) and SASS, without clean and without copying external libs.
+// Recompile React (TS and HTML) and SASS, without clean and without copying external libs.
 // Finish by reloading browsersync
 // This should run a lot quicker than a full build
 gulp.task('recompile', function (callback) {

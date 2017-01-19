@@ -74,7 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Civica.CrmBuilder.Api\Civica.CrmBuilder.Api.csproj">
-      <Project>{c38fac19-9835-4896-8ced-c4308b4543fb}</Project>
+      <Project>{94a5c1c4-d0cb-4814-aa4c-776e87ae3479}</Project>
       <Name>Civica.CrmBuilder.Api</Name>
     </ProjectReference>
   </ItemGroup>

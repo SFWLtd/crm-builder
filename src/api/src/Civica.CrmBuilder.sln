@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{6235D913
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.CodeGen", "Civica.CrmBuilder.CodeGen\Civica.CrmBuilder.CodeGen.csproj", "{AD41119D-797C-45FF-A973-A635040C2D5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Api", "Civica.CrmBuilder.Api\Civica.CrmBuilder.Api.csproj", "{C38FAC19-9835-4896-8CED-C4308B4543FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Api", "Civica.CrmBuilder.Api\Civica.CrmBuilder.Api.csproj", "{94A5C1C4-D0CB-4814-AA4C-776E87AE3479}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,10 @@ Global
 		{AD41119D-797C-45FF-A973-A635040C2D5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD41119D-797C-45FF-A973-A635040C2D5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD41119D-797C-45FF-A973-A635040C2D5C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C38FAC19-9835-4896-8CED-C4308B4543FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C38FAC19-9835-4896-8CED-C4308B4543FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C38FAC19-9835-4896-8CED-C4308B4543FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C38FAC19-9835-4896-8CED-C4308B4543FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94A5C1C4-D0CB-4814-AA4C-776E87AE3479}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94A5C1C4-D0CB-4814-AA4C-776E87AE3479}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94A5C1C4-D0CB-4814-AA4C-776E87AE3479}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94A5C1C4-D0CB-4814-AA4C-776E87AE3479}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

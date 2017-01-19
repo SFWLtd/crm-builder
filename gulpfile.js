@@ -52,18 +52,6 @@ gulp.task('webpack', function() {
         .pipe(gulp.dest('dist/'))
 });
 
-// Build API
-gulp.task('build:api', function() {
-    return gulp.src("src/api/src/Civica.CrmBuilder.sln")
-        .pipe(msbuild(
-            {
-                targets: ['Clean', 'Build'],
-                properties: { VisualStudioVersion : 14.0 },
-                toolsVersion : 14.0,
-                stdout : false
-            }));
-});
-
 // Run CodeGen
 gulp.task('run:apicodegen', shell.task([
     'cd src/api/src/Civica.CrmBuilder.CodeGen/bin/debug && Civica.CrmBuilder.CodeGen.exe'
@@ -103,7 +91,6 @@ gulp.task('build', function (callback) {
     runSequence(
         'tsconfig-glob',
         'clean',
-        'build:api',
         'run:apicodegen',
         ['sass', 'copy:libs', 'copy:assets', 'webpack'],
         callback);

@@ -14,7 +14,11 @@ export class Welcome extends React.Component<undefined, undefined> {
             </div>
         <br/>
         <br/>
-        <LoginForm/>
+        <LoginForm loggedInStateHandler={this.loggedInStateHandler}/>
     </div>
+    }
+
+    loggedInStateHandler = () => {
+        
     }
 }

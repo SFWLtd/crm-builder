@@ -153,5 +153,5 @@ export interface LoginFormState {
 }
 
 export interface LoginFormProps {
-    loggedInHandler : () => void;
+    loggedInStateHandler : (loggedIn : boolean) => void;
 }

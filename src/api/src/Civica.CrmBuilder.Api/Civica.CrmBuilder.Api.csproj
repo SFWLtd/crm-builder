@@ -253,10 +253,26 @@
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
+	<Target Name="AfterBuild">
+		<ItemGroup>
+			<HostingExe Include="$(SolutionDir)packages\OwinHost.3.0.1\tools\owinhost.exe"/>
+			<HostingDlls Include="$(SolutionDir)packages\OwinHost.3.0.1\tools\*.dll"/>
+		</ItemGroup>
+		<Copy SourceFiles="@(HostingExe)"
+			  DestinationFolder="$(TargetDir)"
+			  OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" Condition="'@(HostingExe)' != ''" />
+		<Copy SourceFiles="@(HostingDlls)"
+			  DestinationFolder="$(TargetDir)"
+			  OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" Condition="'@(HostingDlls)' != ''" />
+	</Target>
 </Project>

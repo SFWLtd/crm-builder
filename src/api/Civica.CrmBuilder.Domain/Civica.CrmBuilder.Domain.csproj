@@ -62,6 +62,10 @@
     <Compile Include="Validation\GuardThis.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Civica.CrmBuilder.Entities\Civica.CrmBuilder.Entities.csproj">
+      <Project>{1dd387cb-6475-4ea9-933e-1e44d48ba065}</Project>
+      <Name>Civica.CrmBuilder.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Civica.CrmPlusPlus.Sdk\Civica.CrmPlusPlus.Sdk.csproj">
       <Project>{20e43a48-cb82-4b7d-900a-5f3dffe285cb}</Project>
       <Name>Civica.CrmPlusPlus.Sdk</Name>

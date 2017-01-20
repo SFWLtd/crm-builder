@@ -3,7 +3,7 @@ import { Promise } from "es6-promise";
 
 import { DropdownOptions } from "../shared/DropdownOptions";
 import { IDropdownOptionItem } from "../shared/DropdownOptions";
-import * as ApiClient from "../../api/src/ApiClient"
+import * as ApiClient from "../../../../../api/ApiClient"
 
 export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 

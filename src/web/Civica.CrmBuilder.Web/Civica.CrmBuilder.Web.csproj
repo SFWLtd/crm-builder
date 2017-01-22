@@ -155,8 +155,8 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Target Name="BeforeBuild">
-    <Exec Command="&#xD;&#xA;			  cd ..\&#xD;&#xA;			  npm install" />
-	  <Exec Command="cd $(SolutionDir)api\Civica.CrmBuilder.CodeGen\bin\Debug
-			Civica.CrmBuilder.CodeGen.exe"/>
+    <Exec Command="npm install"  WorkingDirectory="$(ProjectDir)"/>
+	  <Exec Command="npm rebuild node-sass" WorkingDirectory="$(ProjectDir)"/>
+	  <Exec Command="Civica.CrmBuilder.CodeGen.exe" WorkingDirectory="$(SolutionDir)api\Civica.CrmBuilder.CodeGen\bin\Debug"/>
   </Target>
 </Project>

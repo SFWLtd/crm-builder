@@ -34,23 +34,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NJsonSchema, Version=7.6.6221.22528, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\NJsonSchema.7.6.6221.22528\lib\net45\NJsonSchema.dll</HintPath>
+      <HintPath>..\..\packages\NJsonSchema.7.6.6221.22528\lib\net45\NJsonSchema.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NJsonSchema.CodeGeneration, Version=7.6.6221.22554, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\NJsonSchema.CodeGeneration.7.6.6221.22554\lib\portable45-net45+win8+wp8+wpa81\NJsonSchema.CodeGeneration.dll</HintPath>
+      <HintPath>..\..\packages\NJsonSchema.CodeGeneration.7.6.6221.22554\lib\portable45-net45+win8+wp8+wpa81\NJsonSchema.CodeGeneration.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NSwag.CodeGeneration, Version=8.6.6221.23504, Culture=neutral, PublicKeyToken=c2d88086e098d109, processorArchitecture=MSIL">
-      <HintPath>..\packages\NSwag.CodeGeneration.8.6.6221.23504\lib\portable45-net45+win8+wp8+wpa81\NSwag.CodeGeneration.dll</HintPath>
+      <HintPath>..\..\packages\NSwag.CodeGeneration.8.6.6221.23504\lib\portable45-net45+win8+wp8+wpa81\NSwag.CodeGeneration.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NSwag.Core, Version=8.6.6221.23503, Culture=neutral, PublicKeyToken=c2d88086e098d109, processorArchitecture=MSIL">
-      <HintPath>..\packages\NSwag.Core.8.6.6221.23503\lib\portable45-net45+win8+wp8+wpa81\NSwag.Core.dll</HintPath>
+      <HintPath>..\..\packages\NSwag.Core.8.6.6221.23503\lib\portable45-net45+win8+wp8+wpa81\NSwag.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

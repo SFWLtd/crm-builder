@@ -8,7 +8,7 @@ namespace Civica.CrmBuilder.Web
     {
         public static void Main(string[] args)
         {
-            var process = Process.Start(new ProcessStartInfo
+            var npmStart = Process.Start(new ProcessStartInfo
             {
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
@@ -19,7 +19,7 @@ namespace Civica.CrmBuilder.Web
                 Arguments = "start"
             });
 
-            process.StandardOutput.ReadToEnd();
+            npmStart.StandardOutput.ReadToEnd();
 
             Console.ReadKey();
         }

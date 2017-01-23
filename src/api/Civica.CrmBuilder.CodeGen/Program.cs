@@ -35,6 +35,7 @@ namespace Civica.CrmBuilder.CodeGen
 
             var generator = new SwaggerToTypeScriptClientGenerator(document, codeGenSettings);
             var code = generator.GenerateFile();
+            code = code.RemoveStatusCodeHandling();
             code = code.AddReferencedTypes();
             code = code.WithCustomReplacements();
 

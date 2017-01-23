@@ -15,15 +15,16 @@
   "author": "Civica",
   "license": "ISC",
   "dependencies": {
+    "@types/es6-promise": "^0.0.32",
+    "@types/jquery": "^2.0.39",
+    "@types/materialize-css": "^0.97.34",
     "@types/react": "^15.0.0",
     "@types/react-dom": "^0.14.20",
-    "@types/jquery": "^2.0.39",
-    "@types/es6-promise": "^0.0.32",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "jquery": "^3.1.1",
     "es6-promise": "^4.0.5",
-    "es6-promise-polyfill": "^1.2.0"
+    "es6-promise-polyfill": "^1.2.0",
+    "jquery": "^3.1.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.0.0-beta.18",

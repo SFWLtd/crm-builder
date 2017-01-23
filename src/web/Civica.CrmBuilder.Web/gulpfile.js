@@ -27,7 +27,8 @@ gulp.task("copy:libs", function () {
     return gulp.src([
         'jquery/dist/**',
         'react/dist/**',
-        'react-dom/dist/**'   
+        'react-dom/dist/**',
+        'materialize-css/dist/**'
     ], { cwd: "node_modules/**" })
     .pipe(gulp.dest("dist/lib"));
 });
@@ -35,7 +36,7 @@ gulp.task("copy:libs", function () {
 // Copy assets
 gulp.task('copy:assets', function () {
     return gulp.src(['index.html', 'assets/**/*', 'fonts/**/*'], { base: './src', cwd: './src' })
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest('dist'));
 });
 
 // Sass compile
@@ -49,7 +50,7 @@ gulp.task('sass', function () {
 gulp.task('webpack', function() { 
     return gulp.src('src/**/*.jsx')
         .pipe(webpack(require('./webpack.config.js')))
-        .pipe(gulp.dest('dist/'))
+        .pipe(gulp.dest('dist/'));
 });
 
 // TSConfig glob
@@ -79,7 +80,7 @@ gulp.task('serve', ['build'], function () {
 // Reload browsersync
 gulp.task('reload', function () {
     return browserSync.reload();
-})
+});
 
 // Main build task
 gulp.task('build', function (callback) {

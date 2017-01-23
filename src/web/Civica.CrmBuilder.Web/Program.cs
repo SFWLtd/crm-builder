@@ -10,18 +10,19 @@ namespace Civica.CrmBuilder.Web
         {
             var npmStart = Process.Start(new ProcessStartInfo
             {
+                CreateNoWindow = true,
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardInput = true,
                 WorkingDirectory = Path.Combine(Environment.CurrentDirectory, "..\\"),
-                WindowStyle = ProcessWindowStyle.Normal,
                 FileName = "C:\\Program Files\\nodejs\\npm.cmd",
                 Arguments = "start"
             });
 
-            npmStart.StandardOutput.ReadToEnd();
-
-            Console.ReadKey();
+            while (!npmStart.HasExited)
+            {
+                Console.WriteLine(npmStart.StandardOutput.ReadLine());
+            }
         }
     }
 }

@@ -201,3 +201,7 @@ FakesAssemblies/
 
 # Generated typescript files
 *.ts
+
+# Project specific
+api/ApiClient.ts
+api/ApiClient.js

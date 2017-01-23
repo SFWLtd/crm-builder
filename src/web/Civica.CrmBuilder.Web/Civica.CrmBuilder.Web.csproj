@@ -16,6 +16,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <ItemGroup>
@@ -118,16 +119,11 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="package.json" />
     <None Include="tsconfig.json" />
     <None Include="tslint.json" />
     <None Include="typings.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\api\Civica.CrmBuilder.CodeGen\Civica.CrmBuilder.CodeGen.csproj">
-      <Project>{ad41119d-797c-45ff-a973-a635040c2d5c}</Project>
-      <Name>Civica.CrmBuilder.CodeGen</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
@@ -155,8 +151,8 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Target Name="BeforeBuild">
-    <Exec Command="npm install"  WorkingDirectory="$(ProjectDir)"/>
-	  <Exec Command="npm rebuild node-sass" WorkingDirectory="$(ProjectDir)"/>
-	  <Exec Command="Civica.CrmBuilder.CodeGen.exe" WorkingDirectory="$(SolutionDir)api\Civica.CrmBuilder.CodeGen\bin\Debug"/>
+    <Exec Command="npm install" WorkingDirectory="$(ProjectDir)" />
+    <Exec Command="npm rebuild node-sass" WorkingDirectory="$(ProjectDir)" />
+    <Exec Command="Civica.CrmBuilder.CodeGen.exe" WorkingDirectory="$(SolutionDir)api\Civica.CrmBuilder.CodeGen\bin\Debug" />
   </Target>
 </Project>

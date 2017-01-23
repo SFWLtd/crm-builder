@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Autofac;
 using Autofac.Integration.WebApi;
 using Civica.CrmBuilder.Api;
@@ -25,6 +26,8 @@ namespace Civica.CrmBuilder.Api
             config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new { id = RouteParameter.Optional });
             config.Filters.Add(new GlobalExceptionFilter());
             config.Filters.Add(new GlobalActionFilter());
+
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             var builder = new ContainerBuilder();
             builder.RegisterApiControllers(typeof(Startup).Assembly);

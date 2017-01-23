@@ -15,7 +15,7 @@
            return generatedCode += @"
 
 interface FetchOptions {
-    method?: ""GET"" | ""POST"" | ""DELETE"" | ""PATCH"" | ""PUT"";
+    method?: ""GET"" | ""POST"" | ""DELETE"" | ""PATCH"" | ""PUT"" | ""Options"";
     headers ?: any;
             body ?: any;
             mode ?: ""cors"" | ""no -cors"" | ""same -origin"";

@@ -4,8 +4,8 @@ namespace Civica.CrmBuilder.Domain.Authentication
 {
     public interface IClientStore
     {
-        void Add(IClient client);
+        void Set(IClient client);
 
-        IClient FindByAccessToken(Guid accessToken);
+        IClient Get();
     }
 }

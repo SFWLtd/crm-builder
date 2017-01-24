@@ -4,7 +4,7 @@ using Civica.CrmBuilder.Domain.Mapping;
 
 namespace Civica.CrmBuilder.Api.ApiRequests
 {
-    public class AuthenticateRequest : IMappableTo<IClient>
+    public class NewSessionRequest : IMappableTo<IClient>
     {
         public AuthenticationType AuthenticationType { get; set; }
 

@@ -1,14 +1,57 @@
 ﻿import * as React from 'react';
+import * as ApiClient from '../../../../../api/ApiClient';
 
 export class FormWrapper extends React.Component<IFormProps, IFormState> {
 
     onSubmit = () => {
         let validationMessages = this.props.validationHandler();
-        this.setState({ validationMessages: validationMessages });
 
         if (validationMessages.length === 0) {
-            this.props.submitHandler();
+            let promise = this.props.submit();
+            promise.then((response: any) => {
+
+                if (response.statusCode === ApiClient.HttpStatusCode.OK
+                    || response.statusCode === ApiClient.HttpStatusCode.Accepted
+                    || response.statusCode === ApiClient.HttpStatusCode.Created
+                    || response.statusCode === ApiClient.HttpStatusCode.NonAuthoritativeInformation
+                    || response.statusCode === ApiClient.HttpStatusCode.NoContent
+                    || response.statusCode === ApiClient.HttpStatusCode.ResetContent
+                    || response.statusCode === ApiClient.HttpStatusCode.PartialContent) {
+
+                    this.props.onSubmitSuccess(response.result);
+                } else {
+
+                    let validationMessagesByStatusCode: { [statusCode: string]: string; } = {};
+
+                    // process default error messages, then overwrite if custom error messages provided
+                    if (response.statusCode === ApiClient.HttpStatusCode.BadRequest) {
+                        validationMessagesByStatusCode[ApiClient.HttpStatusCode.BadRequest] = 'Bad request';
+                    } else if (response.statusCode === ApiClient.HttpStatusCode.Unauthorized) {
+                        validationMessagesByStatusCode[ApiClient.HttpStatusCode.Unauthorized] = 'Unauthorized';
+                    } else {
+                        validationMessagesByStatusCode[ApiClient.HttpStatusCode.InternalServerError] = 'Internal server error';
+                    }
+
+                    if (this.props.customStatusCodeMessages) {
+                        this.props.customStatusCodeMessages.forEach(h => {
+                            if (h.httpStatusCode === response.statusCode) {
+                                validationMessagesByStatusCode[h.httpStatusCode] = h.errorMessage;
+                            }
+                        });
+                    }
+
+                    for (let key in validationMessagesByStatusCode) {
+                        if (validationMessagesByStatusCode.hasOwnProperty(key)) {
+                            validationMessages.push(validationMessagesByStatusCode[key]);
+                        }
+                    }
+                }
+
+                this.setState({ validationMessages: validationMessages });
+            });
         }
+
+        this.setState({ validationMessages: validationMessages });
     };
 
     constructor(props: IFormProps) {
@@ -48,6 +91,19 @@ export interface IFormState {
 
 export interface IFormProps {
     submissionLabel: string;
-    submitHandler: () => void;
+    submit: () => Promise<any>;
+    onSubmitSuccess: (result: any) => void;
     validationHandler: () => Array<string>;
+    customStatusCodeMessages?: Array<CustomHttpStatusCodeHandler>;
+}
+
+export class CustomHttpStatusCodeHandler {
+
+    httpStatusCode: ApiClient.HttpStatusCode;
+    errorMessage: string;
+
+    constructor(httpStatusCode: ApiClient.HttpStatusCode, errorMessage: string) {
+        this.httpStatusCode = httpStatusCode;
+        this.errorMessage = errorMessage;
+    }
 }

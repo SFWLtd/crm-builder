@@ -8,7 +8,8 @@ namespace Civica.CrmBuilder.Api.Filters
         public override void OnActionExecuted(HttpActionExecutedContext context)
         {
             var results = context.ActionContext.ActionArguments
-                .Where(arg => arg.Value.GetType().IsGenericType 
+                .Where(arg => arg.Value != null
+                    && arg.Value.GetType().IsGenericType 
                     && arg.Value.GetType().GetGenericTypeDefinition() == typeof(GlobalJsonResult<>));
 
             foreach (var result in results)

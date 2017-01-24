@@ -33,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\components\App.tsx" />
+    <TypeScriptCompile Include="src\components\authentication\ConnectionTypeDropdown.ts" />
     <TypeScriptCompile Include="src\components\authentication\LoginForm.tsx" />
     <TypeScriptCompile Include="src\components\forms\FormElementWrapper.tsx" />
     <TypeScriptCompile Include="src\components\forms\Input.tsx" />
@@ -131,9 +132,7 @@
     <None Include="tslint.json" />
     <None Include="typings.json" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\api-client-components\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>

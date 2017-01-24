@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Promise } from 'es6-promise';
 
+import { ConnectionTypeDropdown } from './ConnectionTypeDropdown';
 import { FormWrapper } from '../forms/FormWrapper';
+import { CustomHttpStatusCodeHandler } from '../forms/FormWrapper';
 import { Input } from '../forms/Input';
 import { FormElementWrapper } from '../forms/FormElementWrapper';
 import * as Dropdown from '../forms/DropdownOptions';
@@ -96,43 +98,37 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
     };
 
     login = () => {
-        try {
-            let client = new ApiClient.AuthenticationClient('http://localhost:8001');
+        let client = new ApiClient.SessionClient('http://localhost:8001');
 
-            let request = new ApiClient.AuthenticateRequest();
-            request.url = this.state.url;
-            request.authenticationType = this.state.authenticationType.value;
-            request.domain = this.state.domain;
-            request.emailAddress = this.state.email;
-            request.userName = this.state.username;
-            request.password = this.state.password;
+        let request = new ApiClient.NewSessionRequest();
+        request.url = this.state.url;
+        request.authenticationType = this.state.authenticationType.value;
+        request.domain = this.state.domain;
+        request.emailAddress = this.state.email;
+        request.userName = this.state.username;
+        request.password = this.state.password;
 
-            let response: Promise<ApiClient.GlobalJsonResultOfAuthenticateResult>;
-            response = client.authenticate(request, '');
-            response.then((response: ApiClient.GlobalJsonResultOfAuthenticateResult) => {
-                let test = 'dsahjdshjkl';
-            });
-        } catch (e) {
-
-        }
+        let response: Promise<ApiClient.GlobalJsonResultOfSessionTokenResult>;
+        return response = client.newSession(request, '');
     };
 
     private options: Array<Dropdown.IDropdownOptionItem>;
+    private customErrors: Array<CustomHttpStatusCodeHandler>;
 
     constructor(props: LoginFormProps) {
         super(props);
 
-        this.options = new Array<Dropdown.IDropdownOptionItem>();
-        this.options.push(new Dynamics365DropdownOption());
-        this.options.push(new IfdDropdownOption());
-        this.options.push(new OnPremiseOption());
+        this.options = ConnectionTypeDropdown.Options();
+
+        this.customErrors = new Array<CustomHttpStatusCodeHandler>();
+        this.customErrors.push(new CustomHttpStatusCodeHandler(ApiClient.HttpStatusCode.Unauthorized, 'Invalid credentials. Please try again'));
 
         this.state = { authenticationType: this.options[0], domain : null, email : null, password : null, url : null, username : null };
     }
 
     render() {
 
-        return <FormWrapper submitHandler={this.login} submissionLabel='Log in' validationHandler={this.validateForm}>
+        return <FormWrapper submit={this.login} submissionLabel='Log in' validationHandler={this.validateForm} onSubmitSuccess={this.props.loggedInStateHandler} customStatusCodeMessages={this.customErrors}>
                     <FormElementWrapper label='Connection type:'>
                         <Dropdown.DropdownOptions options={this.options} onSelection={this.handleLoginTypeSelection} />
                     </FormElementWrapper>
@@ -165,36 +161,6 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
     }
 }
 
-class Dynamics365DropdownOption implements Dropdown.IDropdownOptionItem {
-    displayName: string;
-    value: any;
-
-    constructor() {
-        this.displayName = 'Dynamics 365';
-        this.value = ApiClient.AuthenticationType.Dynamics365;
-    }
-}
-
-class IfdDropdownOption implements Dropdown.IDropdownOptionItem {
-    displayName: string;
-    value: any;
-
-    constructor() {
-        this.displayName = 'Internet facing deployment (IFD)';
-        this.value = ApiClient.AuthenticationType.Ifd;
-    }
-}
-
-class OnPremiseOption implements Dropdown.IDropdownOptionItem {
-    displayName: string;
-    value: any;
-
-    constructor() {
-        this.displayName = 'On premise';
-        this.value = ApiClient.AuthenticationType.OnPremise;
-    }
-}
-
 export interface LoginFormState {
     authenticationType?: Dropdown.IDropdownOptionItem;
     url?: string;
@@ -206,5 +172,5 @@ export interface LoginFormState {
 }
 
 export interface LoginFormProps {
-    loggedInStateHandler: (loggedIn: boolean) => void;
+    loggedInStateHandler: (result: ApiClient.SessionTokenResult) => void;
 }

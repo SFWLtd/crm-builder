@@ -1,59 +1,52 @@
-import * as React from "react";
+import * as React from 'react';
+import { NavBarItem } from './NavBarItem';
+import * as ApiClient from '../../../../../api/ApiClient';
 
-import { BuildsOverview } from "../main/BuildsOverview"
-import { NavBarItem } from "./NavBarItem"
-import { MainContent } from "../main/MainContent"
-import { Welcome } from "../main/Welcome"
+export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
-export class NavBar extends React.Component<NavBarProps, NavBarState> {
+    onNavBarItemClick = (navBarItem: NavBarItem) => {
+        this.setState({ activeNavItemId: navBarItem.id });
+    };
 
-    constructor() {
-        super()
+    constructor(props: INavBarProps) {
+        super(props);
 
-        this.state = { activeNavItemId: "homenavbaritem" };
+        this.state = { activeNavItemId: 'homenavbaritem' };
     }
 
     render() {
-     
         return <nav className='primary-color'>
-                    <div className='wrap'>
-                        <ul id="nav-mobile" className="left">
-                            <NavBarItem id="homenavbaritem"
-                                name=""
-                                imageRef = "assets/sfw-civica-logo.png"
-                                onNavBarItemSelect={this.onNavBarItemSelect} 
-                                activeNavBarItemId={this.state.activeNavItemId}
-                                setMainContent={this.props.setMainContent}> 
-                                <Welcome/>
-                            </NavBarItem>
-                            <NavBarItem id="buildsnavbaritem" 
-                                imageRef = ""
-                                name="Builds" 
-                                onNavBarItemSelect={this.onNavBarItemSelect} 
-                                activeNavBarItemId={this.state.activeNavItemId} 
-                                setMainContent={this.props.setMainContent}>
-                                <BuildsOverview/>
-                            </NavBarItem>
-                            <NavBarItem id="settingsnavbaritem" 
-                                imageRef = ""
-                                name="Settings" 
-                                onNavBarItemSelect={this.onNavBarItemSelect} 
-                                activeNavBarItemId={this.state.activeNavItemId} 
-                                setMainContent={this.props.setMainContent}/>
-                        </ul>
-                    </div>
-                </nav>
-    }
-
-    onNavBarItemSelect = (navBarItem : NavBarItem) => {
-        this.setState({ activeNavItemId : navBarItem.id });
+            <div className='wrap'>
+                <ul id='nav-mobile' className='left'>
+                    <NavBarItem id='homenavbaritem'
+                        name=''
+                        imageRef='assets/sfw-civica-logo.png'
+                        onClick={this.onNavBarItemClick}
+                        isActive={this.state.activeNavItemId === 'homenavbaritem'}>
+                    </NavBarItem>
+                    <NavBarItem id='buildsnavbaritem'
+                        imageRef=''
+                        name='Builds'
+                        onClick={this.onNavBarItemClick}
+                        isActive={this.state.activeNavItemId === 'buildsnavbaritem'}>
+                    </NavBarItem>
+                    <NavBarItem id='settingsnavbaritem'
+                        imageRef=''
+                        name='Settings'
+                        onClick={this.onNavBarItemClick}
+                        isActive={this.state.activeNavItemId === 'settingsnavbaritem'}/>
+                </ul>
+            </div>
+        </nav>;
     }
 }
 
-export interface NavBarProps {
-    setMainContent : (content: JSX.Element) => void;
+export interface INavBarProps {
+    onClick: (navBarItem: NavBarItem) => void;
+    loggedIn: boolean;
+    loggedInHandler: (result: ApiClient.SessionTokenResult) => void;
 }
 
-export interface NavBarState {
-    activeNavItemId : string
+export interface INavBarState {
+    activeNavItemId: string;
 }

@@ -203,9 +203,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiModule.cs" />
-    <Compile Include="ApiRequests\AuthenticateRequest.cs" />
-    <Compile Include="ApiResults\AuthenticateResult.cs" />
-    <Compile Include="Controllers\AuthenticationController.cs" />
+    <Compile Include="ApiRequests\NewSessionRequest.cs" />
+    <Compile Include="ApiRequests\GetSessionTokenRequest.cs" />
+    <Compile Include="ApiResults\SessionTokenResult.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\Metadata.cs" />
     <Compile Include="EmptyResult.cs" />
     <Compile Include="Filters\GlobalActionFilter.cs" />

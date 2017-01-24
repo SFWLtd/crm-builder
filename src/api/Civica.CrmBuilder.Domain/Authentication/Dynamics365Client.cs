@@ -14,7 +14,7 @@ namespace Civica.CrmBuilder.Domain.Authentication
             Guard.This(emailAddress).AgainstNullOrEmpty();
             Guard.This(password).AgainstNullOrEmpty();
 
-            var connectionString = string.Format("Url={0}; Username={1}; Password={2};",
+            var connectionString = string.Format("Url={0}; Username={1}; Password={2}; authtype=Office365",
                 url,
                 emailAddress,
                 password);

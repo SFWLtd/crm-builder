@@ -15,11 +15,15 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
     };
 
     onEmailChange = (event: any) => {
-        this.setState({ email: event.target.value })
+        this.setState({ email: event.target.value });
     };
 
     validateEmail = () => {
-        return Validate.thisString(this.state.email).email();
+        if (this.state.authenticationType.value === ApiClient.AuthenticationType.Dynamics365) {
+            return Validate.thisString(this.state.email).email();
+        }
+
+        return true;
     };
 
     onDomainChange = (event: any) => {
@@ -27,15 +31,23 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
     };
 
     validateDomain = () => {
-        return Validate.thisString(this.state.domain).length(1, 100);
+        if (this.state.authenticationType.value !== ApiClient.AuthenticationType.Dynamics365) {
+            return Validate.thisString(this.state.domain).length(1, 100);
+        }
+
+        return true;
     };
 
     validateUsername = () => {
-        return Validate.thisString(this.state.username).length(1, 100);
+        if (this.state.authenticationType.value !== ApiClient.AuthenticationType.Dynamics365) {
+            return Validate.thisString(this.state.username).length(1, 100);
+        }
+
+        return true;
     };
 
     onUsernameChange = (event: any) => {
-        this.setState({ username: event.target.value })
+        this.setState({ username: event.target.value });
     };
 
     onUrlChange = (event: any) => {
@@ -52,17 +64,32 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
     validatePassword = () => {
         return Validate.thisString(this.state.password).length(1, 100);
-    }
+    };
 
-    validateForm = function () {
+    validateForm = () => {
+
+        this.setState({ submissionAttempted: true });
+
         let validationMessages = new Array<string>();
 
-        // to do
-        if (!this.validatePassword) {
-            validationMessages.push('Password is invalid');
-        }
-        if (!this.validateUrl) {
+        if (!this.validateUrl()) {
             validationMessages.push('URL is invalid');
+        }
+
+        if (!this.validateEmail()) {
+            validationMessages.push('Email is invalid');
+        }
+
+        if (!this.validateDomain()) {
+            validationMessages.push('Domain is invalid');
+        }
+
+        if (!this.validateUsername()) {
+            validationMessages.push('Username is invalid');
+        }
+
+        if (!this.validatePassword()) {
+            validationMessages.push('Password is invalid');
         }
 
         return validationMessages;
@@ -111,28 +138,28 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
                     </FormElementWrapper>
 
                     <FormElementWrapper label='CRM URL'>
-                        <Input id='crmurl' type='text' value={this.state.url} validate={this.validateUrl} onChange={this.onUrlChange} />
+                <Input id='crmurl' type='text' value={this.state.url} validate={this.validateUrl} onChange={this.onUrlChange} submissionAttempted={this.state.submissionAttempted} />
                     </FormElementWrapper>
                     {
                         this.state.authenticationType.value !== ApiClient.AuthenticationType.Dynamics365 &&
                         <div>
                         <FormElementWrapper label='Domain'>
-                            <Input id="domain" type="text" value={this.state.domain} validate={this.validateDomain} onChange={this.onDomainChange} />
+                            <Input id='domain' type='text' value={this.state.domain} validate={this.validateDomain} onChange={this.onDomainChange} submissionAttempted={this.state.submissionAttempted} />
                         </FormElementWrapper>
                         <FormElementWrapper label='Username'>
-                            <Input id="username" type="text" value={this.state.username} validate={this.validateUsername} onChange={this.onUsernameChange} />
+                            <Input id='username' type='text' value={this.state.username} validate={this.validateUsername} onChange={this.onUsernameChange} submissionAttempted={this.state.submissionAttempted} />
                         </FormElementWrapper>
                         </div>
                     }
                     {
                         this.state.authenticationType.value === ApiClient.AuthenticationType.Dynamics365 &&
                         <FormElementWrapper label='Email'>
-                            <Input id='email' type='text' value={this.state.email} validate={this.validateEmail} onChange={this.onEmailChange} />
+                            <Input id='email' type='text' value={this.state.email} validate={this.validateEmail} onChange={this.onEmailChange} submissionAttempted={this.state.submissionAttempted} />
                         </FormElementWrapper>
                     }
 
                     <FormElementWrapper label='Password'>
-                        <Input id='password' type='password' value={this.state.password} validate={this.validatePassword} onChange={this.onPasswordChange} />
+                        <Input id='password' type='password' value={this.state.password} validate={this.validatePassword} onChange={this.onPasswordChange} submissionAttempted={this.state.submissionAttempted} />
                     </FormElementWrapper>
         </FormWrapper>;
     }
@@ -175,6 +202,7 @@ export interface LoginFormState {
     username?: string;
     email?: string;
     password?: string;
+    submissionAttempted?: boolean;
 }
 
 export interface LoginFormProps {

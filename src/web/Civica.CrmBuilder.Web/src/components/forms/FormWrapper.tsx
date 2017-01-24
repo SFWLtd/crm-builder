@@ -6,30 +6,31 @@ export class FormWrapper extends React.Component<IFormProps, IFormState> {
         let validationMessages = this.props.validationHandler();
         this.setState({ validationMessages: validationMessages });
 
-        if (validationMessages.length == 0)
-        {
+        if (validationMessages.length === 0) {
             this.props.submitHandler();
         }
-    }
+    };
 
     constructor(props: IFormProps) {
         super(props);
 
         this.state = { validationMessages: new Array<string>() };
-    }           
+    };
 
     render() {
-        var renderedValidation = new Array<JSX.Element>();
+        let renderedValidation = new Array<JSX.Element>();
 
         this.state.validationMessages.forEach(v => {
-            renderedValidation.push(<p className='red-text'>{v}</p>);
+            renderedValidation.push(<h6 className='red-text'>{v}</h6>);
         });
 
-        return <form className='col s12'>          
+        return <form className='col s12'>
             {this.props.children}
             <div id='validationMessages' className='row'>
                 <div className='col s12'>
-                    {renderedValidation}
+                    <blockquote>
+                        {renderedValidation}
+                    </blockquote>
                 </div>
             </div>
             <div className='row'>

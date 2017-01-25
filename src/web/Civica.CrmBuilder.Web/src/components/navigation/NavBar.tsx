@@ -19,18 +19,21 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
             <div className='wrap'>
                 <ul id='nav-mobile' className='left'>
                     <NavBarItem id='homenavbaritem'
+                        isEnabled={this.props.loggedIn}
                         name=''
                         imageRef='assets/sfw-civica-logo.png'
                         onClick={this.onNavBarItemClick}
                         isActive={this.state.activeNavItemId === 'homenavbaritem'}>
                     </NavBarItem>
                     <NavBarItem id='buildsnavbaritem'
+                        isEnabled={this.props.loggedIn}
                         imageRef=''
                         name='Builds'
                         onClick={this.onNavBarItemClick}
                         isActive={this.state.activeNavItemId === 'buildsnavbaritem'}>
                     </NavBarItem>
                     <NavBarItem id='settingsnavbaritem'
+                        isEnabled={this.props.loggedIn}
                         imageRef=''
                         name='Settings'
                         onClick={this.onNavBarItemClick}

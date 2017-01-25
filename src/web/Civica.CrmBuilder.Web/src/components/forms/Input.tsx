@@ -15,7 +15,7 @@ export class Input extends React.Component<IInputProps, undefined> {
     }
 
     render() {
-        return <input id={this.props.id} type={this.props.type} value={this.props.value} className={this.getValidationState()} onChange={this.props.onChange} />;
+        return <input id={this.props.id} type={this.props.type} value={this.props.value ? this.props.value : ''} className={this.getValidationState()} onChange={this.props.onChange} />;
     }
 }
 

@@ -22,6 +22,7 @@ export class NavBarItem extends React.Component<NavBarItemProps, undefined> {
 }
 
 export interface NavBarItemProps {
+    isEnabled: boolean;
     isActive: boolean;
     id: string;
     name: string;

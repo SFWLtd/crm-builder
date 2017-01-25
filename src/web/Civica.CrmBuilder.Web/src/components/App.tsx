@@ -8,11 +8,11 @@ import { Welcome } from './main/Welcome';
 export class App extends React.Component<undefined, IAppState> {
 
     loggedInHandler = (result: ApiClient.SessionTokenResult) => {
-        this.setState({ loggedIn: true, selectedNavigationId: this.state.selectedNavigationId, isLoading: false });
+        this.setState({ loggedIn: true, selectedNavigationId: this.state.selectedNavigationId, hasCheckedForToken: false });
     };
 
     onNavigationClick = (navBarItem: NavBarItem) => {
-        this.setState({ loggedIn: this.state.loggedIn, selectedNavigationId: navBarItem.id, isLoading: false });
+        this.setState({ loggedIn: this.state.loggedIn, selectedNavigationId: navBarItem.id, hasCheckedForToken: false });
     };
 
     constructor() {
@@ -21,7 +21,7 @@ export class App extends React.Component<undefined, IAppState> {
         this.state = {
             selectedNavigationId: 'homenavbaritem',
             loggedIn: false,
-            isLoading: true
+            hasCheckedForToken: true
         };
 
         this.load();
@@ -34,14 +34,14 @@ export class App extends React.Component<undefined, IAppState> {
                 this.setState({
                     selectedNavigationId: this.state.selectedNavigationId,
                     loggedIn: response.statusCode === ApiClient.HttpStatusCode.OK,
-                    isLoading: false
+                    hasCheckedForToken: false
                 });
             });
     }
 
     render() {
         return <div>
-            {!this.state.isLoading &&
+            {!this.state.hasCheckedForToken &&
                 <div>
                     <NavBar onClick={this.onNavigationClick} loggedIn={this.state.loggedIn} loggedInHandler={this.loggedInHandler} />
                     <br />
@@ -63,7 +63,7 @@ export class App extends React.Component<undefined, IAppState> {
                 </div>
             }
 
-            {this.state.isLoading &&
+            {this.state.hasCheckedForToken &&
                 <div id='loader'>
                     <div className='center-align'>
                         <h5>Loading...</h5>
@@ -80,6 +80,7 @@ export class App extends React.Component<undefined, IAppState> {
 
 export interface IAppState {
     selectedNavigationId: string;
-    isLoading: boolean;
+    hasCheckedForToken: boolean;
+    hasLoadedJQueryElements?: boolean;
     loggedIn: boolean;
 }

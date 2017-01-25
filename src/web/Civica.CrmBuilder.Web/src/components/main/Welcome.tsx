@@ -23,6 +23,8 @@ export class Welcome extends React.Component<IWelcomeProps, undefined> {
                 !this.props.loggedIn &&
                 <LoginForm loggedInStateHandler={this.props.loggedInHandler} />
             }
+            {
+            }
         </div>;
     }
 }

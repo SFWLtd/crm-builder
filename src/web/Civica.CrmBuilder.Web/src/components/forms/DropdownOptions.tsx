@@ -1,20 +1,14 @@
 import * as React from 'react';
 
-import { Guid } from '../shared/Guid';
+export class DropdownOptions extends React.Component<IDropdownOptionsProps, IDropdownOptionsState> {
 
-export class DropdownOptions extends React.Component<DropdownOptionsProps, DropdownOptionsState> {
-
-    handleDropdownSelection = (option: IDropdownOptionItem) => {
-        this.setState({ selectedOption: option });
-        this.props.onSelection(option);
+    handleDropdownSelection = (e: any) => {
+        this.setState({ selectedOption: e.target.value });
+        this.props.onSelection(e.target.value);
     };
 
-    private selectorId: string;
-
-    constructor(props: DropdownOptionProps) {
+    constructor(props: IDropdownOptionsProps) {
         super(props);
-
-        this.selectorId = Guid.newGuid();
 
         this.state = {
             selectedOption: this.props.options.length > 0
@@ -27,53 +21,33 @@ export class DropdownOptions extends React.Component<DropdownOptionsProps, Dropd
         if (this.props.options.length > 0) {
             let optionsElements = new Array<JSX.Element>();
 
+            let keyIndex: number = 0;
             this.props.options.forEach(o => {
-                optionsElements.push(<DropdownOption option={o} onSelect={this.handleDropdownSelection} />);
+                optionsElements.push(<option key={keyIndex++} value={o.value}>{o.displayName}</option>);
             });
 
             return <div>
-                <br />
-                <a className='dropdown-button btn' href='#' data-activates={'selector-' + this.selectorId}>{this.state.selectedOption.displayName}</a>
-                <ul id={'selector-' + this.selectorId} className='dropdown-content'>
+                <br/>
+                <select className='browser-default' value={this.state.selectedOption} onChange={this.handleDropdownSelection}>
                     {optionsElements}
-                </ul>
-            </div>;
+                </select>
+                </div>;
         }
 
         throw 'Cannot initialize dropdown options element with no options to select';
     }
 }
 
-export interface DropdownOptionsProps {
+export interface IDropdownOptionsProps {
     options: Array<IDropdownOptionItem>;
-    onSelection: (selectedOption: IDropdownOptionItem) => void;
+    onSelection: (selectedOption: any) => void;
 }
 
-export interface DropdownOptionsState {
-    selectedOption: IDropdownOptionItem;
+export interface IDropdownOptionsState {
+    selectedOption: any;
 }
 
 export interface IDropdownOptionItem {
     displayName: string;
     value: any;
-}
-
-class DropdownOption extends React.Component<DropdownOptionProps, undefined> {
-
-    handleSelection = () => {
-        this.props.onSelect(this.props.option);
-    };
-
-    constructor(props: DropdownOptionProps) {
-        super(props);
-    }
-
-    render() {
-        return <li><a href='#!' onClick={this.handleSelection}>{this.props.option.displayName}</a></li>;
-    }
-}
-
-export interface DropdownOptionProps {
-    option: IDropdownOptionItem;
-    onSelect: (option: IDropdownOptionItem) => void;
 }

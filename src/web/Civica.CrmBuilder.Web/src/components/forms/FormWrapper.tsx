@@ -4,6 +4,9 @@ import * as ApiClient from '../../../../../api/ApiClient';
 export class FormWrapper extends React.Component<IFormProps, IFormState> {
 
     onSubmit = () => {
+
+        this.setState({ processingSubmit: true, validationMessages: this.state.validationMessages });
+
         let validationMessages = this.props.validationHandler();
 
         if (validationMessages.length === 0) {
@@ -47,21 +50,22 @@ export class FormWrapper extends React.Component<IFormProps, IFormState> {
                     }
                 }
 
-                this.setState({ validationMessages: validationMessages });
+                this.setState({ validationMessages: validationMessages, processingSubmit: false });
             });
+        } else {
+            this.setState({ processingSubmit: false, validationMessages: validationMessages });
         }
-
-        this.setState({ validationMessages: validationMessages });
     };
 
     constructor(props: IFormProps) {
         super(props);
 
-        this.state = { validationMessages: new Array<string>() };
+        this.state = { validationMessages: new Array<string>(), processingSubmit: false };
     };
 
     render() {
         let renderedValidation = new Array<JSX.Element>();
+        let spacerStyling = { display: 'inline-block', width: '20px', height: '20px' };
 
         this.state.validationMessages.forEach(v => {
             renderedValidation.push(<h6 className='red-text'>{v}</h6>);
@@ -69,16 +73,34 @@ export class FormWrapper extends React.Component<IFormProps, IFormState> {
 
         return <form className='col s12'>
             {this.props.children}
-            <div id='validationMessages' className='row'>
-                <div className='col s12'>
-                    <blockquote>
-                        {renderedValidation}
-                    </blockquote>
+            {
+                this.props.submissionAttempted &&
+                <div id='validationMessages' className='row'>
+                    <div className='col s12'>
+                        <blockquote>
+                            {renderedValidation}
+                        </blockquote>
+                    </div>
                 </div>
-            </div>
+            }
             <div className='row'>
                 <div className='col s12'>
                     <a onClick={this.onSubmit} className='waves-effect waves-light btn'>{this.props.submissionLabel}</a>
+                    <div style={spacerStyling}></div>
+                    {
+                        this.state.processingSubmit &&
+                        <div className='preloader-wrapper small active'>
+                            <div className='spinner-layer'>
+                                <div className='circle-clipper left'>
+                                    <div className='circle'></div>
+                                </div><div className='gap-patch'>
+                                    <div className='circle'></div>
+                                </div><div className='circle-clipper right'>
+                                    <div className='circle'></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </form>;
@@ -87,9 +109,11 @@ export class FormWrapper extends React.Component<IFormProps, IFormState> {
 
 export interface IFormState {
     validationMessages: Array<string>;
+    processingSubmit?: boolean;
 }
 
 export interface IFormProps {
+    submissionAttempted: boolean;
     submissionLabel: string;
     submit: () => Promise<any>;
     onSubmitSuccess: (result: any) => void;

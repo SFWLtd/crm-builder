@@ -12,8 +12,8 @@ import { Validate } from '../validation/Validate';
 
 export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
-    handleLoginTypeSelection = (selection: Dropdown.IDropdownOptionItem) => {
-        this.setState({ authenticationType: selection });
+    handleLoginTypeSelection = (selection: ApiClient.AuthenticationType) => {
+        this.setState({ authenticationType: selection, formIsNotNew: false,  });
     };
 
     onEmailChange = (event: any) => {
@@ -21,7 +21,7 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
     };
 
     validateEmail = () => {
-        if (this.state.authenticationType.value === ApiClient.AuthenticationType.Dynamics365) {
+        if (this.state.authenticationType == ApiClient.AuthenticationType.Dynamics365) {
             return Validate.thisString(this.state.email).email();
         }
 
@@ -33,7 +33,7 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
     };
 
     validateDomain = () => {
-        if (this.state.authenticationType.value !== ApiClient.AuthenticationType.Dynamics365) {
+        if (this.state.authenticationType != ApiClient.AuthenticationType.Dynamics365) {
             return Validate.thisString(this.state.domain).length(1, 100);
         }
 
@@ -41,7 +41,7 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
     };
 
     validateUsername = () => {
-        if (this.state.authenticationType.value !== ApiClient.AuthenticationType.Dynamics365) {
+        if (this.state.authenticationType != ApiClient.AuthenticationType.Dynamics365) {
             return Validate.thisString(this.state.username).length(1, 100);
         }
 
@@ -70,7 +70,7 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
     validateForm = () => {
 
-        this.setState({ submissionAttempted: true });
+        this.setState({ formIsNotNew: true });
 
         let validationMessages = new Array<string>();
 
@@ -102,7 +102,7 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
         let request = new ApiClient.NewSessionRequest();
         request.url = this.state.url;
-        request.authenticationType = this.state.authenticationType.value;
+        request.authenticationType = this.state.authenticationType;
         request.domain = this.state.domain;
         request.emailAddress = this.state.email;
         request.userName = this.state.username;
@@ -123,52 +123,52 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
         this.customErrors = new Array<CustomHttpStatusCodeHandler>();
         this.customErrors.push(new CustomHttpStatusCodeHandler(ApiClient.HttpStatusCode.Unauthorized, 'Invalid credentials. Please try again'));
 
-        this.state = { authenticationType: this.options[0], domain : null, email : null, password : null, url : null, username : null };
+        this.state = { authenticationType: this.options[0].value, domain : null, email : null, password : null, url : null, username : null };
     }
 
     render() {
 
-        return <FormWrapper submit={this.login} submissionLabel='Log in' validationHandler={this.validateForm} onSubmitSuccess={this.props.loggedInStateHandler} customStatusCodeMessages={this.customErrors}>
+        return <FormWrapper submit={this.login} submissionLabel='Log in' validationHandler={this.validateForm} onSubmitSuccess={this.props.loggedInStateHandler} customStatusCodeMessages={this.customErrors} submissionAttempted={this.state.formIsNotNew}>
                     <FormElementWrapper label='Connection type:'>
                         <Dropdown.DropdownOptions options={this.options} onSelection={this.handleLoginTypeSelection} />
                     </FormElementWrapper>
 
                     <FormElementWrapper label='CRM URL'>
-                <Input id='crmurl' type='text' value={this.state.url} validate={this.validateUrl} onChange={this.onUrlChange} submissionAttempted={this.state.submissionAttempted} />
+                        <Input id='crmurl' type='text' value={this.state.url} validate={this.validateUrl} onChange={this.onUrlChange} submissionAttempted={this.state.formIsNotNew} />
                     </FormElementWrapper>
                     {
-                        this.state.authenticationType.value !== ApiClient.AuthenticationType.Dynamics365 &&
+                        this.state.authenticationType != ApiClient.AuthenticationType.Dynamics365 &&
                         <div>
                         <FormElementWrapper label='Domain'>
-                            <Input id='domain' type='text' value={this.state.domain} validate={this.validateDomain} onChange={this.onDomainChange} submissionAttempted={this.state.submissionAttempted} />
+                            <Input id='domain' type='text' value={this.state.domain} validate={this.validateDomain} onChange={this.onDomainChange} submissionAttempted={this.state.formIsNotNew} />
                         </FormElementWrapper>
                         <FormElementWrapper label='Username'>
-                            <Input id='username' type='text' value={this.state.username} validate={this.validateUsername} onChange={this.onUsernameChange} submissionAttempted={this.state.submissionAttempted} />
+                            <Input id='username' type='text' value={this.state.username} validate={this.validateUsername} onChange={this.onUsernameChange} submissionAttempted={this.state.formIsNotNew} />
                         </FormElementWrapper>
                         </div>
                     }
                     {
-                        this.state.authenticationType.value === ApiClient.AuthenticationType.Dynamics365 &&
+                        this.state.authenticationType == ApiClient.AuthenticationType.Dynamics365 &&
                         <FormElementWrapper label='Email'>
-                            <Input id='email' type='text' value={this.state.email} validate={this.validateEmail} onChange={this.onEmailChange} submissionAttempted={this.state.submissionAttempted} />
+                            <Input id='email' type='text' value={this.state.email} validate={this.validateEmail} onChange={this.onEmailChange} submissionAttempted={this.state.formIsNotNew} />
                         </FormElementWrapper>
                     }
 
                     <FormElementWrapper label='Password'>
-                        <Input id='password' type='password' value={this.state.password} validate={this.validatePassword} onChange={this.onPasswordChange} submissionAttempted={this.state.submissionAttempted} />
+                        <Input id='password' type='password' value={this.state.password} validate={this.validatePassword} onChange={this.onPasswordChange} submissionAttempted={this.state.formIsNotNew} />
                     </FormElementWrapper>
         </FormWrapper>;
     }
 }
 
 export interface LoginFormState {
-    authenticationType?: Dropdown.IDropdownOptionItem;
+    authenticationType?: ApiClient.AuthenticationType;
     url?: string;
     domain?: string;
     username?: string;
     email?: string;
     password?: string;
-    submissionAttempted?: boolean;
+    formIsNotNew?: boolean;
 }
 
 export interface LoginFormProps {

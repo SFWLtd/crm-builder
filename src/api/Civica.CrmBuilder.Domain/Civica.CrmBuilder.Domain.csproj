@@ -52,7 +52,15 @@
     <Compile Include="Authentication\IClientStore.cs" />
     <Compile Include="Authentication\OnPremiseClient.cs" />
     <Compile Include="Authentication\InMemoryClientStore.cs" />
+    <Compile Include="Constants\CrmConstants.cs" />
     <Compile Include="DomainModule.cs" />
+    <Compile Include="Installation\Components\InstallationComponent.cs" />
+    <Compile Include="Installation\IInstallation.cs" />
+    <Compile Include="Installation\Installation.cs" />
+    <Compile Include="Installation\InstallationStatus.cs" />
+    <Compile Include="Mapping\IPopulateFrom.cs" />
+    <Compile Include="Versioning\IVersionable.cs" />
+    <Compile Include="Installation\Versions\IInstallationVersion.cs" />
     <Compile Include="Mapping\IMappableTo.cs" />
     <Compile Include="Mapping\MappingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

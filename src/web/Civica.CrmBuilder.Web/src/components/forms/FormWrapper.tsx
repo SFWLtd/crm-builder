@@ -1,5 +1,6 @@
 ﻿import * as React from 'react';
 import * as ApiClient from '../../../../../api/ApiClient';
+import { Submit } from './Submit';
 
 export class FormWrapper extends React.Component<IFormProps, IFormState> {
 
@@ -65,7 +66,6 @@ export class FormWrapper extends React.Component<IFormProps, IFormState> {
 
     render() {
         let renderedValidation = new Array<JSX.Element>();
-        let spacerStyling = { display: 'inline-block', width: '20px', height: '20px' };
 
         this.state.validationMessages.forEach(v => {
             renderedValidation.push(<h6 className='red-text'>{v}</h6>);
@@ -74,7 +74,7 @@ export class FormWrapper extends React.Component<IFormProps, IFormState> {
         return <form className='col s12'>
             {this.props.children}
             {
-                this.props.submissionAttempted &&
+                this.props.submissionAttempted && !this.state.processingSubmit &&
                 <div id='validationMessages' className='row'>
                     <div className='col s12'>
                         <blockquote>
@@ -83,26 +83,8 @@ export class FormWrapper extends React.Component<IFormProps, IFormState> {
                     </div>
                 </div>
             }
-            <div className='row'>
-                <div className='col s12'>
-                    <a onClick={this.onSubmit} className='waves-effect waves-light btn'>{this.props.submissionLabel}</a>
-                    <div style={spacerStyling}></div>
-                    {
-                        this.state.processingSubmit &&
-                        <div className='preloader-wrapper small active'>
-                            <div className='spinner-layer'>
-                                <div className='circle-clipper left'>
-                                    <div className='circle'></div>
-                                </div><div className='gap-patch'>
-                                    <div className='circle'></div>
-                                </div><div className='circle-clipper right'>
-                                    <div className='circle'></div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
+
+            <Submit label={this.props.submissionLabel} onSubmit={this.onSubmit} showLoader={this.state.processingSubmit}/>
         </form>;
     }
 }

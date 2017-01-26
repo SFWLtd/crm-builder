@@ -62,18 +62,6 @@ export class App extends React.Component<undefined, IAppState> {
                     </div>
                 </div>
             }
-
-            {this.state.hasCheckedForToken &&
-                <div id='loader'>
-                    <div className='center-align'>
-                        <h5>Loading...</h5>
-                    </div>
-                    <div className='progress'>
-                        <div className='indeterminate'>
-                        </div>
-                    </div>
-                </div>
-            }
         </div>;
     }
 }

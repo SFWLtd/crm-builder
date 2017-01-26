@@ -13,7 +13,7 @@ import { Validate } from '../validation/Validate';
 export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
     handleLoginTypeSelection = (selection: ApiClient.AuthenticationType) => {
-        this.setState({ authenticationType: selection, formIsNotNew: false,  });
+        this.setState({ authenticationType: selection, formIsNotNew: false  });
     };
 
     onEmailChange = (event: any) => {

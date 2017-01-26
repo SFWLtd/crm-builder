@@ -2,9 +2,9 @@
 {
     internal static class Guard
     {
-        internal static GuardThis<T> This<T>(T obj)
+        internal static GuardThis<T> This<T>(T obj, string customErrorMessage = null)
         {
-            return new GuardThis<T>(obj);
+            return new GuardThis<T>(obj, customErrorMessage);
         }
     }
 }

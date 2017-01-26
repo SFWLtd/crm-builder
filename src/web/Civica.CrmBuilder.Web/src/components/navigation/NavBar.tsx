@@ -6,6 +6,8 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
     onNavBarItemClick = (navBarItem: NavBarItem) => {
         this.setState({ activeNavItemId: navBarItem.id });
+
+        this.props.onClick(navBarItem);
     };
 
     constructor(props: INavBarProps) {

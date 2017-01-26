@@ -203,9 +203,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiModule.cs" />
+    <Compile Include="ApiRequests\InstallationRequest.cs" />
     <Compile Include="ApiRequests\NewSessionRequest.cs" />
     <Compile Include="ApiRequests\GetSessionTokenRequest.cs" />
+    <Compile Include="ApiRequests\RollbackRequest.cs" />
+    <Compile Include="ApiResults\InstallationResult.cs" />
+    <Compile Include="ApiResults\InstallationStatusResult.cs" />
+    <Compile Include="ApiResults\RollbackResult.cs" />
     <Compile Include="ApiResults\SessionTokenResult.cs" />
+    <Compile Include="Controllers\InstallationController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\Metadata.cs" />
     <Compile Include="EmptyResult.cs" />

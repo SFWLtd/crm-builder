@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as ApiClient from '../../../../../api/ApiClient';
 import { LoginForm } from '../authentication/LoginForm';
+import { Card } from '../shared/Card';
+import { Installation } from '../installation/Installation';
 
 export class Welcome extends React.Component<IWelcomeProps, undefined> {
 
@@ -10,20 +12,21 @@ export class Welcome extends React.Component<IWelcomeProps, undefined> {
 
     render() {
         return <div>
-            <div className='card blue-grey darken-1'>
-                <div className='card-content white-text'>
-                    <span className='card-title'>Welcome to CRM Builder</span>
-                    <p>Continuous integration for CRM solutions.</p>
-                    <br />
-                </div>
-            </div>
-            <br />
-            <br />
             {
                 !this.props.loggedIn &&
-                <LoginForm loggedInStateHandler={this.props.loggedInHandler} />
+                <div>
+                    <Card title='Welcome to CRM Builder'>
+                        <p>Continuous integration for CRM solutions.</p>
+                        <br />
+                    </Card>
+                    <br />
+                    <br />
+                    <LoginForm loggedInStateHandler={this.props.loggedInHandler} />
+                </div>
             }
             {
+                this.props.loggedIn &&
+                <Installation />
             }
         </div>;
     }

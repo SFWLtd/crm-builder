@@ -6,5 +6,10 @@
         {
             return mappable.Map();
         }
+
+        public static void Populate<T>(this IPopulatableFrom<T> populatable, T source)
+        {
+            populatable.PopulateFrom(source);
+        }
     }
 }

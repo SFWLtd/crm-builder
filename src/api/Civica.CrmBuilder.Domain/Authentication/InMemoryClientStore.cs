@@ -24,7 +24,7 @@ namespace Civica.CrmBuilder.Domain.Authentication
         {
             if (client == null || DateTime.Now.Subtract(client.LastAccess).CompareTo(slidingExpiryPeriod) > 0)
             {
-                throw new InvalidOperationException("No client was found");
+                throw new UnauthorizedAccessException("No client was found");
             }
 
             client.MarkAsAccessed();

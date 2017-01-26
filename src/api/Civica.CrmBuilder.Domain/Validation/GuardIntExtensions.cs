@@ -8,7 +8,7 @@ namespace Civica.CrmBuilder.Domain.Validation
         {
             if (guard.Obj < 0)
             {
-                throw new ArgumentException("Value should not be less than zero");
+                throw new ArgumentException(guard.CustomErrorMessage != null? guard.CustomErrorMessage: "Value should not be less than zero");
             }
 
             return guard;
@@ -18,7 +18,17 @@ namespace Civica.CrmBuilder.Domain.Validation
         {
             if (guard.Obj == 0)
             {
-                throw new ArgumentException("Value should not be zero");
+                throw new ArgumentException(guard.CustomErrorMessage != null ? guard.CustomErrorMessage : "Value should not be zero");
+            }
+
+            return guard;
+        }
+
+        internal static GuardThis<int> AgainstNotBeingExactly(this GuardThis<int> guard, int value)
+        {
+            if (guard.Obj != value)
+            {
+                throw new ArgumentException(guard.CustomErrorMessage != null ? guard.CustomErrorMessage : string.Format("Value should be exactly {0}", value));
             }
 
             return guard;

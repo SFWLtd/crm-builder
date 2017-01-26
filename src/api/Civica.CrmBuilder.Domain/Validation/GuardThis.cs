@@ -6,18 +6,21 @@ namespace Civica.CrmBuilder.Domain.Validation
     {
         internal T Obj { get; private set; }
 
-        internal GuardThis(T obj)
+        internal string CustomErrorMessage { get; set; }
+
+        internal GuardThis(T obj, string customErrorMessage = null)
         {
             Obj = obj;
+            CustomErrorMessage = customErrorMessage;
         }
 
-        internal GuardThis<T> CustomRule(Func<T, bool> guardFunc, string customErrorMessage = null)
+        internal GuardThis<T> CustomRule(Func<T, bool> guardFunc)
         {
             if (!guardFunc(Obj))
             {
-                throw new ArgumentException(customErrorMessage == null
+                throw new ArgumentException(CustomErrorMessage == null
                     ? string.Format("A validation error occured for type '{0}'", typeof(T).Name)
-                    : customErrorMessage);
+                    : CustomErrorMessage);
             }
 
             return this;

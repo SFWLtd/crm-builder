@@ -33,7 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\components\App.tsx" />
-    <TypeScriptCompile Include="src\components\authentication\ConnectionTypeDropdown.ts" />
+    <TypeScriptCompile Include="src\components\authentication\ConnectionTypeDropdown.tsx" />
     <TypeScriptCompile Include="src\components\authentication\LoginForm.tsx" />
     <TypeScriptCompile Include="src\components\forms\FormElementWrapper.tsx" />
     <TypeScriptCompile Include="src\components\forms\Input.tsx" />

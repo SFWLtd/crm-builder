@@ -7,6 +7,7 @@ using Civica.CrmPlusPlus.Sdk.DefaultEntities;
 using Civica.CrmPlusPlus.Sdk.EntityAttributes;
 using Civica.CrmPlusPlus.Sdk.EntityAttributes.PropertyTypes;
 using Civica.CrmPlusPlus.Sdk.Validation;
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
@@ -16,13 +17,13 @@ namespace Civica.CrmPlusPlus.Sdk.Client
     public class CrmPlusPlusCustomizationClient : ICrmPlusPlusCustomizationClient
     {
         private readonly IOrganizationService service;
-        private readonly Solution solution;
-        private readonly Publisher publisher;
+        public Solution Solution { get; }
+        private Publisher Publisher { get; }
 
         internal CrmPlusPlusCustomizationClient(Publisher publisher, Solution solution, IOrganizationService service)
         {
-            this.solution = solution;
-            this.publisher = publisher;
+            Solution = solution;
+            Publisher = publisher;
             this.service = service;
         }
 
@@ -53,7 +54,16 @@ namespace Civica.CrmPlusPlus.Sdk.Client
                 }
             };
 
-            service.Execute(createEntityRequest);
+            var response = (CreateEntityResponse)service.Execute(createEntityRequest);
+
+            var addReq = new AddSolutionComponentRequest()
+            {
+                ComponentType = (int)SolutionComponentTypes.Entity,
+                ComponentId = response.EntityId,
+                SolutionUniqueName = Solution.Name
+            };
+            
+            service.Execute(addReq);
         }
 
         public void CreateProperty<T, TProperty>(Expression<Func<T, TProperty>> propertyExpr) where T : CrmPlusPlusEntity, new()

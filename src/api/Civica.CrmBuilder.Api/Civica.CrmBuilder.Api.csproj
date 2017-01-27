@@ -203,10 +203,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiModule.cs" />
-    <Compile Include="ApiRequests\InstallationRequest.cs" />
+    <Compile Include="ApiRequests\ComponentInstallationRequest.cs" />
     <Compile Include="ApiRequests\NewSessionRequest.cs" />
     <Compile Include="ApiRequests\GetSessionTokenRequest.cs" />
     <Compile Include="ApiRequests\RollbackRequest.cs" />
+    <Compile Include="ApiRequests\StartInstallationRequest.cs" />
     <Compile Include="ApiResults\InstallationResult.cs" />
     <Compile Include="ApiResults\InstallationStatusResult.cs" />
     <Compile Include="ApiResults\RollbackResult.cs" />

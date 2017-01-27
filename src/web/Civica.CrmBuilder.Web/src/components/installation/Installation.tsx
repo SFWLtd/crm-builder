@@ -3,13 +3,19 @@ import { Card } from '../shared/Card';
 import { PageLoader } from '../shared/PageLoader';
 import { FormWrapper } from '../forms/FormWrapper';
 import { Submit } from '../forms/Submit';
+import { Installer } from './Installer';
+import { InstallationAction } from './Installer';
 import * as ApiClient from '../../../../../api/ApiClient';
 
 export class Installation extends React.Component<undefined, IInstallationState> {
 
-    install = () => {
+    startInstalling = () => {
+        this.setState({ isInstalling: true });
+    }
 
-    };
+    finishInstalling = () => {
+        this.setState({ isInstalling: false });
+    }
     
     constructor() {
         super();
@@ -57,15 +63,32 @@ export class Installation extends React.Component<undefined, IInstallationState>
                         <p className='Caption'>It looks like CRM Builder is not installed on your instance of CRM yet</p>
                     </Card>
                     <br />
+                    <p className='Caption'>
+                        {
+                            this.state.isInstalling &&
+                            <Installer installationAction={InstallationAction.Install} onFinished={this.finishInstalling} />
+                        }
+                    </p>
                     <br />
-                    <Submit onSubmit={this.install} label='Install' showLoader={this.state.isInstalling} />
+                    <Submit onSubmit={this.startInstalling} label='Install' showLoader={this.state.isInstalling} />
                 </div>
             }
             {
                 this.state.loaded && this.state.errors.length == 0 && this.state.requiresUpdate &&
-                <Card title='Update required'>
-                    <p className='Caption'>CRM requires some updates before you can continue using CRM Builder. Click install to proceed</p>
-                </Card>
+                <div>
+                    <Card title='Update required'>
+                        <p className='Caption'>CRM requires some updates before you can continue using CRM Builder. Click install to proceed</p>
+                    </Card>
+                    <br />
+                    <p className='Caption'>
+                        {
+                            this.state.isInstalling &&
+                            <Installer installationAction={InstallationAction.Update} onFinished={this.finishInstalling} />
+                        }
+                    </p>
+                    <br />
+                    <Submit onSubmit={this.startInstalling} label='Install' showLoader={this.state.isInstalling} />
+                </div>
             }
             {
                 this.state.loaded && this.state.errors.length > 0 &&

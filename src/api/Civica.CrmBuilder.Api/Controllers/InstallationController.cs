@@ -2,23 +2,23 @@
 using System.Web.Http;
 using Civica.CrmBuilder.Api.ApiRequests;
 using Civica.CrmBuilder.Api.ApiResults;
-using Civica.CrmBuilder.Domain.Authentication;
 using Civica.CrmBuilder.Domain.Installation;
 
 namespace Civica.CrmBuilder.Api.Controllers
 {
     public class InstallationController : ApiController
     {
-        private readonly IClientStore clientStore;
+        private readonly IInstallation installation;
 
-        public InstallationController(IClientStore clientStore)
+        public InstallationController(IInstallation installation)
         {
-            this.clientStore = clientStore;
+            this.installation = installation;
         }
 
+        [ActionName("GetInstallationStatus")]
         public GlobalJsonResult<InstallationStatusResult> GetInstallationStatus()
         {
-            var installationStatus = Installation.ForClient(clientStore).GetStatus();
+            var installationStatus = installation.GetStatus();
 
             var result = new InstallationStatusResult();
             result.PopulateFrom(installationStatus);
@@ -26,11 +26,11 @@ namespace Civica.CrmBuilder.Api.Controllers
             return GlobalJsonResult<InstallationStatusResult>.Success(System.Net.HttpStatusCode.OK, result);
         }
 
-        [HttpPost]
+        [ActionName("StartInstallation")]
+        [HttpPost()]
         public GlobalJsonResult<InstallationResult> StartInstallation([FromBody]StartInstallationRequest request)
         {
-            var installationResult = Installation.ForClient(clientStore)
-                .StartInstallation();
+            var installationResult = installation.StartInstallation();
 
             var result = new InstallationResult();
             result.PopulateFrom(installationResult);
@@ -40,11 +40,11 @@ namespace Civica.CrmBuilder.Api.Controllers
                 : GlobalJsonResult<InstallationResult>.Success(System.Net.HttpStatusCode.OK, result);
         }
 
+        [ActionName("InstallNextComponent")]
         [HttpPost]
         public GlobalJsonResult<InstallationResult> InstallNextComponent([FromBody]ComponentInstallationRequest request)
         {
-            var installationResult = Installation.ForClient(clientStore)
-                .InstallNextComponent(request.InstallationComponentId, request.Version);
+            var installationResult = installation.InstallNextComponent(request.InstallationComponentId, Version.Parse(request.Version));
 
             var result = new InstallationResult();
             result.PopulateFrom(installationResult);
@@ -54,13 +54,17 @@ namespace Civica.CrmBuilder.Api.Controllers
                 : GlobalJsonResult<InstallationResult>.Success(System.Net.HttpStatusCode.OK, result);
         }
 
+        [ActionName("RollbackComponentsForVersion")]
         [HttpPost]
-        public GlobalJsonResult<EmptyResult> RollbackComponentsForVersion([FromBody]RollbackRequest request)
+        public GlobalJsonResult<RollbackResult> RollbackComponentsForVersion([FromBody]RollbackRequest request)
         {
-            Installation.ForClient(clientStore)
-                .RollbackInstallationVersion(request.FailedInstallationComponentId, request.FailedInstallationVersion);
+            installation.RollbackInstallationVersion(request.FailedInstallationComponentId, Version.Parse(request.FailedInstallationVersion));
+            var version = installation.GetCurrentVersion();
 
-            return GlobalJsonResult<EmptyResult>.Success(System.Net.HttpStatusCode.NoContent);
+            var result = new RollbackResult();
+            result.PopulateFrom(version);
+
+            return GlobalJsonResult<RollbackResult>.Success(System.Net.HttpStatusCode.NoContent, result);
         }
     }
 }

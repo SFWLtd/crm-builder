@@ -14,6 +14,7 @@ namespace Civica.CrmBuilder.Api.Controllers
             this.clientStore = clientStore;
         }
 
+        [ActionName("GetSessionToken")]
         [HttpGet()]
         public GlobalJsonResult<SessionTokenResult> GetSessionToken([FromBody]GetSessionTokenRequest request)
         {
@@ -25,6 +26,7 @@ namespace Civica.CrmBuilder.Api.Controllers
             return GlobalJsonResult<SessionTokenResult>.Success(System.Net.HttpStatusCode.OK, result);
         }
 
+        [ActionName("NewSession")]
         [HttpPost()]
         public GlobalJsonResult<SessionTokenResult> NewSession([FromBody]NewSessionRequest request)
         {

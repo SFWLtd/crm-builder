@@ -13,7 +13,7 @@ namespace Civica.CrmBuilder.Domain.Installation.Versions
 
         public IReadOnlyDictionary<int, InstallationComponent> InstallationComponents { get { return installationComponents; } }
 
-        protected InstallationVersion(Version version, Dictionary<int, InstallationComponent> installationComponents)
+        protected InstallationVersion(Version version)
         {
             Version = version;
 
@@ -24,7 +24,7 @@ namespace Civica.CrmBuilder.Domain.Installation.Versions
         {
             var nextComponentKey = !installationComponents.Any()
                 ? 0
-                : installationComponents.Keys.OrderByDescending(k => k).First();
+                : installationComponents.Keys.OrderByDescending(k => k).First() + 1;
 
             installationComponents.Add(nextComponentKey, installationComponent);
         }

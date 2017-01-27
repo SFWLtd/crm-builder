@@ -39,6 +39,7 @@
     <TypeScriptCompile Include="src\components\forms\Input.tsx" />
     <TypeScriptCompile Include="src\components\forms\Submit.tsx" />
     <TypeScriptCompile Include="src\components\installation\Installation.tsx" />
+    <TypeScriptCompile Include="src\components\installation\Installer.tsx" />
     <TypeScriptCompile Include="src\components\main\BuildsOverview.tsx" />
     <TypeScriptCompile Include="src\components\main\MainContent.tsx" />
     <TypeScriptCompile Include="src\components\main\Welcome.tsx" />

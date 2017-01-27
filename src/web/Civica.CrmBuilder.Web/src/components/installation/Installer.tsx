@@ -8,12 +8,14 @@ export class Installer extends React.Component<IInstallerProps, IInstallerState>
 
     constructor(props: IInstallerProps) {
         super(props);
+
+        this.state = { started: false, currentResult: null };
+
+        this.startInstallation();
     }
 
-    componentDidMount() {
-        if (!this.state.started) {
-            this.startInstallation();
-        } else {
+    componentDidUpdate(prevProps: IInstallerProps, prevState: IInstallerState) {
+        if (this.state.started) {
             let installationClient = new ApiClient.InstallationClient('http://localhost:8001');
 
             if (this.state.currentResult.isSuccess) {
@@ -24,10 +26,11 @@ export class Installer extends React.Component<IInstallerProps, IInstallerState>
 
                     installationClient.installNextComponent(nextInstallationRequest, '')
                         .then((result: ApiClient.GlobalJsonResultOfInstallationResult) => {
-                            this.setState({ currentResult: result.result })
+                            this.setState({ currentResult: result.result, message: 'Installing component: ' + result.result.componentDescription });
                         });
                 } else {
-                    this.props.onFinished('Installation successful', null);
+                    this.setState({ message: 'Installation successful' });
+                    this.props.onFinished({ succeeded: true, currentVersion: this.state.currentResult.version });
                 }
             } else {
                 let rollbackVersionRequest = new ApiClient.RollbackRequest();
@@ -35,13 +38,19 @@ export class Installer extends React.Component<IInstallerProps, IInstallerState>
                 rollbackVersionRequest.failedInstallationVersion = this.state.currentResult.version;
 
                 installationClient.rollbackComponentsForVersion(rollbackVersionRequest, '')
-                    .then((result: ApiClient.GlobalJsonResultOfEmptyResult) => {
+                    .then((result: ApiClient.GlobalJsonResultOfRollbackResult) => {
                         if (result.successful) {
-                            this.props.onFinished('Installation unsuccesful: ' + this.state.currentResult.errorMessage,
-                                'Rollback of the installation was successful');
+                            this.props.onFinished({
+                                succeeded: false,
+                                currentVersion: result.result.currentVersion,
+                                installationErrorMessage: this.state.currentResult.errorMessage
+                            });
                         } else {
-                            this.props.onFinished('Installation unsuccesful: ' + this.state.currentResult.errorMessage,
-                                'Rollback of the installation also failed: ' + result.errorMessage);
+                            this.props.onFinished({
+                                succeeded: false,
+                                installationErrorMessage: this.state.currentResult.errorMessage,
+                                rollbackErrorMessage: result.errorMessage
+                            });
                         }
                     });
             }
@@ -49,31 +58,34 @@ export class Installer extends React.Component<IInstallerProps, IInstallerState>
     }
 
     startInstallation() {
+
         let installationClient = new ApiClient.InstallationClient('http://localhost:8001');
         installationClient.startInstallation(new ApiClient.StartInstallationRequest(), '')
             .then((result: ApiClient.GlobalJsonResultOfInstallationResult) => {
                 if (result.successful) {
-                    this.setState({started: true, currentResult: result.result})
+                    this.setState({ started: true, currentResult: result.result, message: 'Installation started...' })
                 }
             });
     }
 
     render() {
-        return <span>{this.state.currentResult.componentDescription}...</span>
+        return <span>{this.state.message}</span>
     }
 }
 
 export interface IInstallerProps {
-    installationAction: InstallationAction;
-    onFinished: (installationMessage: string, rollbackMessage: string) => void;
+    onFinished: (result: IInstallerResult) => void;
 }
 
 export interface IInstallerState {
     started?: boolean;
     currentResult?: ApiClient.InstallationResult;
+    message?: string;
 }
 
-export enum InstallationAction {
-    Install,
-    Update
+export interface IInstallerResult {
+    succeeded: boolean,
+    currentVersion?: string,
+    installationErrorMessage?: string,
+    rollbackErrorMessage?: string
 }

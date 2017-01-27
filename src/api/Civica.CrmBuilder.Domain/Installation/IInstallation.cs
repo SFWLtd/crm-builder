@@ -6,6 +6,8 @@ namespace Civica.CrmBuilder.Domain.Installation
     {
         InstallationStatus GetStatus();
 
+        Version GetCurrentVersion();
+
         ComponentInstallationResult StartInstallation();
 
         ComponentInstallationResult InstallNextComponent(int componentId, Version installationVersion);

@@ -4,57 +4,34 @@ using System.Linq;
 using Civica.CrmBuilder.Domain.Authentication;
 using Civica.CrmBuilder.Domain.Constants;
 using Civica.CrmBuilder.Domain.CrmPlusPlusQueries;
+using Civica.CrmBuilder.Domain.Installation.Components;
 using Civica.CrmBuilder.Domain.Installation.Versions;
 using Civica.CrmBuilder.Domain.Validation;
 using Civica.CrmPlusPlus.Sdk;
+using Civica.CrmPlusPlus.Sdk.Client;
 
 namespace Civica.CrmBuilder.Domain.Installation
 {
     public class Installation : IInstallation
     {
-        private readonly ICrmPlusPlus crm;
-        private readonly IList<InstallationVersion> availableInstallationVersions;
-        private readonly Version currentVersion;
+        private readonly Func<ICrmPlusPlus> crm;
+        private readonly IInstallationVersionDiscovery discovery;
 
-        internal Installation(ICrmPlusPlus crm)
+        public Installation(IInstallationVersionDiscovery discovery, Func<ICrmPlusPlus> crm)
         {
             this.crm = crm;
-
-            // Get installation versions
-            var installationVersionTypes = typeof(Installation).Assembly.GetTypes()
-                .Where(t => typeof(InstallationVersion).IsAssignableFrom(t)
-                    && t.IsClass
-                    && !t.IsAbstract
-                    && t.GetConstructors().Any(c => c.GetParameters().Count() == 0));
-
-            availableInstallationVersions = installationVersionTypes
-                .Select(vt => (InstallationVersion)Activator.CreateInstance(vt))
-                .Where(iv => iv.InstallationComponents.Any() && iv.Version != null)
-                .ToList();
-
-            // Get current version 
-            var customizationClient = crm.GetCustomizationClientForSolution(CrmConstants.DefaultPublisherSettings, CrmConstants.DefaultSolutionSettings);
-
-            var solutionByNameQuery = SolutionQueries.SolutionByName(CrmConstants.DefaultSolutionSettings.Name);
-            var solution = crm.EntityClient.RetrieveMultiple(solutionByNameQuery).Single(); // Cannot have more than one solution with the same name
-
-            currentVersion = Version.Parse(solution.Version);
-
-            // If the current version doesn't match the default or an available installation, throw an error
-            Guard.This(currentVersion, "Corrupted installation. Please remove the solution from CRM")
-                .CustomRule(v => currentVersion.CompareTo(Version.Parse(CrmConstants.InitialSolutionVersion)) == 0
-                && !availableInstallationVersions.Select(i => i.Version).Contains(currentVersion));
-        }
-
-        public static IInstallation ForClient(IClientStore clientStore)
-        {
-            var client = clientStore.Get();
-
-            return new Installation(client.Crm);
+            this.discovery = discovery;           
         }
 
         public InstallationStatus GetStatus()
         {
+            var availableInstallationVersions = discovery.Discover();
+            var currentVersion = GetCurrentVersion();
+
+            Guard.This(currentVersion, "Corrupted installation. Please remove the solution from CRM")
+                .CustomRule(v => currentVersion.CompareTo(Version.Parse(CrmConstants.InitialSolutionVersion)) == 0
+                || availableInstallationVersions.Any(i => i.Version.CompareTo(currentVersion) == 0));
+
             var isInstalled = currentVersion != Version.Parse(CrmConstants.InitialSolutionVersion);
             var requiresUpdate = availableInstallationVersions.Any(v => v.Version.CompareTo(currentVersion) > 0)
                 && isInstalled;
@@ -64,11 +41,12 @@ namespace Civica.CrmBuilder.Domain.Installation
 
         public ComponentInstallationResult StartInstallation()
         {
+            var currentVersion = GetCurrentVersion();
             var thisVersion = GetNextVersion(currentVersion);
 
             if (thisVersion == null)
             {
-                return ComponentInstallationResult.Success();
+                return ComponentInstallationResult.Success(Version.Parse(CrmConstants.InitialSolutionVersion));
             }
 
             int componentId = 0; // Installation version not included if there are no components (see ctor)
@@ -78,7 +56,8 @@ namespace Civica.CrmBuilder.Domain.Installation
 
         public ComponentInstallationResult InstallNextComponent(int componentId, Version installationVersion)
         {
-            var thisVersion = availableInstallationVersions
+            var thisVersion = discovery
+                .Discover()
                 .SingleOrDefault(iv => iv.Version.CompareTo(installationVersion) == 0);
 
             if (thisVersion == null)
@@ -95,16 +74,46 @@ namespace Civica.CrmBuilder.Domain.Installation
             return this.InstallComponent(componentId, thisVersion);
         }
 
+        public Version GetCurrentVersion()
+        {
+            // Get current version 
+            var customizationClient = this.crm().GetCustomizationClientForSolution(CrmConstants.DefaultPublisherSettings, CrmConstants.DefaultSolutionSettings);
+
+            var solutionByNameQuery = SolutionQueries.SolutionByName(CrmConstants.DefaultSolutionSettings.Name);
+            var solution = this.crm().EntityClient.RetrieveMultiple(solutionByNameQuery).Single(); // Cannot have more than one solution with the same name
+
+            return Version.Parse(solution.Version);
+        }
+
         private ComponentInstallationResult InstallComponent(int componentId, InstallationVersion version)
         {
             var thisComponent = version.InstallationComponents[componentId];
             var nextComponent = GetNextInstallationComponent(version, componentId);
 
-            var customizationClient = crm.GetCustomizationClientForSolution(CrmConstants.DefaultPublisherSettings, CrmConstants.DefaultSolutionSettings);
+            var customizationClient = crm().GetCustomizationClientForSolution(CrmConstants.DefaultPublisherSettings, CrmConstants.DefaultSolutionSettings);
 
             try
             {
                 thisComponent.InstallationAction.Compile().Invoke(customizationClient);
+
+                if (nextComponent.HasValue && nextComponent.Value.Value.CompareTo(version.Version) > 0)
+                {
+                    /* The next component is part of a newer version, 
+                     * so at this point we update the solution to reflect that this
+                     * installation version has installed. If the solution update fails,
+                     * we should rollback and fail the current component too */
+                    try
+                    {
+                        var solution = customizationClient.Solution;
+                        solution.Version = version.ToString();
+                        crm().EntityClient.Update(solution);
+                    }
+                    catch
+                    {
+                        thisComponent.RollbackAction.Compile().Invoke(customizationClient);
+                        throw;
+                    }
+                }
 
                 return nextComponent.HasValue
                     ? ComponentInstallationResult.Success(componentId, thisComponent.Description, version.Version, true, nextComponent.Value.Key, nextComponent.Value.Value)
@@ -118,7 +127,7 @@ namespace Civica.CrmBuilder.Domain.Installation
 
         private InstallationVersion GetNextVersion(Version version)
         {
-            return availableInstallationVersions
+            return discovery.Discover()
                 .Where(iv => iv.Version.CompareTo(version) > 0)
                 .OrderBy(x => x.Version)
                 .FirstOrDefault();
@@ -145,13 +154,13 @@ namespace Civica.CrmBuilder.Domain.Installation
 
         public void RollbackInstallationVersion(int failedComponentId, Version failedInstallationVersion)
         {
-            var thisVersion = availableInstallationVersions
+            var thisVersion = discovery.Discover()
                 .SingleOrDefault(iv => iv.Version.CompareTo(failedInstallationVersion) == 0);
 
             Guard.This(thisVersion, string.Format("Rollback request was received, but version {0} was found on the system", failedInstallationVersion))
                 .CustomRule(iv => iv != null);
 
-            var customizationClient = crm.GetCustomizationClientForSolution(CrmConstants.DefaultPublisherSettings, CrmConstants.DefaultSolutionSettings);
+            var customizationClient = crm().GetCustomizationClientForSolution(CrmConstants.DefaultPublisherSettings, CrmConstants.DefaultSolutionSettings);
 
             failedComponentId--; // The failed component doesn't require rollback. Start with the component installed before the failure
             while (failedComponentId >= 0)

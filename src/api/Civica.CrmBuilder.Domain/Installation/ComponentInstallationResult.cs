@@ -37,9 +37,9 @@ namespace Civica.CrmBuilder.Domain.Installation
             return new ComponentInstallationResult(componentId, componentDescription, success, version, false);
         }
 
-        public static ComponentInstallationResult Success()
+        public static ComponentInstallationResult Success(Version version)
         {
-            return new ComponentInstallationResult(null, null, true, null, false);
+            return new ComponentInstallationResult(null, null, true, version, false);
         } 
 
         public static ComponentInstallationResult Success(int componentId, string componentDescription, Version version, bool moreToInstall, int nextComponentId, Version nextComponentVersion)

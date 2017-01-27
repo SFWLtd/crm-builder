@@ -1,11 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using Civica.CrmBuilder.Domain.Mapping;
 
 namespace Civica.CrmBuilder.Api.ApiResults
 {
-    public class RollbackResult
+    public class RollbackResult : IPopulatableFrom<Version>
     {
+        public string CurrentVersion { get; set; }
+
+        public void PopulateFrom(Version source)
+        {
+            CurrentVersion = source != null ? source.ToString() : null;
+        }
     }
 }

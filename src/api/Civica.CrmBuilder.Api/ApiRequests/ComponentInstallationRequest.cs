@@ -6,6 +6,6 @@ namespace Civica.CrmBuilder.Api.ApiRequests
     {
         public int InstallationComponentId { get; set; }
 
-        public Version Version { get; set; }
+        public string Version { get; set; }
     }
 }

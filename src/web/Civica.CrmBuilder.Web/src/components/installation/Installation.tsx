@@ -4,17 +4,17 @@ import { PageLoader } from '../shared/PageLoader';
 import { FormWrapper } from '../forms/FormWrapper';
 import { Submit } from '../forms/Submit';
 import { Installer } from './Installer';
-import { InstallationAction } from './Installer';
+import { IInstallerResult } from './Installer';
 import * as ApiClient from '../../../../../api/ApiClient';
 
 export class Installation extends React.Component<undefined, IInstallationState> {
 
     startInstalling = () => {
-        this.setState({ isInstalling: true });
+        this.setState({ isInstalling: true, installationResult: null });
     }
 
-    finishInstalling = () => {
-        this.setState({ isInstalling: false });
+    finishInstalling = (installationResult: IInstallerResult) => {
+        this.setState({ isInstalling: false, installationResult: installationResult, requiresInstallation: !installationResult.succeeded });
     }
     
     constructor() {
@@ -66,7 +66,7 @@ export class Installation extends React.Component<undefined, IInstallationState>
                     <p className='Caption'>
                         {
                             this.state.isInstalling &&
-                            <Installer installationAction={InstallationAction.Install} onFinished={this.finishInstalling} />
+                            <Installer onFinished={this.finishInstalling} />
                         }
                     </p>
                     <br />
@@ -77,17 +77,25 @@ export class Installation extends React.Component<undefined, IInstallationState>
                 this.state.loaded && this.state.errors.length == 0 && this.state.requiresUpdate &&
                 <div>
                     <Card title='Update required'>
-                        <p className='Caption'>CRM requires some updates before you can continue using CRM Builder. Click install to proceed</p>
+                        <p className='Caption'>CRM builder needs to apply some updates to CRM before you can continue. Click install to proceed</p>
                     </Card>
                     <br />
                     <p className='Caption'>
                         {
                             this.state.isInstalling &&
-                            <Installer installationAction={InstallationAction.Update} onFinished={this.finishInstalling} />
+                            <Installer onFinished={this.finishInstalling} />
                         }
                     </p>
                     <br />
                     <Submit onSubmit={this.startInstalling} label='Install' showLoader={this.state.isInstalling} />
+                </div>
+            }
+            {
+                this.state.installationResult && this.state.installationResult.succeeded &&
+                <div>
+                    <Card title='CRM Builder is up to date'>
+                        <p className='caption'>Version: {this.state.installationResult.currentVersion}</p>
+                    </Card>
                 </div>
             }
             {
@@ -107,4 +115,5 @@ export interface IInstallationState {
     requiresInstallation?: boolean;
     requiresUpdate?: boolean;
     isInstalling?: boolean;
+    installationResult?: IInstallerResult;
 }

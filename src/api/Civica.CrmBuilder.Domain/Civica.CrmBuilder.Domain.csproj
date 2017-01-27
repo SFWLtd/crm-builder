@@ -52,9 +52,9 @@
     <Compile Include="Authentication\IClientStore.cs" />
     <Compile Include="Authentication\OnPremiseClient.cs" />
     <Compile Include="Authentication\InMemoryClientStore.cs" />
-    <Compile Include="Constants\CrmConstants.cs" />
     <Compile Include="CrmPlusPlusQueries\SolutionQueries.cs" />
     <Compile Include="DomainModule.cs" />
+    <Compile Include="ICrmPlusPlusCustomizationClientExtensions.cs" />
     <Compile Include="Installation\ComponentInstallationResult.cs" />
     <Compile Include="Installation\Components\InstallationComponent.cs" />
     <Compile Include="Installation\IInstallation.cs" />
@@ -62,6 +62,7 @@
     <Compile Include="Installation\Installation.cs" />
     <Compile Include="Installation\InstallationStatus.cs" />
     <Compile Include="Installation\InstallationVersionDiscovery.cs" />
+    <Compile Include="Installation\Versions\CreateBuildEntity.cs" />
     <Compile Include="Mapping\IPopulateFrom.cs" />
     <Compile Include="Time\SystemTime.cs" />
     <Compile Include="Versioning\IVersionable.cs" />
@@ -75,6 +76,10 @@
     <Compile Include="Validation\GuardThis.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Civica.CrmBuilder.Core\Civica.CrmBuilder.Core.csproj">
+      <Project>{1522e461-c092-4720-bbae-ec0443f8e780}</Project>
+      <Name>Civica.CrmBuilder.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Civica.CrmBuilder.Entities\Civica.CrmBuilder.Entities.csproj">
       <Project>{1dd387cb-6475-4ea9-933e-1e44d48ba065}</Project>
       <Name>Civica.CrmBuilder.Entities</Name>

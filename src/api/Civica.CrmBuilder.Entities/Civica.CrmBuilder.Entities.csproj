@@ -40,9 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Build.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Civica.CrmBuilder.Core\Civica.CrmBuilder.Core.csproj">
+      <Project>{1522E461-C092-4720-BBAE-EC0443F8E780}</Project>
+      <Name>Civica.CrmBuilder.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Civica.CrmPlusPlus.Sdk\Civica.CrmPlusPlus.Sdk.csproj">
       <Project>{20e43a48-cb82-4b7d-900a-5f3dffe285cb}</Project>
       <Name>Civica.CrmPlusPlus.Sdk</Name>

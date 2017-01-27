@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Civica.CrmBuilder.Domain.Authentication;
-using Civica.CrmBuilder.Domain.Constants;
+using Civica.CrmBuilder.Core.Constants;
 using Civica.CrmBuilder.Domain.CrmPlusPlusQueries;
-using Civica.CrmBuilder.Domain.Installation.Components;
 using Civica.CrmBuilder.Domain.Installation.Versions;
 using Civica.CrmBuilder.Domain.Validation;
 using Civica.CrmPlusPlus.Sdk;
-using Civica.CrmPlusPlus.Sdk.Client;
 
 namespace Civica.CrmBuilder.Domain.Installation
 {
@@ -96,7 +93,7 @@ namespace Civica.CrmBuilder.Domain.Installation
             {
                 thisComponent.InstallationAction.Compile().Invoke(customizationClient);
 
-                if (nextComponent.HasValue && nextComponent.Value.Value.CompareTo(version.Version) > 0)
+                if (!nextComponent.HasValue || (nextComponent.HasValue && nextComponent.Value.Value.CompareTo(version.Version) > 0))
                 {
                     /* The next component is part of a newer version, 
                      * so at this point we update the solution to reflect that this
@@ -104,8 +101,9 @@ namespace Civica.CrmBuilder.Domain.Installation
                      * we should rollback and fail the current component too */
                     try
                     {
-                        var solution = customizationClient.Solution;
-                        solution.Version = version.ToString();
+                        var solution = crm().EntityClient.RetrieveMultiple(SolutionQueries.SolutionByName(customizationClient.Solution.Name))
+                            .Single();
+                        solution.Version = version.Version.ToString();
                         crm().EntityClient.Update(solution);
                     }
                     catch

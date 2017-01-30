@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Civica.CrmBuilder.Domain.Authentication;
-using Civica.CrmBuilder.Domain.Constants;
+using Civica.CrmBuilder.Core.Constants;
 using Civica.CrmBuilder.Domain.Installation;
 using Civica.CrmBuilder.Domain.Installation.Components;
 using Civica.CrmBuilder.Domain.Installation.Versions;
@@ -144,6 +143,13 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
                 .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
 
+            var customizationClient = A.Fake<ICrmPlusPlusCustomizationClient>();
+            A.CallTo(() => customizationClient.Solution)
+                .Returns(new Solution { Name = "TestSolution" });
+
+            A.CallTo(() => crmPlusPlus.GetCustomizationClientForSolution(A<PublisherSettings>._, A<SolutionSettings>._))
+                .Returns(customizationClient);
+
             var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).StartInstallation();
 
             Assert.True(result.IsSuccess);
@@ -179,6 +185,13 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
 
             A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
                 .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
+
+            var customizationClient = A.Fake<ICrmPlusPlusCustomizationClient>();
+            A.CallTo(() => customizationClient.Solution)
+                .Returns(new Solution { Name = "TestSolution" });
+
+            A.CallTo(() => crmPlusPlus.GetCustomizationClientForSolution(A<PublisherSettings>._, A<SolutionSettings>._))
+                .Returns(customizationClient);
 
             var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).StartInstallation();
 
@@ -224,6 +237,13 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
                 .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
 
+            var customizationClient = A.Fake<ICrmPlusPlusCustomizationClient>();
+            A.CallTo(() => customizationClient.Solution)
+                .Returns(new Solution { Name = "TestSolution" });
+
+            A.CallTo(() => crmPlusPlus.GetCustomizationClientForSolution(A<PublisherSettings>._, A<SolutionSettings>._))
+                .Returns(customizationClient);
+
             var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).StartInstallation();
 
             Assert.True(result.IsSuccess);
@@ -267,6 +287,13 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
 
             A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
                 .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
+
+            var customizationClient = A.Fake<ICrmPlusPlusCustomizationClient>();
+            A.CallTo(() => customizationClient.Solution)
+                .Returns(new Solution { Name = "TestSolution" });
+
+            A.CallTo(() => crmPlusPlus.GetCustomizationClientForSolution(A<PublisherSettings>._, A<SolutionSettings>._))
+                .Returns(customizationClient);
 
             var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).StartInstallation();
 

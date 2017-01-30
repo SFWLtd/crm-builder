@@ -80,6 +80,10 @@
       <Project>{20E43A48-CB82-4B7D-900A-5F3DFFE285CB}</Project>
       <Name>Civica.CrmPlusPlus.Sdk</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Civica.CrmBuilder.Core\Civica.CrmBuilder.Core.csproj">
+      <Project>{1522e461-c092-4720-bbae-ec0443f8e780}</Project>
+      <Name>Civica.CrmBuilder.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

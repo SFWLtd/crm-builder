@@ -11,11 +11,11 @@ export class Installation extends React.Component<undefined, IInstallationState>
 
     startInstalling = () => {
         this.setState({ isInstalling: true, installationResult: null });
-    }
+    };
 
     finishInstalling = (installationResult: IInstallerResult) => {
         this.setState({ isInstalling: false, installationResult: installationResult, requiresInstallation: !installationResult.succeeded });
-    }
+    };
     
     constructor() {
         super();
@@ -65,7 +65,7 @@ export class Installation extends React.Component<undefined, IInstallationState>
                     <br />
                     <p className='Caption'>
                         {
-                            this.state.isInstalling &&
+                            (this.state.isInstalling || this.state.installationResult) &&
                             <Installer onFinished={this.finishInstalling} />
                         }
                     </p>
@@ -82,7 +82,7 @@ export class Installation extends React.Component<undefined, IInstallationState>
                     <br />
                     <p className='Caption'>
                         {
-                            this.state.isInstalling &&
+                            (this.state.isInstalling || this.state.installationResult) &&
                             <Installer onFinished={this.finishInstalling} />
                         }
                     </p>

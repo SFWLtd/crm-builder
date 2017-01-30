@@ -9,7 +9,7 @@ export class PageLoader extends React.Component<IPageLoaderProps, undefined> {
     render() {
         return <div id='loader'>
             <div className='center-align'>
-                <h5>{this.props.message}</h5>
+                <p>{this.props.message}</p>
             </div>
             <div className='progress'>
                 <div className='indeterminate'>

@@ -1,7 +1,18 @@
 ﻿import * as React from 'react';
 import * as ApiClient from '../../../../../api/ApiClient';
+import * as ExtendedClient from '../../api-extensions/installation-client/ExtendedInstallationClient';
 
 export class Installer extends React.Component<IInstallerProps, IInstallerState> {
+
+    updateInstallationMessage = (message: string) => {
+        this.setState({ message: message });
+    };
+
+    onInstallationFinished = (result: ExtendedClient.IInstallerResult) => {
+        this.setState({ started: false });
+
+        this.props.onFinished(result);
+    };
 
     private installationError: string;
     private rollbackMessage: string;
@@ -9,63 +20,26 @@ export class Installer extends React.Component<IInstallerProps, IInstallerState>
     constructor(props: IInstallerProps) {
         super(props);
 
-        this.state = { started: false, currentResult: null };
+        this.state = { started: false, currentResult: null, message: 'Installation starting...' };
 
         this.startInstallation();
     }
 
-    componentDidUpdate(prevProps: IInstallerProps, prevState: IInstallerState) {
-        if (this.state.started) {
-            let installationClient = new ApiClient.InstallationClient('http://localhost:8001');
-
-            if (this.state.currentResult.isSuccess) {
-                if (this.state.currentResult.moreToInstall) {
-                    let nextInstallationRequest = new ApiClient.ComponentInstallationRequest();
-                    nextInstallationRequest.installationComponentId = this.state.currentResult.nextComponentId;
-                    nextInstallationRequest.version = this.state.currentResult.nextComponentVersion;
-
-                    installationClient.installNextComponent(nextInstallationRequest, '')
-                        .then((result: ApiClient.GlobalJsonResultOfInstallationResult) => {
-                            this.setState({ currentResult: result.result, message: 'Installing component: ' + result.result.componentDescription });
-                        });
-                } else {
-                    this.setState({ message: 'Installation successful' });
-                    this.props.onFinished({ succeeded: true, currentVersion: this.state.currentResult.version });
-                }
-            } else {
-                let rollbackVersionRequest = new ApiClient.RollbackRequest();
-                rollbackVersionRequest.failedInstallationComponentId = this.state.currentResult.componentId;
-                rollbackVersionRequest.failedInstallationVersion = this.state.currentResult.version;
-
-                installationClient.rollbackComponentsForVersion(rollbackVersionRequest, '')
-                    .then((result: ApiClient.GlobalJsonResultOfRollbackResult) => {
-                        if (result.successful) {
-                            this.props.onFinished({
-                                succeeded: false,
-                                currentVersion: result.result.currentVersion,
-                                installationErrorMessage: this.state.currentResult.errorMessage
-                            });
-                        } else {
-                            this.props.onFinished({
-                                succeeded: false,
-                                installationErrorMessage: this.state.currentResult.errorMessage,
-                                rollbackErrorMessage: result.errorMessage
-                            });
-                        }
-                    });
-            }
-        }
-    }
-
     startInstallation() {
 
-        let installationClient = new ApiClient.InstallationClient('http://localhost:8001');
+        let installationClient = new ExtendedClient.ExtendedInstallationClient('http://localhost:8001');
         installationClient.startInstallation(new ApiClient.StartInstallationRequest(), '')
             .then((result: ApiClient.GlobalJsonResultOfInstallationResult) => {
                 if (result.successful) {
-                    this.setState({ started: true, currentResult: result.result, message: 'Installation started...' })
+                    this.setState({ started: true, currentResult: result });
+                    this.continueInstallation();
                 }
             });
+    }
+
+    continueInstallation(): void {
+        let installationClient = new ExtendedClient.ExtendedInstallationClient('http://localhost:8001');
+        installationClient.completeInstallation(this.state.currentResult, this.updateInstallationMessage, this.onInstallationFinished);
     }
 
     render() {
@@ -74,18 +48,12 @@ export class Installer extends React.Component<IInstallerProps, IInstallerState>
 }
 
 export interface IInstallerProps {
-    onFinished: (result: IInstallerResult) => void;
+    onFinished: (result: ExtendedClient.IInstallerResult) => void;
 }
 
 export interface IInstallerState {
     started?: boolean;
-    currentResult?: ApiClient.InstallationResult;
+    currentResult?: ApiClient.GlobalJsonResultOfInstallationResult;
     message?: string;
 }
 
-export interface IInstallerResult {
-    succeeded: boolean,
-    currentVersion?: string,
-    installationErrorMessage?: string,
-    rollbackErrorMessage?: string
-}

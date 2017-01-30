@@ -1,4 +1,6 @@
-﻿namespace Civica.CrmBuilder.Domain.Installation
+﻿using System;
+
+namespace Civica.CrmBuilder.Domain.Installation
 {
     public class InstallationStatus
     {
@@ -6,10 +8,13 @@
 
         public bool RequiresUpdate { get; }
 
-        public InstallationStatus(bool isInstalled, bool requiresUpdate)
+        public Version CurrentVersion { get; }
+
+        public InstallationStatus(bool isInstalled, bool requiresUpdate, Version currentVersion)
         {
             IsInstalled = isInstalled;
             RequiresUpdate = requiresUpdate;
+            CurrentVersion = currentVersion;
         }
     }
 }

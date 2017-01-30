@@ -52,6 +52,7 @@
     <TypeScriptCompile Include="src\components\shared\PageLoader.tsx" />
     <TypeScriptCompile Include="src\components\validation\Validate.tsx" />
     <TypeScriptCompile Include="src\components\validation\ValidateString.tsx" />
+    <TypeScriptCompile Include="src\api-extensions\installation-client\ExtendedInstallationClient.tsx" />
     <TypeScriptCompile Include="src\index.tsx" />
   </ItemGroup>
   <ItemGroup>

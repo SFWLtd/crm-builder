@@ -4,21 +4,30 @@ import { PageLoader } from '../shared/PageLoader';
 import { FormWrapper } from '../forms/FormWrapper';
 import { Submit } from '../forms/Submit';
 import { Installer } from './Installer';
-import { IInstallerResult } from './Installer';
+import { IInstallerResult } from '../../api-extensions/installation-client/ExtendedInstallationClient';
 import * as ApiClient from '../../../../../api/ApiClient';
 
-export class Installation extends React.Component<undefined, IInstallationState> {
+export class Installation extends React.Component<IInstallationProps, IInstallationState> {
 
     startInstalling = () => {
-        this.setState({ isInstalling: true, installationResult: null });
+        this.setState({
+            isInstalling: true,
+            installationResult: null
+        });
     };
 
     finishInstalling = (installationResult: IInstallerResult) => {
-        this.setState({ isInstalling: false, installationResult: installationResult, requiresInstallation: !installationResult.succeeded });
+        this.setState({
+            isInstalling: false,
+            installationResult: installationResult,
+            requiresInstallation: !installationResult.succeeded,
+            requiresUpdate: !installationResult.succeeded,
+            currentVersion: installationResult.currentVersion
+        });
     };
     
-    constructor() {
-        super();
+    constructor(props: IInstallationProps) {
+        super(props);
 
         this.state = {
             loaded: false,
@@ -36,13 +45,23 @@ export class Installation extends React.Component<undefined, IInstallationState>
         installationClient.getInstallationStatus('')
             .then((result: ApiClient.GlobalJsonResultOfInstallationStatusResult) => {
                 if (result.successful) {
-                    this.setState({ requiresUpdate: result.result.requiresUpdate, requiresInstallation: !result.result.isInstalled });
+                    this.setState({
+                        requiresUpdate: result.result.requiresUpdate,
+                        requiresInstallation: !result.result.isInstalled,
+                        currentVersion: result.result.currentVersion,
+                    });
                 } else {
                     this.state.errors.push(result.errorMessage);
                 }
 
                 this.setState({ loaded: true });
             });
+    }
+
+    componentWillUpdate(nextProps: IInstallationProps, nextState: IInstallationState) {
+        if (!nextState.requiresInstallation && !nextState.requiresUpdate) {
+            this.props.onUpToDate(nextState.currentVersion);
+        }
     }
 
     render() {
@@ -65,8 +84,12 @@ export class Installation extends React.Component<undefined, IInstallationState>
                     <br />
                     <p className='Caption'>
                         {
-                            (this.state.isInstalling || this.state.installationResult) &&
+                            this.state.isInstalling &&
                             <Installer onFinished={this.finishInstalling} />
+                        }
+                        {
+                            !this.state.isInstalling && this.state.installationResult &&
+                            <p className='red-text'>Installation failed: {this.state.installationResult.installationErrorMessage}</p>
                         }
                     </p>
                     <br />
@@ -82,8 +105,12 @@ export class Installation extends React.Component<undefined, IInstallationState>
                     <br />
                     <p className='Caption'>
                         {
-                            (this.state.isInstalling || this.state.installationResult) &&
+                            this.state.isInstalling &&
                             <Installer onFinished={this.finishInstalling} />
+                        }
+                        {
+                            !this.state.isInstalling && this.state.installationResult &&
+                            <p className='red-text'>{this.state.installationResult.installationErrorMessage}</p>
                         }
                     </p>
                     <br />
@@ -91,10 +118,10 @@ export class Installation extends React.Component<undefined, IInstallationState>
                 </div>
             }
             {
-                this.state.installationResult && this.state.installationResult.succeeded &&
+                this.state.loaded && !this.state.requiresInstallation && !this.state.requiresUpdate &&
                 <div>
                     <Card title='CRM Builder is up to date'>
-                        <p className='caption'>Version: {this.state.installationResult.currentVersion}</p>
+                        <p className='caption'>Version: {this.state.currentVersion}</p>
                     </Card>
                 </div>
             }
@@ -109,6 +136,10 @@ export class Installation extends React.Component<undefined, IInstallationState>
     }
 }
 
+export interface IInstallationProps {
+    onUpToDate?: (version: string) => void;
+}
+
 export interface IInstallationState {
     loaded?: boolean;
     errors?: Array<string>;
@@ -116,4 +147,5 @@ export interface IInstallationState {
     requiresUpdate?: boolean;
     isInstalling?: boolean;
     installationResult?: IInstallerResult;
+    currentVersion?: string;
 }

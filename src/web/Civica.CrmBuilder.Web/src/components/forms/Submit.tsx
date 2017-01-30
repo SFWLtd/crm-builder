@@ -9,26 +9,24 @@ export class Submit extends React.Component<ISubmitProps, undefined> {
     render() {
         let spacerStyling = { display: 'inline-block', width: '20px', height: '20px' };
 
-        return <div className='row'>
-            <div className='col s12'>
-                <a onClick={this.props.onSubmit} className='waves-effect waves-light btn'>{this.props.label}</a>
-                <div style={spacerStyling}></div>
-                {
-                    this.props.showLoader &&
-                    <div className='preloader-wrapper small active'>
-                        <div className='spinner-layer'>
-                            <div className='circle-clipper left'>
-                                <div className='circle'></div>
-                            </div><div className='gap-patch'>
-                                <div className='circle'></div>
-                            </div><div className='circle-clipper right'>
-                                <div className='circle'></div>
-                            </div>
+        return <div>
+            <a onClick={this.props.onSubmit} className='waves-effect waves-light btn'>{this.props.label}</a>
+            <div style={spacerStyling}></div>
+            {
+                this.props.showLoader &&
+                <div className='preloader-wrapper small active'>
+                    <div className='spinner-layer'>
+                        <div className='circle-clipper left'>
+                            <div className='circle'></div>
+                        </div><div className='gap-patch'>
+                            <div className='circle'></div>
+                        </div><div className='circle-clipper right'>
+                            <div className='circle'></div>
                         </div>
                     </div>
-                }
-            </div>
-        </div>
+                </div>
+            }
+        </div>;
     }
 }
 

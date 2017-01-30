@@ -10,10 +10,13 @@ namespace Civica.CrmBuilder.Api.ApiResults
 
         public bool RequiresUpdate { get; set; }
 
+        public string CurrentVersion { get; set; }
+
         public void PopulateFrom(InstallationStatus source)
         {
             IsInstalled = source.IsInstalled;
             RequiresUpdate = source.RequiresUpdate;
+            CurrentVersion = source.CurrentVersion.ToString();
         }
     }
 }

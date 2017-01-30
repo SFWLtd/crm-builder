@@ -33,7 +33,7 @@ namespace Civica.CrmBuilder.Domain.Installation
             var requiresUpdate = availableInstallationVersions.Any(v => v.Version.CompareTo(currentVersion) > 0)
                 && isInstalled;
 
-            return new InstallationStatus(isInstalled, requiresUpdate);
+            return new InstallationStatus(isInstalled, requiresUpdate, currentVersion);
         }
 
         public ComponentInstallationResult StartInstallation()

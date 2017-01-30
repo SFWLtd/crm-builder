@@ -84,7 +84,9 @@ export class FormWrapper extends React.Component<IFormProps, IFormState> {
                 </div>
             }
 
-            <Submit label={this.props.submissionLabel} onSubmit={this.onSubmit} showLoader={this.state.processingSubmit}/>
+            <div className='col s12'>
+                <Submit label={this.props.submissionLabel} onSubmit={this.onSubmit} showLoader={this.state.processingSubmit} />
+            </div>
         </form>;
     }
 }

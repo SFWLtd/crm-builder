@@ -26,7 +26,7 @@ export class Welcome extends React.Component<IWelcomeProps, undefined> {
             }
             {
                 this.props.loggedIn &&
-                <Installation />
+                <Installation onUpToDate={this.props.onUptoDateHandler} />
             }
         </div>;
     }
@@ -35,4 +35,5 @@ export class Welcome extends React.Component<IWelcomeProps, undefined> {
 export interface IWelcomeProps {
     loggedIn: boolean;
     loggedInHandler: (result: ApiClient.SessionTokenResult) => void;
+    onUptoDateHandler: (version: string) => void;
 }

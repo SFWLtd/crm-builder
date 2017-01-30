@@ -27,19 +27,26 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                         onClick={this.onNavBarItemClick}
                         isActive={this.state.activeNavItemId === 'homenavbaritem'}>
                     </NavBarItem>
-                    <NavBarItem id='buildsnavbaritem'
-                        isEnabled={this.props.loggedIn}
-                        imageRef=''
-                        name='Builds'
-                        onClick={this.onNavBarItemClick}
-                        isActive={this.state.activeNavItemId === 'buildsnavbaritem'}>
-                    </NavBarItem>
-                    <NavBarItem id='settingsnavbaritem'
-                        isEnabled={this.props.loggedIn}
-                        imageRef=''
-                        name='Settings'
-                        onClick={this.onNavBarItemClick}
-                        isActive={this.state.activeNavItemId === 'settingsnavbaritem'}/>
+                    {
+
+                        this.props.loggedIn && this.props.upToDate &&
+                        <NavBarItem id='buildsnavbaritem'
+                            isEnabled={this.props.loggedIn}
+                            imageRef=''
+                            name='Builds'
+                            onClick={this.onNavBarItemClick}
+                            isActive={this.state.activeNavItemId === 'buildsnavbaritem'}>
+                        </NavBarItem>
+                    }
+                    {
+                        this.props.loggedIn && this.props.upToDate && 
+                            <NavBarItem id='settingsnavbaritem'
+                                isEnabled={this.props.loggedIn}
+                                imageRef=''
+                                name='Settings'
+                                onClick={this.onNavBarItemClick}
+                                isActive={this.state.activeNavItemId === 'settingsnavbaritem'} />
+                    }
                 </ul>
             </div>
         </nav>;
@@ -49,6 +56,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
 export interface INavBarProps {
     onClick: (navBarItem: NavBarItem) => void;
     loggedIn: boolean;
+    upToDate: boolean;
     loggedInHandler: (result: ApiClient.SessionTokenResult) => void;
 }
 

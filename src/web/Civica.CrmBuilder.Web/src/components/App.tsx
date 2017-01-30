@@ -8,11 +8,30 @@ import { Welcome } from './main/Welcome';
 export class App extends React.Component<undefined, IAppState> {
 
     loggedInHandler = (result: ApiClient.SessionTokenResult) => {
-        this.setState({ loggedIn: true, selectedNavigationId: this.state.selectedNavigationId, hasCheckedForToken: false });
+        this.setState({
+            loggedIn: true,
+            selectedNavigationId: this.state.selectedNavigationId,
+            upToDate: this.state.upToDate
+        });
     };
 
+    upToDateHandler = (version: string) => {
+
+        if (!this.state.upToDate) {
+            this.setState({
+                loggedIn: this.state.loggedIn,
+                selectedNavigationId: this.state.selectedNavigationId,
+                upToDate: true
+            });
+        }
+    }
+
     onNavigationClick = (navBarItem: NavBarItem) => {
-        this.setState({ loggedIn: this.state.loggedIn, selectedNavigationId: navBarItem.id, hasCheckedForToken: false });
+        this.setState({
+            loggedIn: this.state.loggedIn,
+            selectedNavigationId: navBarItem.id,
+            upToDate: this.state.upToDate
+        });
     };
 
     constructor() {
@@ -21,7 +40,8 @@ export class App extends React.Component<undefined, IAppState> {
         this.state = {
             selectedNavigationId: 'homenavbaritem',
             loggedIn: false,
-            hasCheckedForToken: true
+            upToDate: false,
+            hasLoaded: false
         };
 
         this.load();
@@ -34,28 +54,29 @@ export class App extends React.Component<undefined, IAppState> {
                 this.setState({
                     selectedNavigationId: this.state.selectedNavigationId,
                     loggedIn: response.statusCode === ApiClient.HttpStatusCode.OK,
-                    hasCheckedForToken: false
+                    hasLoaded: true,
+                    upToDate: this.state.upToDate
                 });
             });
     }
 
     render() {
         return <div>
-            {!this.state.hasCheckedForToken &&
+            {this.state.hasLoaded &&
                 <div>
-                    <NavBar onClick={this.onNavigationClick} loggedIn={this.state.loggedIn} loggedInHandler={this.loggedInHandler} />
+                <NavBar onClick={this.onNavigationClick} loggedIn={this.state.loggedIn} upToDate={this.state.upToDate} loggedInHandler={this.loggedInHandler} />
                     <br />
                     <div className='wrap'>
                         {
                             this.state.selectedNavigationId === 'homenavbaritem' &&
-                            <Welcome loggedIn={this.state.loggedIn} loggedInHandler={this.loggedInHandler} />
+                            <Welcome loggedIn={this.state.loggedIn} loggedInHandler={this.loggedInHandler} onUptoDateHandler={this.upToDateHandler} />
                         }
                         {
                             this.state.selectedNavigationId === 'buildsnavbaritem' &&
                             <BuildsOverview />
                         }
                         {
-                            this.state.selectedNavigationId === 'settingsnavbaritem' &&
+                        this.state.selectedNavigationId === 'settingsnavbaritem' &&
                             <div></div>
                         }
 
@@ -68,7 +89,7 @@ export class App extends React.Component<undefined, IAppState> {
 
 export interface IAppState {
     selectedNavigationId: string;
-    hasCheckedForToken: boolean;
-    hasLoadedJQueryElements?: boolean;
+    hasLoaded?: boolean;
     loggedIn: boolean;
+    upToDate: boolean;
 }

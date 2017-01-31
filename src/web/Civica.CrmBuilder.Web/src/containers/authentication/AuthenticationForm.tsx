@@ -13,7 +13,7 @@ const mapStateToProps = (state: IAppState): AuthenticationFormPresenter.IAuthent
     }
 }
 
-const mapDispatchToProps = (dispatch: any, props: AuthenticationFormPresenter.IAuthenticationFormProps): AuthenticationFormPresenter.IAuthenticationFormProps => {
+const mapDispatchToProps = (dispatch: any): AuthenticationFormPresenter.IAuthenticationFormProps => {
     return {
         crmUrlOnChange: (url: string) => dispatch(AuthenticationActionCreators.setCrmUrl(url)),
         emailAddressOnChange: (emailAddress: string) => dispatch(AuthenticationActionCreators.setEmailAddress(emailAddress))

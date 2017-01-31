@@ -3,15 +3,7 @@ import { IAuthenticationState } from '../../state/authentication/IAuthentication
 import { IAction } from '../../actions/IAction';
 import { AuthenticationActions } from '../../actions/authentication/AuthenticationActions';
 
-const defaultState: IAuthenticationState = {
-    crmUrl: '',
-    emailAddress: '',
-    loggedIn: false,
-    logInAttempts: 0,
-    lastErrorMessage: ''
-}
-
-const authenticationReducer = (state: IAuthenticationState = defaultState, action: IAction): IAuthenticationState => {
+const authenticationReducer = (state: IAuthenticationState, action: IAction): IAuthenticationState => {
 
     let newState = state;
 

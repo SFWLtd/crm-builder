@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1DD387CB-6475-4EA9-933E-1E44D48BA065}</ProjectGuid>
+    <ProjectGuid>{1522E461-C092-4720-BBAE-EC0443F8E780}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Civica.CrmBuilder.Entities</RootNamespace>
-    <AssemblyName>Civica.CrmBuilder.Entities</AssemblyName>
+    <RootNamespace>Civica.CrmBuilder.Core</RootNamespace>
+    <AssemblyName>Civica.CrmBuilder.Core</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Build.cs" />
+    <Compile Include="Constants\CrmConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

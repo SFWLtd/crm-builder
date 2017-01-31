@@ -72,17 +72,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\api\Civica.CrmBuilder.Domain\Civica.CrmBuilder.Domain.csproj">
-      <Project>{d31a19da-eaf3-45c3-bc02-f4741408f849}</Project>
-      <Name>Civica.CrmBuilder.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\api\Civica.CrmPlusPlus.Sdk\Civica.CrmPlusPlus.Sdk.csproj">
-      <Project>{20E43A48-CB82-4B7D-900A-5F3DFFE285CB}</Project>
-      <Name>Civica.CrmPlusPlus.Sdk</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Civica.CrmBuilder.Core\Civica.CrmBuilder.Core.csproj">
       <Project>{1522e461-c092-4720-bbae-ec0443f8e780}</Project>
       <Name>Civica.CrmBuilder.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Civica.CrmBuilder.Domain\Civica.CrmBuilder.Domain.csproj">
+      <Project>{d31a19da-eaf3-45c3-bc02-f4741408f849}</Project>
+      <Name>Civica.CrmBuilder.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Civica.CrmPlusPlus.Sdk\Civica.CrmPlusPlus.Sdk.csproj">
+      <Project>{20E43A48-CB82-4B7D-900A-5F3DFFE285CB}</Project>
+      <Name>Civica.CrmPlusPlus.Sdk</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

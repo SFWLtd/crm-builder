@@ -23,9 +23,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Web", "we
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B40A5C80-7BEA-4963-AFE3-FC373A052F64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Domain.Tests", "Civica.CrmBuilder.Domain.Tests\Civica.CrmBuilder.Domain.Tests.csproj", "{6854858F-65FC-4FEC-93C9-E0335B9F227C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Domain.Tests", "api\Civica.CrmBuilder.Domain.Tests\Civica.CrmBuilder.Domain.Tests.csproj", "{6854858F-65FC-4FEC-93C9-E0335B9F227C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Core", "Civica.CrmBuilder.Core\Civica.CrmBuilder.Core.csproj", "{1522E461-C092-4720-BBAE-EC0443F8E780}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Core", "api\Civica.CrmBuilder.Core\Civica.CrmBuilder.Core.csproj", "{1522E461-C092-4720-BBAE-EC0443F8E780}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,5 +79,6 @@ Global
 		{BA4A4E70-195C-4E4F-BF2B-7FAE5A4CA5EC} = {82B18A5C-64B9-4589-A99C-BD5AF1EB2F62}
 		{B40A5C80-7BEA-4963-AFE3-FC373A052F64} = {F41DCC32-1A8C-4791-B1BE-16AD9F774CB3}
 		{6854858F-65FC-4FEC-93C9-E0335B9F227C} = {B40A5C80-7BEA-4963-AFE3-FC373A052F64}
+		{1522E461-C092-4720-BBAE-EC0443F8E780} = {F41DCC32-1A8C-4791-B1BE-16AD9F774CB3}
 	EndGlobalSection
 EndGlobal

@@ -76,7 +76,7 @@
     <Compile Include="Validation\GuardThis.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Civica.CrmBuilder.Core\Civica.CrmBuilder.Core.csproj">
+    <ProjectReference Include="..\Civica.CrmBuilder.Core\Civica.CrmBuilder.Core.csproj">
       <Project>{1522e461-c092-4720-bbae-ec0443f8e780}</Project>
       <Name>Civica.CrmBuilder.Core</Name>
     </ProjectReference>

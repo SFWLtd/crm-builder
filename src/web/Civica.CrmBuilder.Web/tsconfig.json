@@ -9,6 +9,12 @@
       "es6",
       "dom"
     ],
+    "baseUrl": ".",
+    "paths": {
+      "material-ui/styles/MuiThemeProvider": [
+        "node_modules/@types/material-ui"
+      ]
+    },
     "types": [
       "reflect-metadata"
     ],

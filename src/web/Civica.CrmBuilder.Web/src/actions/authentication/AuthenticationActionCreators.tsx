@@ -14,3 +14,17 @@ export const setEmailAddress = (emailAddress: string): IAction => {
         value: emailAddress
     };
 }
+
+export const blurCrmUrl = (): IAction => {
+    return {
+        type: AuthenticationActions.BlurCrmUrl,
+        value: null
+    }
+}
+
+export const blurCrmEmailAddress = (): IAction => {
+    return {
+        type: AuthenticationActions.BlurEmailAddress,
+        value: null
+    }
+}

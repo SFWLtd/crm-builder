@@ -9,8 +9,8 @@ export interface IAppState {
 
 export const defaultAppState: IAppState = {
     authenticationState: {
-        crmUrl: '',
-        emailAddress: '',
+        crmUrl: { hasBeenTouched: false, value: '' },
+        emailAddress: { hasBeenTouched: false, value: '' },
         lastErrorMessage: '',
         loggedIn: false,
         logInAttempts: 0

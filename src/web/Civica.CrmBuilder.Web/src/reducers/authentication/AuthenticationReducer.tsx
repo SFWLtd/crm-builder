@@ -9,11 +9,15 @@ const authenticationReducer = (state: IAuthenticationState, action: IAction): IA
 
     switch (action.type) {
         case AuthenticationActions.SetCrmUrl:
-            newState.crmUrl = action.value;
+            newState.crmUrl.value = action.value;
             break;
         case AuthenticationActions.SetEmailAddress:
-            newState.emailAddress = action.value;
+            newState.emailAddress.value = action.value;
             break;
+        case AuthenticationActions.BlurCrmUrl:
+            newState.crmUrl.hasBeenTouched = true;
+        case AuthenticationActions.BlurEmailAddress:
+            newState.crmUrl.hasBeenTouched = true;
 
         default: return state;
     }

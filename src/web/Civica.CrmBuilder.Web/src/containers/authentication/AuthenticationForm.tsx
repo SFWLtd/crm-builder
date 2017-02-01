@@ -32,7 +32,10 @@ const mapDispatchToProps = (dispatch: any): AuthenticationFormPresenter.IAuthent
         domainOnBlur: () => dispatch(AuthenticationActionCreators.blurDomain()),
         passwordOnBlur: () => dispatch(AuthenticationActionCreators.blurPassword()),
         usernameOnBlur: () => dispatch(AuthenticationActionCreators.blurUsername()),
-        authenticationTypeOnChange: (authenticationType: number) => dispatch(AuthenticationActionCreators.setAuthenticationType(authenticationType)),
+        authenticationTypeOnChange: (authenticationType: number) => {
+            dispatch(AuthenticationActionCreators.setAuthenticationType(authenticationType));
+            dispatch(AuthenticationActionCreators.resetFormFields());
+        },
         crmUrlOnChange: (url: string) => dispatch(AuthenticationActionCreators.setCrmUrl(url)),
         emailAddressOnChange: (emailAddress: string) => dispatch(AuthenticationActionCreators.setEmailAddress(emailAddress)),
         domainOnChange: (domain: string) => dispatch(AuthenticationActionCreators.setDomain(domain)),

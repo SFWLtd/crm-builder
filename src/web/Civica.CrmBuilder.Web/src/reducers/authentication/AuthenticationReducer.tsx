@@ -41,6 +41,19 @@ const authenticationReducer = (state: IAuthenticationState, action: IAction): IA
         case AuthenticationActions.BlurPassword:
             newState.password.hasBeenTouched = true;
             break;
+        case AuthenticationActions.ResetFormFields:
+            newState.crmUrl.value = '';
+            newState.crmUrl.hasBeenTouched = false;
+            newState.emailAddress.value = '';
+            newState.emailAddress.hasBeenTouched = false;
+            newState.domain.value = '';
+            newState.domain.hasBeenTouched = false;
+            newState.username.value = '';
+            newState.username.hasBeenTouched = false;
+            newState.password.value = '';
+            newState.password.hasBeenTouched = false;
+            newState.logInAttempts = 0;
+            break;
 
         default: return state;
     }

@@ -10,4 +10,5 @@
     static SetUsername: string = 'SET_USERNAME';
     static SetDomain: string = 'SET_DOMAIN';
     static SetPassword: string = 'SET_PASSWORD';
+    static ResetFormFields: string = 'RESET_FORM_FIELDS';
 }

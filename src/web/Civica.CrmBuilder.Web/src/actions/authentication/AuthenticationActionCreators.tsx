@@ -77,3 +77,10 @@ export const blurPassword = (): IAction => {
         value: null
     }
 }
+
+export const resetFormFields = (): IAction => {
+    return {
+        type: AuthenticationActions.ResetFormFields,
+        value: null
+    }
+}

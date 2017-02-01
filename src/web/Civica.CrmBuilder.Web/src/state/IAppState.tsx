@@ -17,10 +17,16 @@ export const defaultAppState: IAppState = {
         password: { hasBeenTouched: false, value: '' },
         emailAddress: { hasBeenTouched: false, value: '' },
         lastErrorMessage: '',
+        loginStatus: {
+            hasCompleted: false,
+            hasStarted: false,
+            result: null,
+            latestMessage: ''
+        },
         loggedIn: false,
-        logInAttempts: 0
+        shouldValidateForm: false
     },
     navigationState: {
-        selectedNavigationId: NavigationIds.Home 
+        selectedNavigationId: NavigationIds.Home
     }
 };

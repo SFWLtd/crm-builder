@@ -1,8 +1,10 @@
 ﻿import * as React from 'react';
-
+import * as $ from 'jquery';
+import * as Materialize from 'materialize-css'
 import * as ApiClient from '../../../../../api/ApiClient';
 
 export class AuthenticationForm extends React.Component<IAuthenticationFormProps, undefined> {
+
     constructor(props: IAuthenticationFormProps) {
         super(props);
     }
@@ -30,7 +32,7 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
 
                 <div className='input-field col s6'>
                     <input type='text' value={this.props.crmUrl}
-                        className={this.props.crmUrlHasBeenTouched && !this.props.crmUrlIsValid ? 'invalid' : ''}
+                        className={(this.props.crmUrlHasBeenTouched || this.props.shouldValidateForm) && !this.props.crmUrlIsValid ? 'invalid' : ''}
                         onChange={e => { this.props.crmUrlOnChange((e as any).target.value) }}
                         onBlur={this.props.crmUrlOnBlur}/>
                     <label>CRM URL</label>
@@ -39,7 +41,7 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
                     this.props.authenticationTypeSelectedValue == ApiClient.AuthenticationType.Dynamics365 &&
                     <div className='input-field col s6'>
                         <input type='text' value={this.props.emailAddress}
-                            className={this.props.emailAddressHasBeenTouched && !this.props.emailAddressIsValid ? 'invalid' : ''}
+                            className={(this.props.emailAddressHasBeenTouched || this.props.shouldValidateForm) && !this.props.emailAddressIsValid ? 'invalid' : ''}
                             onChange={e => { this.props.emailAddressOnChange((e as any).target.value) }}
                             onBlur={this.props.emailAddressOnBlur}/>
                         <label>Email</label>
@@ -50,14 +52,14 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
                     <div>
                         <div className='input-field col s6'>
                             <input type='text' value={this.props.domain}
-                                className={this.props.domainHasBeenTouched && !this.props.domainIsValid ? 'invalid' : ''}
+                                className={(this.props.domainHasBeenTouched || this.props.shouldValidateForm) && !this.props.domainIsValid ? 'invalid' : ''}
                                 onChange={e => { this.props.domainOnChange((e as any).target.value) }}
                                 onBlur={this.props.domainOnBlur}/>
                             <label>Domain</label>
                         </div>
                         <div className='input-field col s6'>
                             <input type='text' value={this.props.username}
-                                className={this.props.usernameHasBeenTouched && !this.props.usernameIsValid ? 'invalid' : ''}
+                                className={(this.props.usernameHasBeenTouched || this.props.shouldValidateForm) && !this.props.usernameIsValid ? 'invalid' : ''}
                                 onChange={e => { this.props.usernameOnChange((e as any).target.value) }}
                                 onBlur={this.props.usernameOnBlur}/>
                             <label>Domain</label>
@@ -66,12 +68,20 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
                 }
                 <div className='input-field col s6'>
                     <input type='password' value={this.props.password}
-                        className={this.props.passwordHasBeenTouched && !this.props.passwordIsValid ? 'invalid' : ''}
+                        className={(this.props.passwordHasBeenTouched || this.props.shouldValidateForm) && !this.props.passwordIsValid ? 'invalid' : ''}
                         onChange={e => { this.props.passwordOnChange((e as any).target.value) }}
                         onBlur={this.props.passwordOnBlur} />
                     <label>Password</label>
                 </div>
-                
+
+                <div className='input-field col s6'>
+                    <a className='waves-effect waves-light btn' onClick={() => this.props.onSubmit(this.props)}>Log in</a>
+                </div>
+
+                <div>
+                    <p>{this.props.currentSubmissionMessage}</p>
+                    <p>{this.props.submissionError}</p>
+                </div>
             </form>
         </div>;
     }
@@ -105,4 +115,9 @@ export interface IAuthenticationFormProps {
     passwordIsValid?: boolean;
     passwordOnBlur?: () => void;
     passwordHasBeenTouched?: boolean;
+    shouldValidateForm?: boolean;
+    onSubmit?: (form: IAuthenticationFormProps) => void;
+    hasStartedSubmit?: boolean;
+    currentSubmissionMessage?: string;
+    submissionError?: string;
 }

@@ -1,5 +1,4 @@
-﻿import { combineReducers } from 'redux';
-import { IAuthenticationState } from '../../state/authentication/IAuthenticationState';
+﻿import { IAuthenticationState } from '../../state/authentication/IAuthenticationState';
 import { IAction } from '../../actions/IAction';
 import { AuthenticationActions } from '../../actions/authentication/AuthenticationActions';
 
@@ -52,13 +51,32 @@ const authenticationReducer = (state: IAuthenticationState, action: IAction): IA
             newState.username.hasBeenTouched = false;
             newState.password.value = '';
             newState.password.hasBeenTouched = false;
-            newState.logInAttempts = 0;
+            newState.loginStatus.hasCompleted = false;
+            newState.loginStatus.hasStarted = false;
+            newState.loginStatus.latestMessage = '';
+            newState.loginStatus.result = null;
+            newState.shouldValidateForm = false;
+            break;
+        case AuthenticationActions.ValidateForm:
+            newState.shouldValidateForm = true;
+            break;
+        case AuthenticationActions.Submit:
+            newState.loginStatus.hasStarted = true;
+            newState.loginStatus.hasCompleted = false;
+            newState.loginStatus.result = null;
+            newState.loginStatus.latestMessage = 'Logging in...';
+            break;
+        case AuthenticationActions.SetAuthenticationState:
+            newState.loginStatus.hasCompleted = true;
+            newState.loginStatus.hasStarted = false;
+            newState.loginStatus.result = action.value;
+            newState.loginStatus.latestMessage = '';
             break;
 
         default: return state;
     }
 
     return (Object as any).assign({}, state, {}, { newState });
-}
+};
 
 export default authenticationReducer;

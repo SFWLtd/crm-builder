@@ -11,4 +11,7 @@
     static SetDomain: string = 'SET_DOMAIN';
     static SetPassword: string = 'SET_PASSWORD';
     static ResetFormFields: string = 'RESET_FORM_FIELDS';
+    static Submit: string = 'SUBMIT_AUTHENTICATION_FORM';
+    static SetAuthenticationState: string = 'SET_AUTHENTICATION_STATE';
+    static ValidateForm: string = 'VALIDATE_AUTHENTICATION_FORM';
 }

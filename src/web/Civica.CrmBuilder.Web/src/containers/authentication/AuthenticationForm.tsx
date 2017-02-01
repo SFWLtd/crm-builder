@@ -2,26 +2,35 @@
 import * as AuthenticationFormPresenter from '../../presentation/authentication/AuthenticationForm';
 import * as AuthenticationActionCreators from '../../actions/authentication/AuthenticationActionCreators';
 import { IAppState } from '../../state/IAppState';
-import { Validate } from '../../validation/Validate';
+import { AuthenticationFormValidator } from '../../validation/authentication/AuthenticationFormValidator'
 
 const mapStateToProps = (state: IAppState): AuthenticationFormPresenter.IAuthenticationFormProps => {
+
+    let validator = new AuthenticationFormValidator();
+
     return {
         authenticationTypeSelectedValue: state.authenticationState.authenticationType,
         crmUrl: state.authenticationState.crmUrl.value.toString(),
-        crmUrlIsValid: Validate.thisString(state.authenticationState.crmUrl.value.toString()).url(),
+        crmUrlIsValid: validator.ValidateCrmUrl(state.authenticationState.crmUrl.value.toString()),
         crmUrlHasBeenTouched: state.authenticationState.crmUrl.hasBeenTouched,
         emailAddress: state.authenticationState.emailAddress.value.toString(),
-        emailAddressIsValid: Validate.thisString(state.authenticationState.emailAddress.value.toString()).email(),
+        emailAddressIsValid: validator.ValidateEmailAddress(state.authenticationState.emailAddress.value.toString()),
         emailAddressHasBeenTouched: state.authenticationState.emailAddress.hasBeenTouched,
         domain: state.authenticationState.domain.value.toString(),
-        domainIsValid: Validate.thisString(state.authenticationState.domain.value.toString()).length(1, 50),
+        domainIsValid: validator.ValidateDomain(state.authenticationState.domain.value.toString()),
         domainHasBeenTouched: state.authenticationState.domain.hasBeenTouched,
         usernameHasBeenTouched: state.authenticationState.username.hasBeenTouched,
         username: state.authenticationState.username.value.toString(),
-        usernameIsValid: Validate.thisString(state.authenticationState.username.value.toString()).length(1, 50),
+        usernameIsValid: validator.ValidateUsername(state.authenticationState.username.value.toString()),
         passwordHasBeenTouched: state.authenticationState.password.hasBeenTouched,
         password: state.authenticationState.password.value.toString(),
-        passwordIsValid: Validate.thisString(state.authenticationState.password.value.toString()).length(1, 50),
+        passwordIsValid: validator.ValidatePassword(state.authenticationState.password.value.toString()),
+        shouldValidateForm: state.authenticationState.shouldValidateForm,
+        hasStartedSubmit: state.authenticationState.loginStatus.hasStarted,
+        submissionError: state.authenticationState.loginStatus.hasCompleted && !state.authenticationState.loginStatus.result.successful
+            ? 'Unable to log in. Please check your credentials are correct'
+            : '',
+        currentSubmissionMessage: state.authenticationState.loginStatus.latestMessage
     }
 }
 
@@ -40,7 +49,8 @@ const mapDispatchToProps = (dispatch: any): AuthenticationFormPresenter.IAuthent
         emailAddressOnChange: (emailAddress: string) => dispatch(AuthenticationActionCreators.setEmailAddress(emailAddress)),
         domainOnChange: (domain: string) => dispatch(AuthenticationActionCreators.setDomain(domain)),
         usernameOnChange: (username: string) => dispatch(AuthenticationActionCreators.setUsername(username)),
-        passwordOnChange: (password: string) => dispatch(AuthenticationActionCreators.setPassword(password))
+        passwordOnChange: (password: string) => dispatch(AuthenticationActionCreators.setPassword(password)),
+        onSubmit: (props: AuthenticationFormPresenter.IAuthenticationFormProps) => dispatch(AuthenticationActionCreators.submit(dispatch, props, 'Logging in...'))
     }
 }
 

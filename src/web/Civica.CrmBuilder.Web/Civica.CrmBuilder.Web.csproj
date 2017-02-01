@@ -37,9 +37,12 @@
     <TypeScriptCompile Include="src\actions\IAction.tsx" />
     <TypeScriptCompile Include="src\actions\navigation\NavigationActionCreators.tsx" />
     <TypeScriptCompile Include="src\actions\navigation\NavigationActions.tsx" />
+    <TypeScriptCompile Include="src\apiclient\authentication\AuthenticationClient.tsx" />
     <TypeScriptCompile Include="src\constants\NavigationIds.tsx" />
     <TypeScriptCompile Include="src\containers\App.tsx" />
     <TypeScriptCompile Include="src\containers\authentication\AuthenticationForm.tsx" />
+    <TypeScriptCompile Include="src\Config.tsx" />
+    <TypeScriptCompile Include="src\state\async\IAsyncActionState.tsx" />
     <TypeScriptCompile Include="src\state\forms\IFormInputState.tsx" />
     <TypeScriptCompile Include="src\containers\navigation\Navigation.tsx" />
     <TypeScriptCompile Include="src\presentation\App.tsx" />
@@ -73,6 +76,7 @@
     <TypeScriptCompile Include="src\state\IAppState.tsx" />
     <TypeScriptCompile Include="src\state\authentication\IAuthenticationState.tsx" />
     <TypeScriptCompile Include="src\state\navigation\INavigationState.tsx" />
+    <TypeScriptCompile Include="src\validation\authentication\AuthenticationFormValidator.tsx" />
     <TypeScriptCompile Include="src\validation\Validate.tsx" />
     <TypeScriptCompile Include="src\validation\ValidateString.tsx" />
   </ItemGroup>

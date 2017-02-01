@@ -16,8 +16,12 @@ const authenticationReducer = (state: IAuthenticationState, action: IAction): IA
             break;
         case AuthenticationActions.BlurCrmUrl:
             newState.crmUrl.hasBeenTouched = true;
+            break;
         case AuthenticationActions.BlurEmailAddress:
-            newState.crmUrl.hasBeenTouched = true;
+            newState.emailAddress.hasBeenTouched = true;
+            break;
+        case AuthenticationActions.SetAuthenticationType:
+            newState.authenticationType = action.value;
 
         default: return state;
     }

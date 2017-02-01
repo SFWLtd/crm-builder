@@ -1,6 +1,7 @@
 ﻿import { IAuthenticationState } from './authentication/IAuthenticationState';
 import { INavigationState } from './navigation/INavigationState';
 import { NavigationIds } from '../constants/NavigationIds';
+import * as ApiClient from '../../../../api/ApiClient';
 
 export interface IAppState {
     authenticationState: IAuthenticationState;
@@ -9,6 +10,7 @@ export interface IAppState {
 
 export const defaultAppState: IAppState = {
     authenticationState: {
+        authenticationType: ApiClient.AuthenticationType.Dynamics365,
         crmUrl: { hasBeenTouched: false, value: '' },
         emailAddress: { hasBeenTouched: false, value: '' },
         lastErrorMessage: '',

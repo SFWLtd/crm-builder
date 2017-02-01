@@ -15,6 +15,13 @@ export const setEmailAddress = (emailAddress: string): IAction => {
     };
 }
 
+export const setAuthenticationType = (authenticationType: number): IAction => {
+    return {
+        type: AuthenticationActions.SetAuthenticationType,
+        value: authenticationType
+    }
+}
+
 export const blurCrmUrl = (): IAction => {
     return {
         type: AuthenticationActions.BlurCrmUrl,

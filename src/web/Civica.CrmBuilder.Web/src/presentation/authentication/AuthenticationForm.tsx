@@ -1,5 +1,7 @@
 ﻿import * as React from 'react';
 
+import * as ApiClient from '../../../../../api/ApiClient';
+
 export class AuthenticationForm extends React.Component<IAuthenticationFormProps, undefined> {
     constructor(props: IAuthenticationFormProps) {
         super(props);
@@ -17,6 +19,15 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
             <br />
             <br />
             <form className='col s12'>
+                <label>CRM Authentication Type</label>
+                <select className='browser-default' value={this.props.authenticationTypeSelectedValue}
+                    onChange={e => { this.props.authenticationTypeOnChange((e as any).target.value) }}>
+                    <option value={ApiClient.AuthenticationType.Dynamics365}>Dynamics365</option>
+                    <option value={ApiClient.AuthenticationType.Ifd}>IFD (internet facing deployment)</option>
+                    <option value={ApiClient.AuthenticationType.OnPremise}>OnPremise</option>
+                </select>
+                <br />
+
                 <div className='input-field col s6'>
                     <input type='text' value={this.props.crmUrl}
                         className={this.props.crmUrlHasBeenTouched && !this.props.crmUrlIsValid ? 'invalid' : ''}
@@ -37,6 +48,8 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
 }
 
 export interface IAuthenticationFormProps {
+    authenticationTypeSelectedValue?: number
+    authenticationTypeOnChange?: (value: number) => void;
     crmUrlOnChange?: (value: string) => void;
     crmUrl?: string;
     crmUrlIsValid?: boolean;

@@ -32,16 +32,46 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
                     <input type='text' value={this.props.crmUrl}
                         className={this.props.crmUrlHasBeenTouched && !this.props.crmUrlIsValid ? 'invalid' : ''}
                         onChange={e => { this.props.crmUrlOnChange((e as any).target.value) }}
-                        onBlur={e => { this.props.crmUrlOnBlur((e as any).target.value) }}/>
+                        onBlur={this.props.crmUrlOnBlur}/>
                     <label>CRM URL</label>
                 </div>
+                {
+                    this.props.authenticationTypeSelectedValue == ApiClient.AuthenticationType.Dynamics365 &&
+                    <div className='input-field col s6'>
+                        <input type='text' value={this.props.emailAddress}
+                            className={this.props.emailAddressHasBeenTouched && !this.props.emailAddressIsValid ? 'invalid' : ''}
+                            onChange={e => { this.props.emailAddressOnChange((e as any).target.value) }}
+                            onBlur={this.props.emailAddressOnBlur}/>
+                        <label>Email</label>
+                    </div>
+                } 
+                {
+                    this.props.authenticationTypeSelectedValue != ApiClient.AuthenticationType.Dynamics365 &&
+                    <div>
+                        <div className='input-field col s6'>
+                            <input type='text' value={this.props.domain}
+                                className={this.props.domainHasBeenTouched && !this.props.domainIsValid ? 'invalid' : ''}
+                                onChange={e => { this.props.domainOnChange((e as any).target.value) }}
+                                onBlur={this.props.domainOnBlur}/>
+                            <label>Domain</label>
+                        </div>
+                        <div className='input-field col s6'>
+                            <input type='text' value={this.props.username}
+                                className={this.props.usernameHasBeenTouched && !this.props.usernameIsValid ? 'invalid' : ''}
+                                onChange={e => { this.props.usernameOnChange((e as any).target.value) }}
+                                onBlur={this.props.usernameOnBlur}/>
+                            <label>Domain</label>
+                        </div>
+                    </div>
+                }
                 <div className='input-field col s6'>
-                    <input type='text' value={this.props.emailAddress}
-                        className={this.props.emailAddressHasBeenTouched && !this.props.emailAddressIsValid ? 'invalid' : ''}
-                        onChange={e => { this.props.emailAddressOnChange((e as any).target.value) }}
-                        onBlur={e => { this.props.emailAddressOnBlur((e as any).target.value) }}/>
-                    <label>Email</label>
+                    <input type='password' value={this.props.password}
+                        className={this.props.passwordHasBeenTouched && !this.props.passwordIsValid ? 'invalid' : ''}
+                        onChange={e => { this.props.passwordOnChange((e as any).target.value) }}
+                        onBlur={this.props.passwordOnBlur} />
+                    <label>Password</label>
                 </div>
+                
             </form>
         </div>;
     }
@@ -53,11 +83,26 @@ export interface IAuthenticationFormProps {
     crmUrlOnChange?: (value: string) => void;
     crmUrl?: string;
     crmUrlIsValid?: boolean;
-    crmUrlOnBlur?: (value: string) => void;
+    crmUrlOnBlur?: () => void;
     crmUrlHasBeenTouched?: boolean;
     emailAddressOnChange?: (value: string) => void;
     emailAddress?: string;
     emailAddressIsValid?: boolean;
-    emailAddressOnBlur?: (value: string) => void;
+    emailAddressOnBlur?: () => void;
     emailAddressHasBeenTouched?: boolean;
+    domainOnChange?: (value: string) => void;
+    domain?: string;
+    domainIsValid?: boolean;
+    domainOnBlur?: () => void;
+    domainHasBeenTouched?: boolean;
+    usernameOnChange?: (value: string) => void;
+    username?: string;
+    usernameIsValid?: boolean;
+    usernameOnBlur?: () => void;
+    usernameHasBeenTouched?: boolean;
+    passwordOnChange?: (value: string) => void;
+    password?: string;
+    passwordIsValid?: boolean;
+    passwordOnBlur?: () => void;
+    passwordHasBeenTouched?: boolean;
 }

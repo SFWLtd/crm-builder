@@ -22,6 +22,27 @@ export const setAuthenticationType = (authenticationType: number): IAction => {
     }
 }
 
+export const setUsername = (username: string): IAction => {
+    return {
+        type: AuthenticationActions.SetUsername,
+        value: username
+    }
+}
+
+export const setDomain = (domain: string): IAction => {
+    return {
+        type: AuthenticationActions.SetDomain,
+        value: domain
+    }
+}
+
+export const setPassword = (password: string): IAction => {
+    return {
+        type: AuthenticationActions.SetPassword,
+        value: password
+    }
+}
+
 export const blurCrmUrl = (): IAction => {
     return {
         type: AuthenticationActions.BlurCrmUrl,
@@ -32,6 +53,27 @@ export const blurCrmUrl = (): IAction => {
 export const blurCrmEmailAddress = (): IAction => {
     return {
         type: AuthenticationActions.BlurEmailAddress,
+        value: null
+    }
+}
+
+export const blurDomain = (): IAction => {
+    return {
+        type: AuthenticationActions.BlurDomain,
+        value: null
+    }
+}
+
+export const blurUsername = (): IAction => {
+    return {
+        type: AuthenticationActions.BlurUsername,
+        value: null
+    }
+}
+
+export const blurPassword = (): IAction => {
+    return {
+        type: AuthenticationActions.BlurPassword,
         value: null
     }
 }

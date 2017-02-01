@@ -12,6 +12,9 @@ export const defaultAppState: IAppState = {
     authenticationState: {
         authenticationType: ApiClient.AuthenticationType.Dynamics365,
         crmUrl: { hasBeenTouched: false, value: '' },
+        domain: { hasBeenTouched: false, value: '' },
+        username: { hasBeenTouched: false, value: '' },
+        password: { hasBeenTouched: false, value: '' },
         emailAddress: { hasBeenTouched: false, value: '' },
         lastErrorMessage: '',
         loggedIn: false,

@@ -8,11 +8,23 @@ const authenticationReducer = (state: IAuthenticationState, action: IAction): IA
     let newState = state;
 
     switch (action.type) {
+        case AuthenticationActions.SetAuthenticationType:
+            newState.authenticationType = action.value;
+            break;
         case AuthenticationActions.SetCrmUrl:
             newState.crmUrl.value = action.value;
             break;
+        case AuthenticationActions.SetDomain:
+            newState.domain.value = action.value;
+            break;
+        case AuthenticationActions.SetUsername:
+            newState.username.value = action.value;
+            break;
         case AuthenticationActions.SetEmailAddress:
             newState.emailAddress.value = action.value;
+            break;
+        case AuthenticationActions.SetPassword:
+            newState.password.value = action.value;
             break;
         case AuthenticationActions.BlurCrmUrl:
             newState.crmUrl.hasBeenTouched = true;
@@ -20,8 +32,15 @@ const authenticationReducer = (state: IAuthenticationState, action: IAction): IA
         case AuthenticationActions.BlurEmailAddress:
             newState.emailAddress.hasBeenTouched = true;
             break;
-        case AuthenticationActions.SetAuthenticationType:
-            newState.authenticationType = action.value;
+        case AuthenticationActions.BlurDomain:
+            newState.domain.hasBeenTouched = true;
+            break;
+        case AuthenticationActions.BlurUsername:
+            newState.username.hasBeenTouched = true;
+            break;
+        case AuthenticationActions.BlurPassword:
+            newState.password.hasBeenTouched = true;
+            break;
 
         default: return state;
     }

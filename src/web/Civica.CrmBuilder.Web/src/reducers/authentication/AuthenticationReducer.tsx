@@ -51,10 +51,7 @@ const authenticationReducer = (state: IAuthenticationState, action: IAction): IA
             newState.username.hasBeenTouched = false;
             newState.password.value = '';
             newState.password.hasBeenTouched = false;
-            newState.loginStatus.hasCompleted = false;
-            newState.loginStatus.hasStarted = false;
-            newState.loginStatus.latestMessage = '';
-            newState.loginStatus.result = null;
+            newState.hasBeenSubmitted = false;
             newState.shouldValidateForm = false;
             break;
         case AuthenticationActions.ValidateForm:
@@ -67,10 +64,12 @@ const authenticationReducer = (state: IAuthenticationState, action: IAction): IA
             newState.loginStatus.latestMessage = 'Logging in...';
             break;
         case AuthenticationActions.SetAuthenticationState:
+        case AuthenticationActions.SetLoginAuthenticationState:
             newState.loginStatus.hasCompleted = true;
             newState.loginStatus.hasStarted = false;
             newState.loginStatus.result = action.value;
             newState.loginStatus.latestMessage = '';
+            newState.hasBeenSubmitted = action.type === AuthenticationActions.SetLoginAuthenticationState;
             break;
 
         default: return state;

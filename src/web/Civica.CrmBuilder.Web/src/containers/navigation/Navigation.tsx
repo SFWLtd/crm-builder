@@ -7,7 +7,7 @@ import { Validate } from '../../validation/Validate';
 const mapStateToProps = (state: IAppState): NavigationPresenter.INavigationProps => {
     return {
         selectedNavigationId: state.navigationState.selectedNavigationId,
-        isLoggedIn: state.authenticationState.loggedIn
+        isLoggedIn: state.authenticationState.loginStatus.result.successful
     }
 }
 

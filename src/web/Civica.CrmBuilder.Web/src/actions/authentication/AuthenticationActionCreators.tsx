@@ -1,5 +1,6 @@
 ﻿import { IAction } from '../IAction';
 import { AuthenticationActions } from './AuthenticationActions';
+import * as InstallationActionCreators from '../installation/InstallationActionCreators';
 import { AuthenticationClient } from '../../apiclient/authentication/AuthenticationClient';
 import { IAppState } from '../../state/IAppState';
 import { IAuthenticationFormProps } from '../../presentation/authentication/AuthenticationForm';
@@ -102,11 +103,11 @@ export const submit = (dispatch: any, props: IAuthenticationFormProps, initialMe
         };
     }
 
-    let authenticationClient = new AuthenticationClient(props, new ApiClient.SessionClient(config.apiUrl));
-    let newSessionResult = authenticationClient.newSession();
+    let authenticationClient = new AuthenticationClient(new ApiClient.SessionClient(config.apiUrl));
+    let newSessionResult = authenticationClient.newSession(props);
     newSessionResult
         .then((result: ApiClient.GlobalJsonResultOfSessionTokenResult) => {
-            let setAuthAction: IAction = setAuthenticationResult(result);
+            let setAuthAction: IAction = setLoginAuthenticationResult(dispatch, result);
             dispatch(setAuthAction);
         });
 
@@ -116,7 +117,31 @@ export const submit = (dispatch: any, props: IAuthenticationFormProps, initialMe
     };
 };
 
-export const setAuthenticationResult = (result: ApiClient.GlobalJsonResultOfSessionTokenResult): IAction => {
+export const getLoginStatus = (dispatch: any): IAction => {
+    let authenticationClient = new AuthenticationClient(new ApiClient.SessionClient(config.apiUrl));
+    let getSessionResult = authenticationClient.getSession();
+    getSessionResult
+        .then((result: ApiClient.GlobalJsonResultOfSessionTokenResult) => {
+            let setAuthAction: IAction = setAuthenticationResult(dispatch, result);
+            dispatch(setAuthAction);
+        });
+
+    return {
+        type: AuthenticationActions.GetLoginStatus,
+        value: null
+    }
+}
+
+export const setLoginAuthenticationResult = (dispatch: any, result: ApiClient.GlobalJsonResultOfSessionTokenResult): IAction => {
+
+    return {
+        type: AuthenticationActions.SetLoginAuthenticationState,
+        value: result
+    };
+};
+
+export const setAuthenticationResult = (dispatch: any, result: ApiClient.GlobalJsonResultOfSessionTokenResult): IAction => {
+
     return {
         type: AuthenticationActions.SetAuthenticationState,
         value: result

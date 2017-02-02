@@ -9,8 +9,8 @@ export interface IAuthenticationState {
     domain: IFormInputState;
     username: IFormInputState;
     password: IFormInputState;
-    loggedIn: boolean;
     shouldValidateForm: boolean;
     lastErrorMessage: string;
+    hasBeenSubmitted: boolean;
     loginStatus: IAsyncActionState<ApiClient.GlobalJsonResultOfSessionTokenResult>;
 }

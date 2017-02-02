@@ -27,7 +27,7 @@ const mapStateToProps = (state: IAppState): AuthenticationFormPresenter.IAuthent
         passwordIsValid: validator.ValidatePassword(state.authenticationState.password.value.toString()),
         shouldValidateForm: state.authenticationState.shouldValidateForm,
         hasStartedSubmit: state.authenticationState.loginStatus.hasStarted,
-        submissionError: state.authenticationState.loginStatus.hasCompleted && !state.authenticationState.loginStatus.result.successful
+        submissionError: state.authenticationState.hasBeenSubmitted && state.authenticationState.loginStatus.hasCompleted && !state.authenticationState.loginStatus.result.successful
             ? 'Unable to log in. Please check your credentials are correct'
             : '',
         currentSubmissionMessage: state.authenticationState.loginStatus.latestMessage

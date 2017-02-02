@@ -32,16 +32,24 @@
     <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\actions\AppActionCreators.tsx" />
+    <TypeScriptCompile Include="src\actions\AppActions.tsx" />
     <TypeScriptCompile Include="src\actions\authentication\AuthenticationActionCreators.tsx" />
     <TypeScriptCompile Include="src\actions\authentication\AuthenticationActions.tsx" />
     <TypeScriptCompile Include="src\actions\IAction.tsx" />
+    <TypeScriptCompile Include="src\actions\installation\InstallationActionCreators.tsx" />
+    <TypeScriptCompile Include="src\actions\installation\InstallationActions.tsx" />
     <TypeScriptCompile Include="src\actions\navigation\NavigationActionCreators.tsx" />
     <TypeScriptCompile Include="src\actions\navigation\NavigationActions.tsx" />
     <TypeScriptCompile Include="src\apiclient\authentication\AuthenticationClient.tsx" />
+    <TypeScriptCompile Include="src\apiclient\installation\InstallationClient.tsx" />
     <TypeScriptCompile Include="src\constants\NavigationIds.tsx" />
     <TypeScriptCompile Include="src\containers\App.tsx" />
     <TypeScriptCompile Include="src\containers\authentication\AuthenticationForm.tsx" />
     <TypeScriptCompile Include="src\Config.tsx" />
+    <TypeScriptCompile Include="src\containers\installation\Installation.tsx" />
+    <TypeScriptCompile Include="src\presentation\installation\Installation.tsx" />
+    <TypeScriptCompile Include="src\reducers\installation\InstallationReducer.tsx" />
     <TypeScriptCompile Include="src\state\async\IAsyncActionState.tsx" />
     <TypeScriptCompile Include="src\state\forms\IFormInputState.tsx" />
     <TypeScriptCompile Include="src\containers\navigation\Navigation.tsx" />
@@ -75,6 +83,7 @@
     <TypeScriptCompile Include="src\reducers\navigation\NavigationReducer.tsx" />
     <TypeScriptCompile Include="src\state\IAppState.tsx" />
     <TypeScriptCompile Include="src\state\authentication\IAuthenticationState.tsx" />
+    <TypeScriptCompile Include="src\state\installation\IInstallationState.tsx" />
     <TypeScriptCompile Include="src\state\navigation\INavigationState.tsx" />
     <TypeScriptCompile Include="src\validation\authentication\AuthenticationFormValidator.tsx" />
     <TypeScriptCompile Include="src\validation\Validate.tsx" />

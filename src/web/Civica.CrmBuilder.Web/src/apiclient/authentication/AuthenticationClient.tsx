@@ -3,24 +3,29 @@ import { IAuthenticationFormProps } from '../../presentation/authentication/Auth
 
 export class AuthenticationClient {
 
-    private props: IAuthenticationFormProps;
     private client: ApiClient.ISessionClient;
 
-    constructor(props: IAuthenticationFormProps, client: ApiClient.ISessionClient) {
+    constructor(client: ApiClient.ISessionClient) {
         this.client = client;
-        this.props = props;
     }
 
-    newSession(): Promise<ApiClient.GlobalJsonResultOfSessionTokenResult> {
+    newSession(props: IAuthenticationFormProps): Promise<ApiClient.GlobalJsonResultOfSessionTokenResult> {
 
         let request = new ApiClient.NewSessionRequest();
-        request.authenticationType = this.props.authenticationTypeSelectedValue;
-        request.domain = this.props.domain;
-        request.url = this.props.crmUrl;
-        request.emailAddress = this.props.emailAddress;
-        request.userName = this.props.username;
-        request.password = this.props.password;
+        request.authenticationType = props.authenticationTypeSelectedValue;
+        request.domain = props.domain;
+        request.url = props.crmUrl;
+        request.emailAddress = props.emailAddress;
+        request.userName = props.username;
+        request.password = props.password;
 
         return this.client.newSession(request, '');
+    }
+
+    getSession(): Promise<ApiClient.GlobalJsonResultOfSessionTokenResult> {
+
+        let request = new ApiClient.GetSessionTokenRequest();
+
+        return this.client.getSessionToken(request, '')
     }
 }

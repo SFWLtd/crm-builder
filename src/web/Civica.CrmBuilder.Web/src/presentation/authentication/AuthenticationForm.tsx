@@ -33,7 +33,7 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
                         </Form.Field>
                         <Form.Field error={(this.props.crmUrlHasBeenTouched || this.props.shouldValidateForm) && !this.props.crmUrlIsValid }>
                             <label>CRM Url</label>
-                            <input placeholder='https://myorg' onChange={e => { this.props.crmUrlOnChange((e as any).target.value) }} onBlur={this.props.crmUrlOnBlur}/>
+                            <input placeholder='https://myorg.dynamics.com' onChange={e => { this.props.crmUrlOnChange((e as any).target.value) }} onBlur={this.props.crmUrlOnBlur}/>
                         </Form.Field>
                         {
                             this.props.authenticationTypeSelectedValue == ApiClient.AuthenticationType.Dynamics365 &&
@@ -58,10 +58,10 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
                         }
                         <Form.Field error={(this.props.passwordHasBeenTouched || this.props.shouldValidateForm) && !this.props.passwordIsValid}>
                             <label>Password</label>
-                            <input type='password' placeholder='password12345' onChange={e => { this.props.passwordOnChange((e as any).target.value) } } onBlur={this.props.passwordOnBlur} />
+                            <input type='password' onChange={e => { this.props.passwordOnChange((e as any).target.value) } } onBlur={this.props.passwordOnBlur} />
                         </Form.Field>
                         <br/>
-                        <Button onClick={(e) => { e.preventDefault(); this.props.onSubmit(this.props) } }>Log in</Button>
+                        <Button primary onClick={(e) => { e.preventDefault(); this.props.onSubmit(this.props) } }>Log in</Button>
                         {
                             this.props.submissionError && this.props.submissionError !== '' &&
                             <Message negative>

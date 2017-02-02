@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import * as ApiClient from '../../../../../api/ApiClient';
-import { Button, Dimmer, Form, Header, Icon, Message, Card } from 'semantic-ui-react'
+import { Button, Card , Dimmer, Form, Header, Icon, Loader, Message } from 'semantic-ui-react'
 
 export class AuthenticationForm extends React.Component<IAuthenticationFormProps, undefined> {
 
@@ -61,13 +61,20 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
                             <input type='password' placeholder='password12345' onChange={e => { this.props.passwordOnChange((e as any).target.value) } } onBlur={this.props.passwordOnBlur} />
                         </Form.Field>
                         <br/>
-                        <Button onClick={(e) => { e.preventDefault(); this.props.onSubmit(this.props) }}>Log in</Button>
+                        <Button onClick={(e) => { e.preventDefault(); this.props.onSubmit(this.props) } }>Log in</Button>
+                        {
+                            this.props.submissionError && this.props.submissionError !== '' &&
+                            <Message negative>
+                                <p>{this.props.submissionError}</p>
+                            </Message>
+                        }
+                        
                     </Form>
                 </Card.Content>
             </Card>
 
             <Dimmer active={this.props.hasStartedSubmit} page>
-                {this.props.currentSubmissionMessage}
+                <Loader>{this.props.currentSubmissionMessage}</Loader>
             </Dimmer>
         </div>;
     }

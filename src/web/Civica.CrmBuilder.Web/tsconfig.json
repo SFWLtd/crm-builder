@@ -13,6 +13,12 @@
     "paths": {
       "material-ui/styles/MuiThemeProvider": [
         "node_modules/@types/material-ui"
+      ],
+      "material-ui/styles/colors": [
+        "node_modules/@types/material-ui"
+      ],
+      "material-ui/styles": [
+        "node_modules/@types/material-ui"
       ]
     },
     "types": [

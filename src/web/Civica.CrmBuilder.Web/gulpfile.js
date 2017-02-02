@@ -27,8 +27,7 @@ gulp.task("copy:libs", function () {
     return gulp.src([
         'jquery/dist/**',
         'react/dist/**',
-        'react-dom/dist/**',
-        'materialize-css/dist/**'
+        'react-dom/dist/**'
     ], { cwd: "node_modules/**" })
     .pipe(gulp.dest("dist/lib"));
 });
@@ -51,14 +50,6 @@ gulp.task('webpack', function() {
     return gulp.src('src/**/*.jsx')
         .pipe(webpack(require('./webpack.config.js')))
         .pipe(gulp.dest('dist/'));
-});
-
-// TSConfig glob
-gulp.task('tsconfig-glob', function () {
-    return tsconfig({
-        configPath: '.',
-        indent: 2
-    });
 });
 
 // Run browsersync for development
@@ -85,7 +76,6 @@ gulp.task('reload', function () {
 // Main build task
 gulp.task('build', function (callback) {
     runSequence(
-        'tsconfig-glob',
         'clean',
         ['sass', 'copy:libs', 'copy:assets', 'webpack'],
         callback);

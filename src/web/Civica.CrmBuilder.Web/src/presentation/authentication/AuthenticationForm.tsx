@@ -1,6 +1,4 @@
 ﻿import * as React from 'react';
-import * as $ from 'jquery';
-import * as Materialize from 'materialize-css'
 import * as ApiClient from '../../../../../api/ApiClient';
 
 export class AuthenticationForm extends React.Component<IAuthenticationFormProps, undefined> {

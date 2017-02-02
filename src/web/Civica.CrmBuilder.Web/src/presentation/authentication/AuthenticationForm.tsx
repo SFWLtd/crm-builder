@@ -61,7 +61,7 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
                             <input type='password' placeholder='password12345' onChange={e => { this.props.passwordOnChange((e as any).target.value) } } onBlur={this.props.passwordOnBlur} />
                         </Form.Field>
                         <br/>
-                        <Button onClick={() => this.props.onSubmit(this.props)}>Log in</Button>
+                        <Button onClick={(e) => { e.preventDefault(); this.props.onSubmit(this.props) }}>Log in</Button>
                     </Form>
                 </Card.Content>
             </Card>

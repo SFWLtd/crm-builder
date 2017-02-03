@@ -170,4 +170,4 @@ $RECYCLE.BIN/
 
 # Project specific
 index.js.map
-**/*.js
+src/**/*.js

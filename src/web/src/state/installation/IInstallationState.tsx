@@ -1,4 +1,4 @@
-﻿import * as ApiClient from '../../../../../api/ApiClient';
+﻿import * as ApiClient from '../../../../api/ApiClient';
 import { IAsyncActionState } from '../async/IAsyncActionState';
 
 export interface IInstallationState {

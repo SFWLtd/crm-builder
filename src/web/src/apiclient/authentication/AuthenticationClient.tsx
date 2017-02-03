@@ -1,4 +1,4 @@
-﻿import * as ApiClient from '../../../../../api/ApiClient';
+﻿import * as ApiClient from '../../../../api/ApiClient';
 import { IAuthenticationFormProps } from '../../presentation/authentication/AuthenticationForm';
 
 export class AuthenticationClient {

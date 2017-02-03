@@ -1,7 +1,7 @@
 ﻿import { IAuthenticationState } from './authentication/IAuthenticationState';
 import { INavigationState } from './navigation/INavigationState';
 import { NavigationIds } from '../constants/NavigationIds';
-import * as ApiClient from '../../../../api/ApiClient';
+import * as ApiClient from '../../../api/ApiClient';
 import { IAsyncActionState } from './async/IAsyncActionState';
 import { IInstallationState } from './installation/IInstallationState';
 

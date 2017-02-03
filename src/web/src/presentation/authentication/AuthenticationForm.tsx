@@ -1,5 +1,5 @@
 ﻿import * as React from 'react';
-import * as ApiClient from '../../../../../api/ApiClient';
+import * as ApiClient from '../../../../api/ApiClient';
 import { Button, Card , Dimmer, Form, Header, Icon, Loader, Message } from 'semantic-ui-react'
 
 export class AuthenticationForm extends React.Component<IAuthenticationFormProps, undefined> {

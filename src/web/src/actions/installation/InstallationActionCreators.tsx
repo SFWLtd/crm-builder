@@ -1,4 +1,4 @@
-﻿import * as ApiClient from '../../../../../api/ApiClient';
+﻿import * as ApiClient from '../../../../api/ApiClient';
 import config from '../../Config';
 import { IAction } from '../IAction';
 import { InstallationActions } from './InstallationActions';

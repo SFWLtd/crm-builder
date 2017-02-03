@@ -5,7 +5,7 @@ import { AuthenticationClient } from '../../apiclient/authentication/Authenticat
 import { IAppState } from '../../state/IAppState';
 import { IAuthenticationFormProps } from '../../presentation/authentication/AuthenticationForm';
 import { AuthenticationFormValidator } from '../../validation/authentication/AuthenticationFormValidator';
-import * as ApiClient from '../../../../../api/ApiClient';
+import * as ApiClient from '../../../../api/ApiClient';
 import config from '../../Config';
 
 export const setCrmUrl = (url: string): IAction => {

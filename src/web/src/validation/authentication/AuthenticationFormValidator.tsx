@@ -1,5 +1,5 @@
 ﻿import { IAuthenticationFormProps } from '../../presentation/authentication/AuthenticationForm';
-import * as ApiClient from '../../../../../api/ApiClient';
+import * as ApiClient from '../../../../api/ApiClient';
 import { Validate } from '../Validate';
 
 export class AuthenticationFormValidator {

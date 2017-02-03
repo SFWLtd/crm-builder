@@ -1,4 +1,4 @@
-﻿import * as ApiClient from '../../../../../api/ApiClient';
+﻿import * as ApiClient from '../../../../api/ApiClient';
 
 export class InstallationClient {
 

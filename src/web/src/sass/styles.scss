@@ -1,0 +1,138 @@
+$primary-teal: #00a499;
+$secondary-teal:#48BBB3;
+$primary-steel: #616161;
+$secondary-steel: #e8e8e8;
+$ternary-steel:#d1d1d1; 
+
+$top-banner-height: 7;
+$left-nav-width: 12;
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@mixin box-sizing($arg) {
+    -webkit-box-sizing: $arg;
+    -moz-box-sizing: $arg;
+    box-sizing: $arg;
+}
+
+body {
+    margin: 0;
+    background-color: white;
+    font-family: 'Noto Serif';
+    font-size: 20px;
+}
+
+.top-banner {
+    position:relative;
+    height: $top-banner-height + em;
+    // background: $primary-teal; /* For browsers that do not support gradients */
+    // background: -webkit-linear-gradient(white, $secondary-teal); /* For Safari 5.1 to 6.0 */
+    // background: -o-linear-gradient(white, $secondary-teal); /* For Opera 11.1 to 12.0 */
+    // background: -moz-linear-gradient(white, $secondary-teal); /* For Firefox 3.6 to 15 */
+    // background: linear-gradient(white, $secondary-teal); /* Standard syntax */
+}
+
+.top-banner-content-container {
+    position:relative;
+    margin-left:1em;
+    margin-right:20%;
+    height:100%;
+    float: left;
+    white-space: nowrap;
+}
+
+.top-banner-content {
+    display: inline-block;
+}
+
+#sfw-logo {
+    padding-top: ($top-banner-height / 8) + em;
+    padding-bottom: ($top-banner-height / 8)  + em;
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+    min-height: 85vh;
+}
+
+#loader {
+    margin-top: 400px;
+}
+
+.primary-color {
+    background-color: $primary-teal;
+}
+
+.nav-bar-icon {
+    margin-top: 10px;
+}
+
+.nav-img-link {
+    max-height: 65px;
+}
+
+.primary-background-color {
+    background-color: $secondary-teal;
+}
+
+.left-nav {
+    position: inherit;
+    width: $left-nav-width + em;
+    height: 100%;
+    display: inline-block;
+}
+
+.left-nav-box {
+    float: left;
+    width: 100%;
+}
+
+.left-nav-header {
+    font-size: larger;
+    margin-left: 0.8em;
+}
+
+.left-nav-error {
+    margin-left: 0.8em;
+}
+
+.center-banner {
+    position:absolute;
+    margin-top:30vh;
+    margin-bottom:35vh;
+    height:30vh;
+    width:100%;
+}
+
+.main {
+    position: relative;
+    height: 100%;
+    margin-top: 0.0em;
+    display: inline-flex;
+    float: left;
+}
+
+.wrap {
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+

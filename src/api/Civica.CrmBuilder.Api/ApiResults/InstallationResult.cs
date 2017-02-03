@@ -10,8 +10,6 @@ namespace Civica.CrmBuilder.Api.ApiResults
 
         public string Version { get; set; }
 
-        public string ComponentDescription { get; set; }
-
         public bool IsSuccess { get; set; }
 
         public string ErrorMessage { get; set; }
@@ -22,6 +20,8 @@ namespace Civica.CrmBuilder.Api.ApiResults
 
         public string NextComponentVersion { get; set; }
 
+        public string NextComponentDescription { get; set; }
+
         public void PopulateFrom(ComponentInstallationResult source)
         {
             ComponentId = source.ComponentId;      
@@ -30,7 +30,7 @@ namespace Civica.CrmBuilder.Api.ApiResults
             MoreToInstall = source.MoreToInstall;
             NextComponentId = source.NextComponentId;
             NextComponentVersion = source.NextComponentVersion != null ? source.NextComponentVersion.ToString(): null;
-            ComponentDescription = source.ComponentDescription;
+            NextComponentDescription = source.NextComponentDescription;
             ErrorMessage = source.ErrorMessage;
         }
     }

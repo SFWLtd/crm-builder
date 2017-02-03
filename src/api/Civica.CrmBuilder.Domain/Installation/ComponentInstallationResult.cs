@@ -6,8 +6,6 @@ namespace Civica.CrmBuilder.Domain.Installation
     {
         public int? ComponentId { get; private set; }
 
-        public string ComponentDescription { get; private set; }
-
         public Version Version { get; private set; }
 
         public bool IsSuccess { get; private set; }
@@ -20,10 +18,12 @@ namespace Civica.CrmBuilder.Domain.Installation
 
         public Version NextComponentVersion { get; private set; }
 
-        private ComponentInstallationResult(int? componentId, string componentDescription, bool success, Version version, bool moreToInstall, int? nextComponentId = null, Version nextComponentVersion = null, string errorMessage = null)
+        public string NextComponentDescription { get; private set; }
+
+        private ComponentInstallationResult(int? componentId, bool success, Version version, bool moreToInstall, int? nextComponentId = null, Version nextComponentVersion = null, string nextComponentDescription = null, string errorMessage = null)
         {
             ComponentId = componentId;
-            ComponentDescription = componentDescription;
+            NextComponentDescription = nextComponentDescription;
             Version = version;
             IsSuccess = success;
             MoreToInstall = moreToInstall;
@@ -32,24 +32,24 @@ namespace Civica.CrmBuilder.Domain.Installation
             ErrorMessage = errorMessage;
         }
 
-        public static ComponentInstallationResult Success(int componentId, string componentDescription, Version version, bool success)
+        public static ComponentInstallationResult Success(int componentId, Version version, bool success)
         {
-            return new ComponentInstallationResult(componentId, componentDescription, success, version, false);
+            return new ComponentInstallationResult(componentId, success, version, false);
         }
 
         public static ComponentInstallationResult Success(Version version)
         {
-            return new ComponentInstallationResult(null, null, true, version, false);
+            return new ComponentInstallationResult(null, true, version, false);
         } 
 
-        public static ComponentInstallationResult Success(int componentId, string componentDescription, Version version, bool moreToInstall, int nextComponentId, Version nextComponentVersion)
+        public static ComponentInstallationResult Success(int? componentId, Version version, int nextComponentId, Version nextComponentVersion, string nextComponentDescription)
         {
-            return new ComponentInstallationResult(componentId, componentDescription, true, version, moreToInstall, nextComponentId, nextComponentVersion);
+            return new ComponentInstallationResult(componentId, true, version, true, nextComponentId, nextComponentVersion, nextComponentDescription);
         }
 
-        public static ComponentInstallationResult Fail(int componentId, string componentDescription, Version version, string errorMessage)
+        public static ComponentInstallationResult Fail(int componentId, Version version, string errorMessage)
         {
-            return new ComponentInstallationResult(componentId, componentDescription, false, version, false, errorMessage: errorMessage);
+            return new ComponentInstallationResult(componentId, false, version, false, errorMessage: errorMessage);
         }
     }
 }

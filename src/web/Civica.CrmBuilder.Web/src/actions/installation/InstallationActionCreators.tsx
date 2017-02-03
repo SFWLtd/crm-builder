@@ -57,7 +57,7 @@ export const install = (dispatch: any, previousResult: ApiClient.GlobalJsonResul
     }
 
     if (previousResult.result.isSuccess && previousResult.result.moreToInstall) {
-        dispatch(setInstallationMessage(previousResult.result.componentDescription));
+        dispatch(setInstallationMessage(previousResult.result.nextComponentDescription));
         let nextResult = client.installNextComponent(previousResult);
         nextResult.then((result: ApiClient.GlobalJsonResultOfInstallationResult) => {
             install(dispatch, result);

@@ -86,4 +86,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="AfterBuild">
+    <Exec Command="Civica.CrmBuilder.CodeGen.exe" WorkingDirectory="$(TargetDir)" />
+  </Target>
 </Project>

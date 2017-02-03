@@ -120,7 +120,7 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
         }
 
         [Fact]
-        public void StartInstallation_ForNewVersionWithOneComponent_InstallationIsComplete()
+        public void StartInstallation_ForNewVersionWithOneComponent_InstallationIsNotComplete_AndReturnsDetailsOfFirstComponent()
         {
             var currentVersion = new Version("0.0.0.1");
             var latestVersion = new Version("0.0.0.2");
@@ -153,12 +153,14 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).StartInstallation();
 
             Assert.True(result.IsSuccess);
-            Assert.Equal(componentDescription, result.ComponentDescription);
-            Assert.False(result.MoreToInstall);
+            Assert.Equal(componentDescription, result.NextComponentDescription);
+            Assert.Equal(0, result.NextComponentId);
+            Assert.Equal("0.0.0.2", result.NextComponentVersion.ToString());
+            Assert.True(result.MoreToInstall);
         }
 
         [Fact]
-        public void StartInstallation_ForNewVersionWithTwoComponents_InstallationIsNotComplete_AndGivesDetailsOfNextComponentToInstall()
+        public void InstallNextComponent_ForNewVersionWithTwoComponents_InstallationIsNotComplete_AndGivesDetailsOfNextComponentToInstall()
         {
             var currentVersion = new Version("0.0.0.1");
             var latestVersion = new Version("0.0.0.2");
@@ -193,11 +195,13 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             A.CallTo(() => crmPlusPlus.GetCustomizationClientForSolution(A<PublisherSettings>._, A<SolutionSettings>._))
                 .Returns(customizationClient);
 
-            var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).StartInstallation();
+            var installation = new Domain.Installation.Installation(discovery, () => crmPlusPlus);
+            var startInstallationResult = installation.StartInstallation();
+            var result = installation.InstallNextComponent(startInstallationResult.NextComponentId.Value, startInstallationResult.NextComponentVersion);
 
             Assert.True(result.IsSuccess);
             Assert.True(result.MoreToInstall);
-            Assert.Equal(firstComponentDescription, result.ComponentDescription);
+            Assert.Equal(secondComponentDescription, result.NextComponentDescription);
             Assert.True(result.NextComponentId.HasValue);
             Assert.Equal(1, result.NextComponentId.Value);
             Assert.NotNull(result.NextComponentVersion);
@@ -205,7 +209,7 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
         }
 
         [Fact]
-        public void StartInstallation_ForTwoNewVersionsWithTwoComponents_InstallationIsNotComplete_AndGivesDetailsOfNextComponentToInstall()
+        public void InstallNextComponent_ForTwoNewVersionsWithTwoComponents_InstallationIsNotComplete_AndGivesDetailsOfNextComponentToInstall()
         {
             var currentVersion = new Version("0.0.0.1");
             var firstNewVersion = new Version("0.0.0.2");
@@ -244,11 +248,13 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             A.CallTo(() => crmPlusPlus.GetCustomizationClientForSolution(A<PublisherSettings>._, A<SolutionSettings>._))
                 .Returns(customizationClient);
 
-            var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).StartInstallation();
+            var installation = new Domain.Installation.Installation(discovery, () => crmPlusPlus);
+            var startInstallationResult = installation.StartInstallation();
+            var result = installation.InstallNextComponent(startInstallationResult.NextComponentId.Value, startInstallationResult.Version);
 
             Assert.True(result.IsSuccess);
             Assert.True(result.MoreToInstall);
-            Assert.Equal(firstComponentDescription, result.ComponentDescription);
+            Assert.Equal(secondComponentDescription, result.NextComponentDescription);
             Assert.True(result.NextComponentId.HasValue);
             Assert.Equal(0, result.NextComponentId.Value);
             Assert.NotNull(result.NextComponentVersion);
@@ -256,7 +262,7 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
         }
 
         [Fact]
-        public void StartInstallation_ForTwoNewVersionsWithTwoComponents_UpdatesSolutionVersionAsFirstComponentInstalled()
+        public void InstallNextComponent_ForTwoNewVersionsWithTwoComponents_UpdatesSolutionVersionAsFirstComponentInstalled()
         {
             var currentVersion = new Version("0.0.0.1");
             var firstNewVersion = new Version("0.0.0.2");
@@ -295,14 +301,16 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             A.CallTo(() => crmPlusPlus.GetCustomizationClientForSolution(A<PublisherSettings>._, A<SolutionSettings>._))
                 .Returns(customizationClient);
 
-            var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).StartInstallation();
+            var installation = new Domain.Installation.Installation(discovery, () => crmPlusPlus);
+            var startInstallationResult = installation.StartInstallation();
+            var result = installation.InstallNextComponent(startInstallationResult.NextComponentId.Value, startInstallationResult.NextComponentVersion);
 
             A.CallTo(() => crmPlusPlus.EntityClient.Update(A<Solution>._))
                 .MustHaveHappened();
         }
 
         [Fact]
-        public void StartInstallation_ForTwoNewVersionsWithTwoComponents_ButSolutionUpdateFailsAfterFirstComponentInstalled_RollsBackComponentInstallation_AndStatesFailure()
+        public void InstallNextComponent_ForTwoNewVersionsWithTwoComponents_ButSolutionUpdateFailsAfterFirstComponentInstalled_RollsBackComponentInstallation_AndStatesFailure()
         {
             var currentVersion = new Version("0.0.0.1");
             var firstNewVersion = new Version("0.0.0.2");
@@ -339,7 +347,9 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
                 .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
 
-            var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).StartInstallation();
+            var installation = new Domain.Installation.Installation(discovery, () => crmPlusPlus);
+            var startInstallationResult = installation.StartInstallation();
+            var result = installation.InstallNextComponent(startInstallationResult.NextComponentId.Value, startInstallationResult.NextComponentVersion);
 
             Assert.Equal(1, rollbacks.Count);
             Assert.False(result.IsSuccess);
@@ -347,7 +357,7 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
         }
 
         [Fact]
-        public void StartInstallation_WithComponentThatFailsToInstall_ShouldSayUnsuccessful()
+        public void InstallNextComponent_WithComponentThatFailsToInstall_ShouldSayUnsuccessful()
         {
             var currentVersion = new Version("0.0.0.1");
             var latestVersion = new Version("0.0.0.2");
@@ -377,7 +387,9 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
                 .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
 
-            var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).StartInstallation();
+            var installation = new Domain.Installation.Installation(discovery, () => crmPlusPlus);
+            var startInstallationResult = installation.StartInstallation();
+            var result = installation.InstallNextComponent(startInstallationResult.NextComponentId.Value, startInstallationResult.NextComponentVersion);
 
             Assert.False(result.IsSuccess);
             Assert.False(result.MoreToInstall);

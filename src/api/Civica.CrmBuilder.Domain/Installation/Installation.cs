@@ -46,9 +46,9 @@ namespace Civica.CrmBuilder.Domain.Installation
                 return ComponentInstallationResult.Success(Version.Parse(CrmConstants.InitialSolutionVersion));
             }
 
-            int componentId = 0; // Installation version not included if there are no components (see ctor)
+            var thisComponent = thisVersion.InstallationComponents[0];
 
-            return InstallComponent(componentId, thisVersion);
+            return ComponentInstallationResult.Success(null, thisVersion.Version, 0, thisVersion.Version, thisComponent.Description);
         }
 
         public ComponentInstallationResult InstallNextComponent(int componentId, Version installationVersion)
@@ -59,12 +59,12 @@ namespace Civica.CrmBuilder.Domain.Installation
 
             if (thisVersion == null)
             {
-                return ComponentInstallationResult.Fail(componentId, "unknown", installationVersion, "Installation version not found");
+                return ComponentInstallationResult.Fail(componentId, installationVersion, "Installation version not found");
             }
             
             if (!thisVersion.InstallationComponents.ContainsKey(componentId))
             {
-                return ComponentInstallationResult.Fail(componentId, "unknown", installationVersion, 
+                return ComponentInstallationResult.Fail(componentId, installationVersion, 
                     string.Format("Component with id {0} not found in installation version {1}", componentId, installationVersion));
             }
 
@@ -93,7 +93,7 @@ namespace Civica.CrmBuilder.Domain.Installation
             {
                 thisComponent.InstallationAction.Compile().Invoke(customizationClient);
 
-                if (!nextComponent.HasValue || (nextComponent.HasValue && nextComponent.Value.Value.CompareTo(version.Version) > 0))
+                if (!nextComponent.HasValue || (nextComponent.HasValue && nextComponent.Value.Value.Version.CompareTo(version.Version) > 0))
                 {
                     /* The next component is part of a newer version, 
                      * so at this point we update the solution to reflect that this
@@ -113,13 +113,22 @@ namespace Civica.CrmBuilder.Domain.Installation
                     }
                 }
 
-                return nextComponent.HasValue
-                    ? ComponentInstallationResult.Success(componentId, thisComponent.Description, version.Version, true, nextComponent.Value.Key, nextComponent.Value.Value)
-                    : ComponentInstallationResult.Success(componentId, thisComponent.Description, version.Version, true);
+                if (nextComponent.HasValue)
+                {
+                    var nextComponentDescription = nextComponent.Value.Value.InstallationComponents[nextComponent.Value.Key].Description;
+                    var nextComponentKey = nextComponent.Value.Key;
+                    var nextComponentVersion = nextComponent.Value.Value.Version;
+
+                    return ComponentInstallationResult.Success(componentId, version.Version, nextComponentKey, nextComponentVersion, nextComponentDescription);
+                }
+                else
+                {
+                    return ComponentInstallationResult.Success(componentId, version.Version, true);
+                }
             }
             catch (Exception ex)
             {
-                return ComponentInstallationResult.Fail(componentId, thisComponent.Description, version.Version, ex.Message);
+                return ComponentInstallationResult.Fail(componentId, version.Version, ex.Message);
             }
         }
 
@@ -131,11 +140,11 @@ namespace Civica.CrmBuilder.Domain.Installation
                 .FirstOrDefault();
         }
 
-        private KeyValuePair<int, Version>? GetNextInstallationComponent(InstallationVersion version, int componentId)
+        private KeyValuePair<int, InstallationVersion>? GetNextInstallationComponent(InstallationVersion version, int componentId)
         {
             if (version.InstallationComponents.ContainsKey(componentId + 1))
             {
-                return new KeyValuePair<int, Version>(componentId + 1, version.Version);
+                return new KeyValuePair<int, InstallationVersion>(componentId + 1, version);
             }
             else 
             {
@@ -143,7 +152,7 @@ namespace Civica.CrmBuilder.Domain.Installation
 
                 if (nextVersion != null)
                 {
-                    return new KeyValuePair<int, Version>(0, nextVersion.Version);
+                    return new KeyValuePair<int, InstallationVersion>(0, nextVersion);
                 }
             }
 

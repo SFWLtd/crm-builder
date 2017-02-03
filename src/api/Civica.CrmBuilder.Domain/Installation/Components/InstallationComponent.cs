@@ -12,10 +12,10 @@ namespace Civica.CrmBuilder.Domain.Installation.Components
 
         public Expression<Action<ICrmPlusPlusCustomizationClient>> RollbackAction { get; }
 
-        public InstallationComponent(string descrption, Expression<Action<ICrmPlusPlusCustomizationClient>> installationAction,
+        public InstallationComponent(string activeDescription, Expression<Action<ICrmPlusPlusCustomizationClient>> installationAction,
             Expression<Action<ICrmPlusPlusCustomizationClient>> rollbackAction)
         {
-            Description = descrption;
+            Description = activeDescription;
             InstallationAction = installationAction;
             RollbackAction = rollbackAction;
         }

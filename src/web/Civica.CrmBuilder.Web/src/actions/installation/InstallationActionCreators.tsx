@@ -26,3 +26,61 @@ export const setAuthenticationResult = (result: ApiClient.GlobalJsonResultOfInst
         value: result
     }
 }
+
+export const install = (dispatch: any, previousResult: ApiClient.GlobalJsonResultOfInstallationResult = null): IAction => {
+
+    let client = new InstallationClient(new ApiClient.InstallationClient(config.apiUrl));
+
+    if (previousResult === null) {
+        let startInstallResult = client.startInstallation();
+        startInstallResult
+            .then((result: ApiClient.GlobalJsonResultOfInstallationResult) => {
+                return install(dispatch, result);
+            });
+
+        return {
+            type: InstallationActions.Install,
+            value: null
+        }
+    }
+
+    if (!previousResult.successful || (previousResult.result.isSuccess && !previousResult.result.moreToInstall)) {
+        dispatch(finishInstallation(previousResult));
+    }
+
+    if (!previousResult.result.isSuccess) {
+        dispatch(setInstallationMessage('Failed. Rolling back...'));
+        client.rollback(previousResult)
+            .then((result: ApiClient.GlobalJsonResultOfRollbackResult) => {
+                dispatch(finishInstallation(previousResult));
+            });
+    }
+
+    if (previousResult.result.isSuccess && previousResult.result.moreToInstall) {
+        dispatch(setInstallationMessage(previousResult.result.componentDescription));
+        let nextResult = client.installNextComponent(previousResult);
+        nextResult.then((result: ApiClient.GlobalJsonResultOfInstallationResult) => {
+            install(dispatch, result);
+        });
+    }
+
+    return {
+        type: InstallationActions.Install,
+        value: null
+    }
+}
+
+export const setInstallationMessage = (message: string): IAction => {
+    return {
+        type: InstallationActions.SetLatestInstallationMessage,
+        value: message
+    }
+}
+
+
+export const finishInstallation = (result: ApiClient.GlobalJsonResultOfInstallationResult): IAction => {
+    return {
+        type: InstallationActions.FinishInstall,
+        value: result
+    }
+}

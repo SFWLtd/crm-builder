@@ -41,6 +41,12 @@ export const defaultAppState: IAppState = {
             hasStarted: false,
             latestMessage: '',
             result: null
+        },
+        installation: {
+            hasCompleted: false,
+            hasStarted: false,
+            latestMessage: '',
+            result: null
         }
     }
 };

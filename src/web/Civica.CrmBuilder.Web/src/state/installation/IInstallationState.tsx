@@ -4,4 +4,5 @@ import { IAsyncActionState } from '../async/IAsyncActionState';
 export interface IInstallationState {
     hasLoadedState: boolean;
     status: IAsyncActionState<ApiClient.GlobalJsonResultOfInstallationStatusResult>
+    installation: IAsyncActionState<ApiClient.GlobalJsonResultOfInstallationResult>
 }

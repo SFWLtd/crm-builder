@@ -32,5 +32,10 @@ namespace Civica.CrmBuilder.Domain.Authentication
             client.MarkAsAccessed();
             return client;
         }
+
+        public void Clear()
+        {
+            client = null;
+        }
     }
 }

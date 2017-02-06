@@ -13,4 +13,5 @@ export interface IAuthenticationState {
     lastErrorMessage: string;
     hasBeenSubmitted: boolean;
     loginStatus: IAsyncActionState<ApiClient.GlobalJsonResultOfSessionTokenResult>;
+    logOutStatus: IAsyncActionState<ApiClient.GlobalJsonResultOfEmptyResult>;
 }

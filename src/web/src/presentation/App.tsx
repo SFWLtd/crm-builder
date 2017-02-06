@@ -17,7 +17,7 @@ export class App extends React.Component<IAppProps, undefined> {
         <Container textAlign='center'>
                 <Dimmer active={this.props.isLoading} page>
                     <Loader>
-                        <p>Checking log in status...</p>
+                        <p>Logging in...</p>
                     </Loader>
                 </Dimmer>
                 <Dimmer active={this.props.isCheckingInstallationState} page>

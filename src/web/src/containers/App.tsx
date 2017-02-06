@@ -5,7 +5,7 @@ import * as AppActionCreators from '../actions/AppActionCreators';
 
 const mapStateToProps = (state: IAppState): AppPresenter.IAppProps => {
     return {
-        isLoading: state.isLoading,
+        isLoading: state.authenticationState.loginStatus.hasStarted,
         isLoggedIn: state.authenticationState.loginStatus.hasCompleted && state.authenticationState.loginStatus.result.successful,
         isUpToDate: state.installationState.status.hasCompleted
             && state.installationState.status.result !== null

@@ -16,4 +16,6 @@
     static SetLoginAuthenticationState: string = 'SET_LOGIN_AUTHENTICATION_STATE';
     static SetAuthenticationState: string = 'SET_AUTHENTICATION_STATE';
     static ValidateForm: string = 'VALIDATE_AUTHENTICATION_FORM';
+    static BeginLogOut: string = 'BEGIN_LOG_OUT';
+    static FinishLogOut: string = 'FINISH_LOG_OUT';
 }

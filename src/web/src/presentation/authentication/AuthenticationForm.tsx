@@ -72,6 +72,11 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
                     </Form>
                 </Card.Content>
             </Card>
+            <Dimmer active={this.props.hasStartedSubmit} page>
+                <Loader>
+                    <p>Logging in...</p>
+                </Loader>
+            </Dimmer>
         </div>;
     }
 }

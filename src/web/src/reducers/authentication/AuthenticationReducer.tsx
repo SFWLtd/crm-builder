@@ -69,7 +69,16 @@ const authenticationReducer = (state: IAuthenticationState, action: IAction): IA
             newState.loginStatus.result = action.value;
             newState.hasBeenSubmitted = action.type === AuthenticationActions.SetLoginAuthenticationState;
             break;
-
+        case AuthenticationActions.BeginLogOut:
+            newState.logOutStatus.hasStarted = true;
+            newState.logOutStatus.hasCompleted = false;
+            newState.logOutStatus.result = null;
+            break;
+        case AuthenticationActions.FinishLogOut:
+            newState.logOutStatus.hasCompleted = true;
+            newState.logOutStatus.hasStarted = false;
+            newState.logOutStatus.result = null;
+            break;
         default: return state;
     }
 

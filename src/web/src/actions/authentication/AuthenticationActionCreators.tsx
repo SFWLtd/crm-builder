@@ -149,3 +149,26 @@ export const setAuthenticationResult = (dispatch: any, result: ApiClient.GlobalJ
     };
 };
 
+export const beginLogOut = (dispatch: any): IAction => {
+
+    let authenticationClient = new AuthenticationClient(new ApiClient.SessionClient(config.apiUrl));
+    authenticationClient.endSession()
+        .then((result: ApiClient.GlobalJsonResultOfEmptyResult) => {
+            dispatch(finishLogOut(dispatch));
+        })
+
+    return {
+        type: AuthenticationActions.BeginLogOut,
+        value: null
+    };
+}
+
+export const finishLogOut = (dispatch: any): IAction => {
+    dispatch(getLoginStatus(dispatch));
+
+    return {
+        type: AuthenticationActions.FinishLogOut,
+        value: null
+    };
+}
+

@@ -7,14 +7,12 @@ import { IInstallationState } from './installation/IInstallationState';
 import { ILoadingState } from './loading/ILoadingState';
 
 export interface IAppState {
-    isLoading: boolean;
     authenticationState: IAuthenticationState;
     navigationState: INavigationState;
     installationState: IInstallationState;
 }
 
 export const defaultAppState: IAppState = {
-    isLoading: true,
     authenticationState: {
         authenticationType: ApiClient.AuthenticationType.Dynamics365,
         crmUrl: { hasBeenTouched: false, value: '' },
@@ -29,7 +27,12 @@ export const defaultAppState: IAppState = {
             result: null,
         },
         hasBeenSubmitted: false,
-        shouldValidateForm: false
+        shouldValidateForm: false,
+        logOutStatus: {
+            hasCompleted: false,
+            hasStarted: false,
+            result: null
+        }
     },
     navigationState: {
         selectedNavigationId: NavigationIds.Builds

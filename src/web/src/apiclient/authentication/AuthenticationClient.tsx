@@ -26,6 +26,10 @@ export class AuthenticationClient {
 
         let request = new ApiClient.GetSessionTokenRequest();
 
-        return this.client.getSessionToken(request, '')
+        return this.client.getSessionToken(request, '');
+    }
+
+    endSession(): Promise<ApiClient.GlobalJsonResultOfEmptyResult> {
+        return this.client.endSession('');
     }
 }

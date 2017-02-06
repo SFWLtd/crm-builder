@@ -12,14 +12,16 @@ namespace Civica.CrmBuilder.Domain.Installation.Versions
             RegisterComponents();
         }
 
-        public void RegisterComponents()
+        private void RegisterComponents()
         {
             var createEntity = new InstallationComponent("Creating build entity",
                 client => client.CreateEntity<Build>(),
+                client => client.DoNothing(),
                 client => client.Delete<Build>());
 
             var createName = new InstallationComponent("Creating build entity name",
                 client => client.CreateProperty<Build, string>(p => p.Name),
+                client => client.DoNothing(),
                 client => client.DoNothing()); // Rollback is covered by deletion of entity in first component
 
             base.RegisterNextComponent(createEntity);

@@ -127,8 +127,9 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
 
             var componentDescription = "dhjskldsa";
             var componentInstall = new InstallationComponent(componentDescription,
-                client => client.GetType(),
-                client => client.GetType()); // Does nothing on installation or rollback
+                client => client.DoNothing(),
+                client => client.DoNothing(),
+                client => client.DoNothing()); // Does nothing on installation or rollback
 
             var components = new Dictionary<int, InstallationComponent>();
             components.Add(0, componentInstall);
@@ -168,11 +169,13 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             var firstComponentDescription = "dhjskldsa";
             var secondComponentDescription = "DLAOIEHJK";
             var firstComponent = new InstallationComponent(firstComponentDescription,
-                client => client.GetType(),
-                client => client.GetType()); // Does nothing on installation or rollback
+                client => client.DoNothing(),
+                client => client.DoNothing(),
+                client => client.DoNothing()); // Does nothing on installation or rollback
             var secondComponent = new InstallationComponent(secondComponentDescription,
-                client => client.GetType(),
-                client => client.GetType());
+                client => client.DoNothing(),
+                client => client.DoNothing(),
+                client => client.DoNothing());
 
             var components = new Dictionary<int, InstallationComponent>();
             components.Add(0, firstComponent);
@@ -218,11 +221,13 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             var firstComponentDescription = "dhjskldsa";
             var secondComponentDescription = "DLAOIEHJK";
             var firstComponent = new InstallationComponent(firstComponentDescription,
-                client => client.GetType(),
-                client => client.GetType()); // Does nothing on installation or rollback
+                client => client.DoNothing(),
+                client => client.DoNothing(),
+                client => client.DoNothing()); // Does nothing on installation or rollback
             var secondComponent = new InstallationComponent(secondComponentDescription,
-                client => client.GetType(),
-                client => client.GetType());
+                client => client.DoNothing(),
+                client => client.DoNothing(),
+                client => client.DoNothing());
 
             var firstNewVersionComponents = new Dictionary<int, InstallationComponent>();
             firstNewVersionComponents.Add(0, firstComponent);
@@ -271,11 +276,13 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             var firstComponentDescription = "dhjskldsa";
             var secondComponentDescription = "DLAOIEHJK";
             var firstComponent = new InstallationComponent(firstComponentDescription,
-                client => client.GetType(),
-                client => client.GetType()); // Does nothing on installation or rollback
+                client => client.DoNothing(),
+                client => client.DoNothing(),
+                client => client.DoNothing()); // Does nothing on installation or rollback
             var secondComponent = new InstallationComponent(secondComponentDescription,
-                client => client.GetType(),
-                client => client.GetType());
+                client => client.DoNothing(),
+                client => client.DoNothing(),
+                client => client.DoNothing());
 
             var firstNewVersionComponents = new Dictionary<int, InstallationComponent>();
             firstNewVersionComponents.Add(0, firstComponent);
@@ -324,11 +331,13 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
 
             var rollbacks = new List<bool>();
             var firstComponent = new InstallationComponent(firstComponentDescription,
-                client => client.GetType(),
+                client => client.DoNothing(),
+                client => client.DoNothing(),
                 client => rollbacks.Add(true)); // Notifies that rollback was called on installation component
             var secondComponent = new InstallationComponent(secondComponentDescription,
-                client => client.GetType(),
-                client => client.GetType());
+                client => client.DoNothing(),
+                client => client.DoNothing(),
+                client => client.DoNothing());
 
             var firstNewVersionComponents = new Dictionary<int, InstallationComponent>();
             firstNewVersionComponents.Add(0, firstComponent);
@@ -372,7 +381,8 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             var componentDescription = "dhjskldsa";
             var componentInstall = new InstallationComponent(componentDescription,
                 client => client.CreateEntity<TestEntity>(), // This will throw an error
-                client => client.GetType()); // Does nothing on rollback
+                client => client.DoNothing(),
+                client => client.DoNothing()); // Does nothing on rollback
 
             var components = new Dictionary<int, InstallationComponent>();
             components.Add(0, componentInstall);
@@ -428,8 +438,9 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             var latestVersion = new Version("0.0.0.2");
 
             var component = new InstallationComponent("dshajdkh",
-                client => client.GetType(),
-                client => client.GetType()); // Does nothing on installation or rollback
+                client => client.DoNothing(),
+                client => client.DoNothing(),
+                client => client.DoNothing()); // Does nothing on installation or rollback
 
             var installationComponents = new Dictionary<int, InstallationComponent>();
             installationComponents.Add(0, component);

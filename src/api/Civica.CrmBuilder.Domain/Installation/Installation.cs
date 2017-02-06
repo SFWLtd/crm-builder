@@ -92,6 +92,7 @@ namespace Civica.CrmBuilder.Domain.Installation
             try
             {
                 thisComponent.InstallationAction.Compile().Invoke(customizationClient);
+                thisComponent.DataChangeAction.Invoke(crm().EntityClient);
 
                 if (!nextComponent.HasValue || (nextComponent.HasValue && nextComponent.Value.Value.Version.CompareTo(version.Version) > 0))
                 {

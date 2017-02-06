@@ -10,6 +10,12 @@ namespace Civica.CrmBuilder.Domain.Tests.Builds
     public class BuildTests
     {
         [Fact]
+        public void WhenCreatingABuildFromProperties_ShouldThrowArgumentExceptionIfNameDoesNotExist()
+        {
+            Assert.Throws<ArgumentException>(() => new Build(null, new NewBuildProperties()));
+        }
+
+        [Fact]
         public void WhenCreatingABuildFromProperties_ShouldCreateEntityInCrm()
         {
             var entityClient = A.Fake<ICrmPlusPlusEntityClient>();

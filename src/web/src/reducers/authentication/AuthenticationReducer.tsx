@@ -62,6 +62,11 @@ const authenticationReducer = (state: IAuthenticationState, action: IAction): IA
             newState.loginStatus.hasCompleted = false;
             newState.loginStatus.result = null;
             break;
+        case AuthenticationActions.GetLoginStatus:
+            newState.loginStatus.hasStarted = true;
+            newState.loginStatus.hasCompleted = false;
+            newState.loginStatus.result = null;
+            break;
         case AuthenticationActions.SetAuthenticationState:
         case AuthenticationActions.SetLoginAuthenticationState:
             newState.loginStatus.hasCompleted = true;

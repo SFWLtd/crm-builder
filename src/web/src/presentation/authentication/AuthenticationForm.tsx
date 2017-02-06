@@ -61,7 +61,7 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
                             <input type='password' onChange={e => { this.props.passwordOnChange((e as any).target.value) } } onBlur={this.props.passwordOnBlur} />
                         </Form.Field>
                         <br/>
-                        <Button primary onClick={(e) => { e.preventDefault(); this.props.onSubmit(this.props) } }>Log in</Button>
+                        <Button primary onClick={(e: any) => { e.preventDefault(); this.props.onSubmit(this.props) } }>Log in</Button>
                         {
                             this.props.submissionError && this.props.submissionError !== '' &&
                             <Message negative>
@@ -72,10 +72,6 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
                     </Form>
                 </Card.Content>
             </Card>
-
-            <Dimmer active={this.props.hasStartedSubmit} page>
-                <Loader>{this.props.currentSubmissionMessage}</Loader>
-            </Dimmer>
         </div>;
     }
 }
@@ -111,6 +107,5 @@ export interface IAuthenticationFormProps {
     shouldValidateForm?: boolean;
     onSubmit?: (form: IAuthenticationFormProps) => void;
     hasStartedSubmit?: boolean;
-    currentSubmissionMessage?: string;
     submissionError?: string;
 }

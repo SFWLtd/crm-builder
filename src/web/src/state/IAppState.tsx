@@ -4,12 +4,14 @@ import { NavigationIds } from '../constants/NavigationIds';
 import * as ApiClient from '../../../api/ApiClient';
 import { IAsyncActionState } from './async/IAsyncActionState';
 import { IInstallationState } from './installation/IInstallationState';
+import { ILoadingState } from './loading/ILoadingState';
 
 export interface IAppState {
     isLoading: boolean;
     authenticationState: IAuthenticationState;
     navigationState: INavigationState;
     installationState: IInstallationState;
+    loadingState: ILoadingState;
 }
 
 export const defaultAppState: IAppState = {
@@ -26,27 +28,29 @@ export const defaultAppState: IAppState = {
             hasCompleted: false,
             hasStarted: false,
             result: null,
-            latestMessage: ''
         },
         hasBeenSubmitted: false,
         shouldValidateForm: false
     },
     navigationState: {
-        selectedNavigationId: NavigationIds.Home
+        selectedNavigationId: NavigationIds.Builds
     },
     installationState: {
         hasLoadedState: false,
         status: {
             hasCompleted: false,
             hasStarted: false,
-            latestMessage: '',
             result: null
         },
         installation: {
             hasCompleted: false,
             hasStarted: false,
-            latestMessage: '',
             result: null
         }
+    },
+    loadingState: {
+        isLoading: false,
+        title: '',
+        description: ''
     }
 };

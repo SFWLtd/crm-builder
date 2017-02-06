@@ -61,14 +61,12 @@ const authenticationReducer = (state: IAuthenticationState, action: IAction): IA
             newState.loginStatus.hasStarted = true;
             newState.loginStatus.hasCompleted = false;
             newState.loginStatus.result = null;
-            newState.loginStatus.latestMessage = 'Logging in...';
             break;
         case AuthenticationActions.SetAuthenticationState:
         case AuthenticationActions.SetLoginAuthenticationState:
             newState.loginStatus.hasCompleted = true;
             newState.loginStatus.hasStarted = false;
             newState.loginStatus.result = action.value;
-            newState.loginStatus.latestMessage = '';
             newState.hasBeenSubmitted = action.type === AuthenticationActions.SetLoginAuthenticationState;
             break;
 

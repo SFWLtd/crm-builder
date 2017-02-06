@@ -2,6 +2,8 @@
 import AuthenticationForm from '../containers/authentication/AuthenticationForm';
 import Navigation from '../containers/navigation/Navigation';
 import Installation from '../containers/installation/Installation';
+import Loading from '../containers/loading/Loading';
+import BuildsOverview from '../containers/builds/BuildsOverview';
 import { Container, Dimmer, Loader } from 'semantic-ui-react';
 
 export class App extends React.Component<IAppProps, undefined> {
@@ -11,7 +13,10 @@ export class App extends React.Component<IAppProps, undefined> {
     }
 
     render() {
-        return <div><Container>
+
+        return <div>
+        <Container textAlign='center'>
+                <Loading/>
                 {   
                     this.props.isLoading &&
                     <Dimmer active={this.props.isLoading} page>
@@ -30,7 +35,13 @@ export class App extends React.Component<IAppProps, undefined> {
                     !this.props.isLoading && this.props.isLoggedIn && this.props.isUpToDate &&
                     <Navigation />
                 }
-        </Container></div>;
+                
+                <br/>
+                <Container textAlign='left'>
+                    <BuildsOverview/>
+                </Container>
+            </Container>
+            </div>;
     }
 }
 

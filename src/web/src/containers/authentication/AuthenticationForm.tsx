@@ -29,8 +29,7 @@ const mapStateToProps = (state: IAppState): AuthenticationFormPresenter.IAuthent
         hasStartedSubmit: state.authenticationState.loginStatus.hasStarted,
         submissionError: state.authenticationState.hasBeenSubmitted && state.authenticationState.loginStatus.hasCompleted && !state.authenticationState.loginStatus.result.successful
             ? 'Unable to log in. Please check your credentials are correct'
-            : '',
-        currentSubmissionMessage: state.authenticationState.loginStatus.latestMessage
+            : ''
     }
 }
 
@@ -50,7 +49,7 @@ const mapDispatchToProps = (dispatch: any): AuthenticationFormPresenter.IAuthent
         domainOnChange: (domain: string) => dispatch(AuthenticationActionCreators.setDomain(domain)),
         usernameOnChange: (username: string) => dispatch(AuthenticationActionCreators.setUsername(username)),
         passwordOnChange: (password: string) => dispatch(AuthenticationActionCreators.setPassword(password)),
-        onSubmit: (props: AuthenticationFormPresenter.IAuthenticationFormProps) => dispatch(AuthenticationActionCreators.submit(dispatch, props, 'Logging in...'))
+        onSubmit: (props: AuthenticationFormPresenter.IAuthenticationFormProps) => dispatch(AuthenticationActionCreators.submit(dispatch, props))
     }
 }
 

@@ -21,9 +21,6 @@ export class Installation extends React.Component<IInstallationProps, undefined>
 
     render() {
         return <div>
-                <Dimmer active={!this.props.hasLoaded} page>
-                    <Loader>Checking installation status...</Loader>
-                </Dimmer>
                 <br />
                 {
                     this.props.hasLoaded && this.props.requiresInstallation &&
@@ -41,15 +38,9 @@ export class Installation extends React.Component<IInstallationProps, undefined>
                                             : 'It looks like this is the first time you\'ve used CRM builder with this CRM instance. Click install to continue'
                                     }</h4>
 
-                                <Button primary fluid type='submit' onClick={e => { e.preventDefault(); this.props.install() } }>{this.props.installationIsUpdate ? 'Update' : 'Install'}</Button>
+                                <Button primary fluid type='submit' onClick={(e: any) => { e.preventDefault(); this.props.install() } }>{this.props.installationIsUpdate ? 'Update' : 'Install'}</Button>
                             </Card.Content>
                         </Card>
-                        <Dimmer active={this.props.isInstalling} page>
-                            <Loader>
-                                <p>{this.props.installationIsUpdate ? 'Applying updates...' : 'Installing...'}</p>
-                                <p>{this.props.latestInstallationMessage}</p>
-                            </Loader>
-                        </Dimmer>
                     </div>
                 }
         </div>;
@@ -61,7 +52,6 @@ export interface IInstallationProps {
     install?: () => void;
     isInstalling?: boolean;
     hasCompletedInstallation?: boolean;
-    latestInstallationMessage?: string;
     installationErrorMessage?: string;
     hasLoaded?: boolean;
     requiresInstallation?: boolean;

@@ -2,6 +2,7 @@
 import config from '../../Config';
 import { IAction } from '../IAction';
 import { InstallationActions } from './InstallationActions';
+import * as LoadingActionCreators from '../loading/LoadingActionCreators';
 import { InstallationClient } from '../../apiclient/installation/InstallationClient';
 
 export const loadInstallationStatus = (dispatch: any): IAction => {
@@ -46,10 +47,11 @@ export const install = (dispatch: any, previousResult: ApiClient.GlobalJsonResul
 
     if (!previousResult.successful || (previousResult.result.isSuccess && !previousResult.result.moreToInstall)) {
         dispatch(finishInstallation(previousResult));
+        dispatch(LoadingActionCreators.StopLoading());
     }
 
     if (!previousResult.result.isSuccess) {
-        dispatch(setInstallationMessage('Failed. Rolling back...'));
+        dispatch(LoadingActionCreators.SetLoadingTitle('Failed. Rolling back...'));
         client.rollback(previousResult)
             .then((result: ApiClient.GlobalJsonResultOfRollbackResult) => {
                 dispatch(finishInstallation(previousResult));
@@ -57,26 +59,20 @@ export const install = (dispatch: any, previousResult: ApiClient.GlobalJsonResul
     }
 
     if (previousResult.result.isSuccess && previousResult.result.moreToInstall) {
-        dispatch(setInstallationMessage(previousResult.result.nextComponentDescription));
+        dispatch(LoadingActionCreators.SetLoadingDescription(previousResult.result.nextComponentDescription));
         let nextResult = client.installNextComponent(previousResult);
         nextResult.then((result: ApiClient.GlobalJsonResultOfInstallationResult) => {
             install(dispatch, result);
         });
     }
 
+    dispatch(LoadingActionCreators.SetLoadingTitle('Starting installation...'));
+
     return {
         type: InstallationActions.Install,
         value: null
     }
 }
-
-export const setInstallationMessage = (message: string): IAction => {
-    return {
-        type: InstallationActions.SetLatestInstallationMessage,
-        value: message
-    }
-}
-
 
 export const finishInstallation = (result: ApiClient.GlobalJsonResultOfInstallationResult): IAction => {
     return {

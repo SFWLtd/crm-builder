@@ -12,7 +12,6 @@ const mapStateToProps = (state: IAppState): InstallationPresenter.IInstallationP
             && state.installationState.status.result.result.isInstalled
             && state.installationState.status.result.result.requiresUpdate,
         hasLoaded: state.installationState.hasLoadedState,
-        latestInstallationMessage: state.installationState.installation.latestMessage,
         isInstalling: state.installationState.installation.hasStarted,
         hasCompletedInstallation: state.installationState.installation.hasCompleted,
         installationErrorMessage: state.installationState.installation.hasCompleted && !state.installationState.installation.result.successful

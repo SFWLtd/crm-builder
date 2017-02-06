@@ -21,10 +21,6 @@ const installationReducer = (state: IInstallationState, action: IAction): IInsta
         case InstallationActions.Install:
             newState.installation.hasStarted = true;
             newState.installation.hasCompleted = false;
-            newState.installation.latestMessage = '';
-            break;
-        case InstallationActions.SetLatestInstallationMessage:
-            newState.installation.latestMessage = action.value;
             break;
         case InstallationActions.FinishInstall:
             newState.installation.hasCompleted = true;

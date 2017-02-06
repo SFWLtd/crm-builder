@@ -2,6 +2,7 @@
 import authenticationReducer from './authentication/AuthenticationReducer';
 import navigationReducer from './navigation/NavigationReducer';
 import installationReducer from './installation/InstallationReducer';
+import loadingReducer from './loading/LoadingReducer';
 import * as AppState from '../state/IAppState';
 import { IAction } from '../actions/IAction';
 
@@ -10,6 +11,7 @@ const appReducer = (state: AppState.IAppState = AppState.defaultAppState, action
         authenticationState: authenticationReducer(state.authenticationState, action),
         navigationState: navigationReducer(state.navigationState, action),
         installationState: installationReducer(state.installationState, action),
+        loadingState: loadingReducer(state.loadingState, action),
 
         // always set AppState properties that depend on child reducers last
         isLoading: !state.authenticationState.loginStatus.hasCompleted

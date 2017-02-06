@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Civica.CrmBuilder.Domain.Authentication;
+using Civica.CrmBuilder.Domain.Builds;
 using Civica.CrmBuilder.Domain.Installation;
 using Civica.CrmPlusPlus.Sdk;
 
@@ -26,6 +27,9 @@ namespace Civica.CrmBuilder.Domain
 
             builder.RegisterType<Installation.Installation>()
                 .As<IInstallation>();
+
+            builder.RegisterType<BuildBuilder>()
+                .As<IBuildBuilder>();
         }
     }
 }

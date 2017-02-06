@@ -11,33 +11,37 @@ export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefi
                 <Menu text>
                     <Menu.Item onClick={(e:any) => this.props.newBuild()}><Icon name='write'/>Add new build...</Menu.Item>
                 </Menu>
-                <Item.Group>
+                <Header as='h2' attached='top'>
+                    Your builds
+                </Header>
+                <Segment attached>
                     <Item>
-                    <Item.Image size='tiny' src='http://semantic-ui.com/images/wireframe/image.png' />
-                    <Item.Content>
-                        <Item.Header as='a'>Header</Item.Header>
-                        <Item.Meta>Description</Item.Meta>
-                        <Item.Description>
-                        <Image src='http://semantic-ui.com/images/wireframe/short-paragraph.png' />
-                        </Item.Description>
-                        <Item.Extra>Additional Details</Item.Extra>
-                    </Item.Content>
+                        <Item.Image size='tiny' src='http://semantic-ui.com/images/wireframe/image.png' />
+                        <Item.Content>
+                            <Item.Header as='a'>Header</Item.Header>
+                            <Item.Meta>Description</Item.Meta>
+                            <Item.Description>
+                            <Image src='http://semantic-ui.com/images/wireframe/short-paragraph.png' />
+                            </Item.Description>
+                            <Item.Extra>Additional Details</Item.Extra>
+                        </Item.Content>
                     </Item>
-
+                </Segment>
+                <Segment attached>
                     <Item>
-                    <Item.Image size='tiny' src='http://semantic-ui.com/images/wireframe/image.png' />
+                        <Item.Image size='tiny' src='http://semantic-ui.com/images/wireframe/image.png' />
 
-                    <Item.Content>
-                        <Item.Header as='a'>Header</Item.Header>
-                        <Item.Meta>Description</Item.Meta>
-                        <Item.Description>
-                        <Image src='http://semantic-ui.com/images/wireframe/short-paragraph.png' />
-                        </Item.Description>
-                        <Item.Extra>Additional Details</Item.Extra>
-                    </Item.Content>
+                        <Item.Content>
+                            <Item.Header as='a'>Header</Item.Header>
+                            <Item.Meta>Description</Item.Meta>
+                            <Item.Description>
+                            <Image src='http://semantic-ui.com/images/wireframe/short-paragraph.png' />
+                            </Item.Description>
+                            <Item.Extra>Additional Details</Item.Extra>
+                        </Item.Content>
                     </Item>
-                </Item.Group>
-        </div>
+                </Segment>
+        </div>;
     }
 }
 

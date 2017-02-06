@@ -1,6 +1,6 @@
 ﻿using System;
+using Civica.CrmBuilder.Core.Mapping;
 using Civica.CrmBuilder.Domain.Authentication;
-using Civica.CrmBuilder.Domain.Mapping;
 
 namespace Civica.CrmBuilder.Api.ApiRequests
 {

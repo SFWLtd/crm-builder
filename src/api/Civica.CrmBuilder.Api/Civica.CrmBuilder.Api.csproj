@@ -196,6 +196,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Civica.CrmBuilder.Core\Civica.CrmBuilder.Core.csproj">
+      <Project>{1522E461-C092-4720-BBAE-EC0443F8E780}</Project>
+      <Name>Civica.CrmBuilder.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Civica.CrmBuilder.Domain\Civica.CrmBuilder.Domain.csproj">
       <Project>{d31a19da-eaf3-45c3-bc02-f4741408f849}</Project>
       <Name>Civica.CrmBuilder.Domain</Name>
@@ -204,14 +208,17 @@
   <ItemGroup>
     <Compile Include="ApiModule.cs" />
     <Compile Include="ApiRequests\ComponentInstallationRequest.cs" />
+    <Compile Include="ApiRequests\NewBuildRequest.cs" />
     <Compile Include="ApiRequests\NewSessionRequest.cs" />
     <Compile Include="ApiRequests\GetSessionTokenRequest.cs" />
     <Compile Include="ApiRequests\RollbackRequest.cs" />
     <Compile Include="ApiRequests\StartInstallationRequest.cs" />
     <Compile Include="ApiResults\InstallationResult.cs" />
     <Compile Include="ApiResults\InstallationStatusResult.cs" />
+    <Compile Include="ApiResults\NewBuildResult.cs" />
     <Compile Include="ApiResults\RollbackResult.cs" />
     <Compile Include="ApiResults\SessionTokenResult.cs" />
+    <Compile Include="Controllers\BuildsController.cs" />
     <Compile Include="Filters\AuthorizeClientFilter.cs" />
     <Compile Include="Controllers\InstallationController.cs" />
     <Compile Include="Controllers\SessionController.cs" />

@@ -41,6 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\CrmConstants.cs" />
+    <Compile Include="Enums\BuildVersioningType.cs" />
+    <Compile Include="Mapping\IMappableTo.cs" />
+    <Compile Include="Mapping\IPopulateFrom.cs" />
+    <Compile Include="Mapping\MappingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

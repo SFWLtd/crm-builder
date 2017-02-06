@@ -1,4 +1,4 @@
-﻿namespace Civica.CrmBuilder.Domain.Mapping
+﻿namespace Civica.CrmBuilder.Core.Mapping
 {
     public static class MappingExtensions
     {

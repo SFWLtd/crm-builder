@@ -2,7 +2,6 @@
 import AuthenticationForm from '../containers/authentication/AuthenticationForm';
 import Navigation from '../containers/navigation/Navigation';
 import Installation from '../containers/installation/Installation';
-import Loading from '../containers/loading/Loading';
 import BuildsOverview from '../containers/builds/BuildsOverview';
 import { Container, Dimmer, Loader } from 'semantic-ui-react';
 
@@ -16,13 +15,16 @@ export class App extends React.Component<IAppProps, undefined> {
 
         return <div>
         <Container textAlign='center'>
-                <Loading/>
-                {   
-                    this.props.isLoading &&
-                    <Dimmer active={this.props.isLoading} page>
-                        <Loader>Retrieving log in status...</Loader>
-                    </Dimmer>
-                }
+                <Dimmer active={this.props.isLoading} page>
+                    <Loader>
+                        <p>Checking log in status...</p>
+                    </Loader>
+                </Dimmer>
+                <Dimmer active={this.props.isCheckingInstallationState} page>
+                    <Loader>
+                        <p>Checking installation status...</p>
+                    </Loader>
+                </Dimmer>
                 {
                     !this.props.isLoading && !this.props.isLoggedIn &&
                     <AuthenticationForm />
@@ -33,13 +35,15 @@ export class App extends React.Component<IAppProps, undefined> {
                 }
                 {
                     !this.props.isLoading && this.props.isLoggedIn && this.props.isUpToDate &&
-                    <Navigation />
+                    <div>
+                        <Navigation />
+                        <br/>
+                        <Container textAlign='left'>
+                            <BuildsOverview/>
+                        </Container>
+                    </div>
                 }
-                
-                <br/>
-                <Container textAlign='left'>
-                    <BuildsOverview/>
-                </Container>
+
             </Container>
             </div>;
     }
@@ -49,5 +53,6 @@ export interface IAppProps {
     isLoading?: boolean;
     load?: () => void;
     isLoggedIn?: boolean;
+    isCheckingInstallationState?: boolean;
     isUpToDate?: boolean;
 }

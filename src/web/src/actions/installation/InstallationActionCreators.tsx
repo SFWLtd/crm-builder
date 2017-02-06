@@ -2,10 +2,11 @@
 import config from '../../Config';
 import { IAction } from '../IAction';
 import { InstallationActions } from './InstallationActions';
-import * as LoadingActionCreators from '../loading/LoadingActionCreators';
 import { InstallationClient } from '../../apiclient/installation/InstallationClient';
 
 export const loadInstallationStatus = (dispatch: any): IAction => {
+
+    dispatch(setInstallationStatusMessage('Checking installation status...'));
 
     let client = new InstallationClient(new ApiClient.InstallationClient(config.apiUrl));
     let statusResult = client.getStatus();
@@ -13,6 +14,7 @@ export const loadInstallationStatus = (dispatch: any): IAction => {
         .then((result: ApiClient.GlobalJsonResultOfInstallationStatusResult) => {
             let setAuthAction: IAction = setAuthenticationResult(result);
             dispatch(setAuthAction);
+            dispatch(setInstallationStatusMessage('Finished checking installation status'));
         });
 
     return {
@@ -25,6 +27,20 @@ export const setAuthenticationResult = (result: ApiClient.GlobalJsonResultOfInst
     return {
         type: InstallationActions.SetStatus,
         value: result
+    }
+}
+
+export const setInstallationStatusMessage = (message: string): IAction => {
+    return {
+        type: InstallationActions.SetInstallationMessage,
+        value: message
+    }
+}
+
+export const setInstallationStatusDescription = (description: string): IAction => {
+    return {
+        type: InstallationActions.SetInstallationDescription,
+        value: description
     }
 }
 
@@ -47,11 +63,10 @@ export const install = (dispatch: any, previousResult: ApiClient.GlobalJsonResul
 
     if (!previousResult.successful || (previousResult.result.isSuccess && !previousResult.result.moreToInstall)) {
         dispatch(finishInstallation(previousResult));
-        dispatch(LoadingActionCreators.StopLoading());
     }
 
     if (!previousResult.result.isSuccess) {
-        dispatch(LoadingActionCreators.SetLoadingTitle('Failed. Rolling back...'));
+        dispatch(setInstallationStatusMessage('Failed installation.Rolling back...'));
         client.rollback(previousResult)
             .then((result: ApiClient.GlobalJsonResultOfRollbackResult) => {
                 dispatch(finishInstallation(previousResult));
@@ -59,14 +74,14 @@ export const install = (dispatch: any, previousResult: ApiClient.GlobalJsonResul
     }
 
     if (previousResult.result.isSuccess && previousResult.result.moreToInstall) {
-        dispatch(LoadingActionCreators.SetLoadingDescription(previousResult.result.nextComponentDescription));
         let nextResult = client.installNextComponent(previousResult);
         nextResult.then((result: ApiClient.GlobalJsonResultOfInstallationResult) => {
+            dispatch(setInstallationStatusDescription(previousResult.result.nextComponentDescription));
             install(dispatch, result);
         });
     }
 
-    dispatch(LoadingActionCreators.SetLoadingTitle('Starting installation...'));
+    dispatch(setInstallationStatusMessage('Starting installation...'));
 
     return {
         type: InstallationActions.Install,

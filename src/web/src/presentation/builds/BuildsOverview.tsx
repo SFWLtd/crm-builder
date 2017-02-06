@@ -3,7 +3,7 @@ import { Button, Container, Grid, Header, Icon, Image, Item, Menu, Rail, Segment
 
 export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefined> {
     render() {
-        if (!this.props.navigationIsSelected) {
+        if (!this.props.navigationIsActive) {
             return <div></div>;
         }
 
@@ -42,6 +42,6 @@ export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefi
 }
 
 export interface IBuildsOverviewProps {
-    navigationIsSelected?: boolean;
+    navigationIsActive?: boolean;
     newBuild?: () => void;
 }

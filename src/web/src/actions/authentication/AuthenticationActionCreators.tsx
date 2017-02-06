@@ -1,7 +1,6 @@
 ﻿import { IAction } from '../IAction';
 import { AuthenticationActions } from './AuthenticationActions';
 import * as InstallationActionCreators from '../installation/InstallationActionCreators';
-import * as LoadingActionCreators from '../loading/LoadingActionCreators';
 import { AuthenticationClient } from '../../apiclient/authentication/AuthenticationClient';
 import { IAppState } from '../../state/IAppState';
 import { IAuthenticationFormProps } from '../../presentation/authentication/AuthenticationForm';
@@ -104,15 +103,12 @@ export const submit = (dispatch: any, props: IAuthenticationFormProps): IAction 
         };
     }
 
-    dispatch(LoadingActionCreators.SetLoadingTitle('Logging in...'));
-
     let authenticationClient = new AuthenticationClient(new ApiClient.SessionClient(config.apiUrl));
     let newSessionResult = authenticationClient.newSession(props);
     newSessionResult
         .then((result: ApiClient.GlobalJsonResultOfSessionTokenResult) => {
             let setAuthAction: IAction = setLoginAuthenticationResult(dispatch, result);
             dispatch(setAuthAction);
-            dispatch(LoadingActionCreators.StopLoading());
         });
 
     return {
@@ -123,15 +119,12 @@ export const submit = (dispatch: any, props: IAuthenticationFormProps): IAction 
 
 export const getLoginStatus = (dispatch: any): IAction => {
 
-    dispatch(LoadingActionCreators.SetLoadingTitle('Checking log in status...'));
-
     let authenticationClient = new AuthenticationClient(new ApiClient.SessionClient(config.apiUrl));
     let getSessionResult = authenticationClient.getSession();
     getSessionResult
         .then((result: ApiClient.GlobalJsonResultOfSessionTokenResult) => {
             let setAuthAction: IAction = setAuthenticationResult(dispatch, result);
             dispatch(setAuthAction);
-            dispatch(LoadingActionCreators.StopLoading());
         });
 
     return {

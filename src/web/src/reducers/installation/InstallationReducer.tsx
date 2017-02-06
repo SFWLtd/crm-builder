@@ -17,6 +17,8 @@ const installationReducer = (state: IInstallationState, action: IAction): IInsta
             newState.status.hasStarted = false;
             newState.status.result = action.value;
             newState.hasLoadedState = true;
+            newState.message = '';
+            newState.description = '';
             break;
         case InstallationActions.Install:
             newState.installation.hasStarted = true;
@@ -26,6 +28,14 @@ const installationReducer = (state: IInstallationState, action: IAction): IInsta
             newState.installation.hasCompleted = true;
             newState.installation.hasStarted = false;
             newState.installation.result = action.value;
+            newState.message = '';
+            newState.description = '';
+            break;
+        case InstallationActions.SetInstallationMessage:
+            newState.message = action.value;
+            break;
+        case InstallationActions.SetInstallationDescription:
+            newState.description = action.value;
             break;
         default: return state;
     }

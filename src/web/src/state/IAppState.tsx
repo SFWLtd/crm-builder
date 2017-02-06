@@ -11,7 +11,6 @@ export interface IAppState {
     authenticationState: IAuthenticationState;
     navigationState: INavigationState;
     installationState: IInstallationState;
-    loadingState: ILoadingState;
 }
 
 export const defaultAppState: IAppState = {
@@ -46,11 +45,8 @@ export const defaultAppState: IAppState = {
             hasCompleted: false,
             hasStarted: false,
             result: null
-        }
-    },
-    loadingState: {
-        isLoading: false,
-        title: '',
-        description: ''
+        },
+        description: null,
+        message: null
     }
 };

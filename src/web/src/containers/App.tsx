@@ -11,7 +11,9 @@ const mapStateToProps = (state: IAppState): AppPresenter.IAppProps => {
             && state.installationState.status.result !== null
             && state.installationState.status.result.successful
             && state.installationState.status.result.result.isInstalled
-            && !state.installationState.status.result.result.requiresUpdate
+            && state.installationState.hasLoadedState
+            && !state.installationState.status.result.result.requiresUpdate,
+        isCheckingInstallationState: !state.installationState.hasLoadedState && state.installationState.status.hasStarted
     };
 };
 

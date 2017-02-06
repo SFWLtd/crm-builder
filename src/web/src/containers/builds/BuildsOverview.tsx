@@ -5,7 +5,9 @@ import { IAppState } from '../../state/IAppState';
 
 const mapStateToProps = (state: IAppState): BuildsPresenter.IBuildsOverviewProps => {
     return {
-        navigationIsSelected: state.navigationState.selectedNavigationId === NavigationIds.Builds
+        navigationIsActive: state.navigationState.selectedNavigationId === NavigationIds.Builds 
+            && state.authenticationState.loginStatus.hasCompleted
+            && state.authenticationState.loginStatus.result.successful
     };
 };
 

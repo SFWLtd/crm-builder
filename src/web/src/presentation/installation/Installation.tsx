@@ -23,6 +23,14 @@ export class Installation extends React.Component<IInstallationProps, undefined>
         return <div>
                 <br />
                 {
+                    !this.props.hasLoaded &&
+                    <Dimmer active={this.props.hasLoaded} page>
+                        <Loader>
+                            <p>Checking installation status...</p>
+                        </Loader>
+                    </Dimmer>
+                }
+                {
                     this.props.hasLoaded && this.props.requiresInstallation &&
                     <div>
                         <Header as='h2' icon textAlign='center'>
@@ -42,6 +50,14 @@ export class Installation extends React.Component<IInstallationProps, undefined>
                             </Card.Content>
                         </Card>
                     </div>
+                }
+                {
+                    this.props.isInstalling &&
+                    <Dimmer active={this.props.isInstalling} page>
+                        <Loader>
+                            <p>Installing...</p>
+                        </Loader>
+                    </Dimmer>
                 }
         </div>;
     }

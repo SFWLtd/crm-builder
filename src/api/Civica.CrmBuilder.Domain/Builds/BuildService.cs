@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Civica.CrmBuilder.Core.Mapping;
 using Civica.CrmBuilder.Domain.Authentication;
+using Civica.CrmBuilder.Domain.Validation;
 using Civica.CrmPlusPlus.Sdk.Client;
+using Civica.CrmPlusPlus.Sdk.Client.Retrieve;
 using Civica.CrmPlusPlus.Sdk.Querying;
 
 namespace Civica.CrmBuilder.Domain.Builds
@@ -20,6 +22,21 @@ namespace Civica.CrmBuilder.Domain.Builds
         public IBuild Get(Guid id)
         {
             return new Build(entityClient, id);
+        }
+
+        public void Delete(Guid id)
+        {
+            var retrieval = Retrieval.ForEntity<Entities.Build>(id);
+            var build = entityClient.Retrieve(retrieval);
+
+            entityClient.Delete(build);
+        }
+
+        public void Delete(string id)
+        {
+            Guard.This(id).AgainstNonGuidFormat();
+
+            Delete(Guid.Parse(id));
         }
 
         public IEnumerable<BuildProperties> GetAll()

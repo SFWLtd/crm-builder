@@ -11,12 +11,12 @@ const mapStateToProps = (state: IAppState): AddNewBuildPresenter.IAddNewBuildPro
     let validator = new AddNewBuildFormValidator();
 
     return {
-        shouldDisplay: state.buildState.formState.show,
-        buildVersioningType: state.buildState.formState.buildVersioningType,
-        name: state.buildState.formState.name.value.toString(),
-        nameIsValid: state.buildState.formState.shouldValidate && !validator.validateName(state.buildState.formState.name.value.toString())
-            || state.buildState.formState.name.hasBeenTouched && !validator.validateName(state.buildState.formState.name.value.toString()),
-        isSubmitting: state.buildState.formState.submission.hasStarted
+        shouldDisplay: state.buildState.newBuildFormState.show,
+        buildVersioningType: state.buildState.newBuildFormState.buildVersioningType,
+        name: state.buildState.newBuildFormState.name.value.toString(),
+        nameIsValid: state.buildState.newBuildFormState.shouldValidate && !validator.validateName(state.buildState.newBuildFormState.name.value.toString())
+            || state.buildState.newBuildFormState.name.hasBeenTouched && !validator.validateName(state.buildState.newBuildFormState.name.value.toString()),
+        isSubmitting: state.buildState.newBuildFormState.submission.hasStarted
     };
 };
 
@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch: any): AddNewBuildPresenter.IAddNewBuildPro
         nameOnBlur: () => dispatch(BuildActions.blurBuildName()),
         nameOnChange: (name: string) => dispatch(BuildActions.setBuildName(name)),
         onFormCancel: () => dispatch(BuildActions.closeNewBuildForm()),
-        onFormSubmit: (props: AddNewBuildPresenter.IAddNewBuildProps) => dispatch(BuildActions.startSubmit(props, dispatch))
+        onFormSubmit: (props: AddNewBuildPresenter.IAddNewBuildProps) => dispatch(BuildActions.startNewBuildSubmit(props, dispatch))
     }
 };
 

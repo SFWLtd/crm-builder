@@ -27,5 +27,19 @@ namespace Civica.CrmBuilder.Domain.Validation
 
             return guard;
         }
+
+        internal static GuardThis<string> AgainstNonGuidFormat(this GuardThis<string> guard)
+        {
+            Guid guid = Guid.Empty;
+
+            if (!Guid.TryParse(guard.Obj, out guid))
+            {
+                throw new ArgumentException(guard.CustomErrorMessage != null
+                    ? guard.CustomErrorMessage
+                    : "String was expected to be in GUID format (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx)");
+            }
+
+            return guard;
+        }
     }
 }

@@ -3,8 +3,9 @@ import { IFormInputState } from './FormInputState';
 import { IAsyncActionState } from './AsyncActionState';
 
 export interface IBuildState {
-    formState: INewBuildMainForm
+    newBuildFormState: INewBuildMainForm
     builds: IAsyncActionState<ApiClient.GlobalJsonResultOfIEnumerableOfBuildProperties>
+    confirmDeleteDialog: IConfirmDeleteDialog;
 }
 
 export interface IBuildSummary {
@@ -19,4 +20,10 @@ export interface INewBuildMainForm {
     buildVersioningType: ApiClient.BuildVersioningType,
     shouldValidate: boolean,
     submission: IAsyncActionState<ApiClient.GlobalJsonResultOfNewBuildResult>
+}
+
+export interface IConfirmDeleteDialog {
+    show: boolean,
+    buildId: string,
+    submission: IAsyncActionState<ApiClient.GlobalJsonResultOfEmptyResult>
 }

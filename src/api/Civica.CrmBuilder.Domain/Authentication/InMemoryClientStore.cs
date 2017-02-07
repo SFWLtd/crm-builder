@@ -8,10 +8,8 @@ namespace Civica.CrmBuilder.Domain.Authentication
         private IClient client;
         private readonly TimeSpan slidingExpiryPeriod;
 
-        public InMemoryClientStore()
+        public InMemoryClientStore(int slidingExpiryPeriodInMinutes = 15)
         {
-            int slidingExpiryPeriodInMinutes = 15;
-
             client = null;
             slidingExpiryPeriod = TimeSpan.FromMinutes(slidingExpiryPeriodInMinutes);
         }

@@ -11,8 +11,12 @@ export class BuildActions {
     static SetBuildVersioningType: string = 'SET_BUILD_VERSIONING_TYPE';
     static SetBuildName: string = 'SET_BUILD_NAME';
     static BlurBuildName: string = 'BLUR_BUILD_NAME';
-    static ShowForm: string = 'SHOW_NEW_BUILD_FORM';
-    static CloseForm: string = 'CLOSE_NEW_BUILD_FORM';
+    static ShowNewBuildForm: string = 'SHOW_NEW_BUILD_FORM';
+    static CloseNewBuildForm: string = 'CLOSE_NEW_BUILD_FORM';
+    static ShowDeleteConfirmationDialog: string = 'SHOW_DELETE_BUILD_DIALOG';
+    static CloseDeleteConfirmationDialog: string = 'CLOSE_DELETE_BUILD_DIALOG';
+    static StartDeletingBuild: string = 'START_DELETING_BUILD';
+    static FinishDeletingBuild: string = 'FINISH_DELETING_BUILD';
     static ResetForm: string = 'RESET_NEW_BUILD_FORM';
     static ValidateForm: string = 'VALIDATE_NEW_BUILD_FORM';
     static StartSubmittingNewBuild: string = 'START_SUBMIT_NEW_BUILD';
@@ -39,7 +43,7 @@ export const finishFetchingBuilds = (result: ApiClient.GlobalJsonResultOfIEnumer
     }
 }
 
-export const startSubmit = (props: IAddNewBuildProps, dispatch: any): IAction => {
+export const startNewBuildSubmit = (props: IAddNewBuildProps, dispatch: any): IAction => {
 
     let validator = new AddNewBuildFormValidator();  
     if (!validator.isValid(props)) {
@@ -50,7 +54,7 @@ export const startSubmit = (props: IAddNewBuildProps, dispatch: any): IAction =>
     } else {
         let client = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
         client.addNew(props).then((result: ApiClient.GlobalJsonResultOfNewBuildResult) => {
-            dispatch(finishSubmit(dispatch, result));
+            dispatch(finishNewBuildSubmit(dispatch, result));
         });
     }
 
@@ -60,7 +64,7 @@ export const startSubmit = (props: IAddNewBuildProps, dispatch: any): IAction =>
     };
 };
 
-export const finishSubmit = (dispatch: any, result: ApiClient.GlobalJsonResultOfNewBuildResult): IAction => {
+export const finishNewBuildSubmit = (dispatch: any, result: ApiClient.GlobalJsonResultOfNewBuildResult): IAction => {
 
     if (result.successful) {
         dispatch(closeNewBuildForm());
@@ -98,14 +102,14 @@ export const blurBuildName = (): IAction => {
 export const showNewBuildForm = (): IAction => {
 
     return {
-        type: BuildActions.ShowForm,
+        type: BuildActions.ShowNewBuildForm,
         value: null
     };
 };
 
 export const closeNewBuildForm = (): IAction => {
     return {
-        type: BuildActions.CloseForm,
+        type: BuildActions.CloseNewBuildForm,
         value: null
     };
 };
@@ -120,6 +124,44 @@ export const resetForm = (): IAction => {
 export const validateForm = (): IAction => {
     return {
         type: BuildActions.ValidateForm,
+        value: null
+    };
+};
+
+export const showDeleteConfirmationDialog = (buildId: string): IAction => {
+    return {
+        type: BuildActions.ShowDeleteConfirmationDialog,
+        value: buildId
+    };
+};
+
+export const closeDeleteConfirmationDialog = (): IAction => {
+    return {
+        type: BuildActions.CloseDeleteConfirmationDialog,
+        value: null
+    };
+};
+
+export const startDeletingBuild = (dispatch: any, buildId: string): IAction => {
+    let client = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
+    client.delete(buildId).then((result: ApiClient.GlobalJsonResultOfEmptyResult) => {
+        dispatch(finishDeletingBuild(dispatch, result));
+    })
+
+    return {
+        type: BuildActions.StartDeletingBuild,
+        value: null
+    };
+};
+
+export const finishDeletingBuild = (dispatch: any, result: ApiClient.GlobalJsonResultOfEmptyResult): IAction => {
+    if (result.successful) {
+        dispatch(closeDeleteConfirmationDialog());
+        dispatch(startFetchingBuilds(dispatch));
+    }
+
+    return {
+        type: BuildActions.FinishDeletingBuild,
         value: null
     };
 };

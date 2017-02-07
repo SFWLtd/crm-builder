@@ -20,4 +20,11 @@ export class BuildClient {
     fetchAll(): Promise<ApiClient.GlobalJsonResultOfIEnumerableOfBuildProperties> {
         return this.client.getBuilds('');
     }
+
+    delete(id: string): Promise<ApiClient.GlobalJsonResultOfEmptyResult> {
+        let request = new ApiClient.DeleteBuildRequest();
+        request.id = id;
+
+        return this.client.deleteBuild(request, '');
+    }
 }

@@ -20,7 +20,8 @@ const mapStateToProps = (state: IAppState): BuildsPresenter.IBuildsOverviewProps
 const mapDispatchToProps = (dispatch: any): BuildsPresenter.IBuildsOverviewProps => {
     return {
         newBuild: () => dispatch(BuildActions.showNewBuildForm()),
-        fetchBuilds: () => dispatch(BuildActions.startFetchingBuilds(dispatch))
+        fetchBuilds: () => dispatch(BuildActions.startFetchingBuilds(dispatch)),
+        deleteBuild: (buildId: string) => dispatch(BuildActions.showDeleteConfirmationDialog(buildId))
     }
 };
 

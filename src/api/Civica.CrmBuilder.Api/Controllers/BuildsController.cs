@@ -33,5 +33,14 @@ namespace Civica.CrmBuilder.Api.Controllers
 
             return GlobalJsonResult<NewBuildResult>.Success(System.Net.HttpStatusCode.Created, result);
         }
+
+        [ActionName("DeleteBuild")]
+        [HttpPost]
+        public GlobalJsonResult<EmptyResult> DeleteBuild([FromBody]DeleteBuildRequest request)
+        {
+            buildService.Delete(request.Id);
+
+            return GlobalJsonResult<EmptyResult>.Success(System.Net.HttpStatusCode.NoContent);
+        }
     }
 }

@@ -11,5 +11,9 @@ namespace Civica.CrmBuilder.Domain.Builds
         IBuild Get(Guid id);
 
         IEnumerable<BuildProperties> GetAll();
+
+        void Delete(Guid id);
+
+        void Delete(string id);
     }
 }

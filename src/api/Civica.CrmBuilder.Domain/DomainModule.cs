@@ -12,6 +12,7 @@ namespace Civica.CrmBuilder.Domain
         {
             builder.RegisterType<InMemoryClientStore>()
                 .As<IClientStore>()
+                .WithParameter("slidingExpiryPeriodInMinutes", 240)
                 .SingleInstance();
 
             builder.Register(c =>

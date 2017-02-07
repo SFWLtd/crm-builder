@@ -20,43 +20,60 @@ const buildReducer = (state: IBuildState, action: IAction): IBuildState => {
             newState.builds.result = action.value;
             break;
         case BuildActions.SetBuildName:
-            newState.formState.name.value = action.value;
+            newState.newBuildFormState.name.value = action.value;
             break;
         case BuildActions.SetBuildVersioningType:
-            newState.formState.buildVersioningType = action.value;
+            newState.newBuildFormState.buildVersioningType = action.value;
             break;
         case BuildActions.BlurBuildName:
-            newState.formState.name.hasBeenTouched = true;
+            newState.newBuildFormState.name.hasBeenTouched = true;
             break;
-        case BuildActions.ShowForm:
-            newState.formState.show = true;
+        case BuildActions.ShowNewBuildForm:
+            newState.newBuildFormState.show = true;
             break;
-        case BuildActions.CloseForm:
-            newState.formState.show = false;
+        case BuildActions.CloseNewBuildForm:
+            newState.newBuildFormState.show = false;
             break;
         case BuildActions.ValidateForm:
-            newState.formState.shouldValidate = true;
+            newState.newBuildFormState.shouldValidate = true;
             break;
         case BuildActions.ResetForm:
-            newState.formState.name.value = '';
-            newState.formState.buildVersioningType = ApiClient.BuildVersioningType.JulianDate;
-            newState.formState.name.hasBeenTouched = false;
-            newState.formState.submission.hasStarted = false;
-            newState.formState.submission.hasCompleted = false;
-            newState.formState.submission.result = null;
-            newState.formState.shouldValidate = false;
+            newState.newBuildFormState.name.value = '';
+            newState.newBuildFormState.buildVersioningType = ApiClient.BuildVersioningType.JulianDate;
+            newState.newBuildFormState.name.hasBeenTouched = false;
+            newState.newBuildFormState.submission.hasStarted = false;
+            newState.newBuildFormState.submission.hasCompleted = false;
+            newState.newBuildFormState.submission.result = null;
+            newState.newBuildFormState.shouldValidate = false;
             break;
         case BuildActions.StartSubmittingNewBuild:
-            newState.formState.submission.hasStarted = true,
-            newState.formState.submission.hasCompleted = false,
-            newState.formState.submission.result = null
+            newState.newBuildFormState.submission.hasStarted = true;
+            newState.newBuildFormState.submission.hasCompleted = false;
+            newState.newBuildFormState.submission.result = null;
             break;
         case BuildActions.FinishSubmittingNewBuild:
-            newState.formState.submission.hasStarted = false,
-            newState.formState.submission.hasCompleted = true,
-            newState.formState.submission.result = action.value
+            newState.newBuildFormState.submission.hasStarted = false;
+            newState.newBuildFormState.submission.hasCompleted = true;
+            newState.newBuildFormState.submission.result = action.value;
             break;
-
+        case BuildActions.ShowDeleteConfirmationDialog:
+            newState.confirmDeleteDialog.show = true;
+            newState.confirmDeleteDialog.buildId = action.value;
+            break;
+        case BuildActions.CloseDeleteConfirmationDialog:
+            newState.confirmDeleteDialog.show = false;
+            newState.confirmDeleteDialog.buildId = '';
+            break;
+        case BuildActions.StartDeletingBuild: 
+            newState.confirmDeleteDialog.submission.hasStarted = true;
+            newState.confirmDeleteDialog.submission.hasCompleted = false;
+            newState.confirmDeleteDialog.submission.result = null;
+            break;
+        case BuildActions.FinishDeletingBuild:
+            newState.confirmDeleteDialog.submission.hasStarted = false;
+            newState.confirmDeleteDialog.submission.hasCompleted = true;
+            newState.confirmDeleteDialog.submission.result = null;
+            break;
         default: return state;
     }
 

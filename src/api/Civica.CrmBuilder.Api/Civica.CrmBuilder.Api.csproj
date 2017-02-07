@@ -208,6 +208,7 @@
   <ItemGroup>
     <Compile Include="ApiModule.cs" />
     <Compile Include="ApiRequests\ComponentInstallationRequest.cs" />
+    <Compile Include="ApiRequests\DeleteBuildRequest.cs" />
     <Compile Include="ApiRequests\NewBuildRequest.cs" />
     <Compile Include="ApiRequests\NewSessionRequest.cs" />
     <Compile Include="ApiRequests\GetSessionTokenRequest.cs" />

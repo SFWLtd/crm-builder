@@ -60,7 +60,16 @@ export const defaultAppState: IAppState = {
             hasStarted: false,
             result: null
         },
-        formState: {
+        confirmDeleteDialog: {
+            show: false,
+            buildId: '',
+            submission: {
+                hasCompleted: false,
+                hasStarted: false,
+                result: null
+            }
+        },
+        newBuildFormState: {
             buildVersioningType: ApiClient.BuildVersioningType.JulianDate,
             name: {
                 hasBeenTouched: false,

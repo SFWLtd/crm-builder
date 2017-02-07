@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ApiClient from '../../../api/ApiClient';
 import AddNewBuild from '../containers/AddNewBuild';
+import ConfirmDeleteBuild from '../containers/ConfirmDeleteBuild';
 import { Button, Container, Dimmer, Grid, Header, Icon, Image, Item, Loader, Menu, Rail, Segment } from 'semantic-ui-react';
 
 export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefined> {
@@ -22,7 +23,13 @@ export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefi
             return <Segment key={build.id} attached>
                 <Item>
                     <Item.Content>
-                        <Item.Header as='a'><h3>{build.name}</h3></Item.Header>
+                        <Item.Header><h3>{build.name}</h3></Item.Header>
+                    </Item.Content>
+                    <br/>
+                    <Item.Content>
+                        <Button.Group basic size='small'>
+                            <Button icon='archive' onClick={(e:any) => this.props.deleteBuild(build.id)}/>
+                        </Button.Group>
                     </Item.Content>
                 </Item>
             </Segment>
@@ -37,6 +44,7 @@ export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefi
                 </Header>
                 {builds}
                 <AddNewBuild/>
+                <ConfirmDeleteBuild/>
                 <Dimmer active={this.props.isFetchingBuilds} page>
                     <Loader>
                         <p>Fetching builds...</p>
@@ -52,4 +60,5 @@ export interface IBuildsOverviewProps {
     builds?: Array<ApiClient.BuildProperties>;
     navigationIsActive?: boolean;
     newBuild?: () => void;
+    deleteBuild?: (id: string) => void;
 }

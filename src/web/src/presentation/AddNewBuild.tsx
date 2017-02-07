@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ApiClient from '../../../api/ApiClient';
-import { Button, Dimmer, Form, Loader, Modal } from 'semantic-ui-react';
+import { Button, Dimmer, Form, Header, Icon, Loader, Modal } from 'semantic-ui-react';
 
 export class AddNewBuild extends React.Component<IAddNewBuildProps, undefined> {
     constructor(props: IAddNewBuildProps) {
@@ -10,9 +10,12 @@ export class AddNewBuild extends React.Component<IAddNewBuildProps, undefined> {
     render() {
         return <div>
         <Modal open={this.props.shouldDisplay} onClose={(e: any) => this.props.onFormCancel()}>
-            <Modal.Header>
-                Add new build
-            </Modal.Header>
+            <Header as='h2' icon textAlign='center'>
+                <Icon name='wrench' circular size='tiny' />
+                <Header.Content>
+                    Add new build
+                </Header.Content>
+            </Header>
             <Modal.Content>
                <Form size='large'>
                     <Form.Field error={this.props.nameIsValid}>
@@ -34,7 +37,7 @@ export class AddNewBuild extends React.Component<IAddNewBuildProps, undefined> {
             </Modal.Content>
             <Modal.Actions>
             <Button negative onClick={(e: any) => this.props.onFormCancel()}>Cancel</Button>
-            <Button primary labelPosition='right' icon='checkmark' content='Submit' onClick={(e: any) => this.props.onFormSubmit(this.props)} />
+            <Button primary labelPosition='right' icon='write' content='Submit' onClick={(e: any) => this.props.onFormSubmit(this.props)} />
           </Modal.Actions>
         </Modal>
         <Dimmer active={this.props.isSubmitting} page>

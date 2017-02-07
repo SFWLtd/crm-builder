@@ -91,7 +91,7 @@ namespace Civica.CrmBuilder.Domain.Installation
 
             try
             {
-                thisComponent.InstallationAction.Compile().Invoke(customizationClient);
+                thisComponent.InstallationAction.Invoke(customizationClient);
                 thisComponent.DataChangeAction.Invoke(crm().EntityClient);
 
                 if (!nextComponent.HasValue || (nextComponent.HasValue && nextComponent.Value.Value.Version.CompareTo(version.Version) > 0))
@@ -109,7 +109,7 @@ namespace Civica.CrmBuilder.Domain.Installation
                     }
                     catch
                     {
-                        thisComponent.RollbackAction.Compile().Invoke(customizationClient);
+                        thisComponent.RollbackAction.Invoke(customizationClient);
                         throw;
                     }
                 }
@@ -176,7 +176,7 @@ namespace Civica.CrmBuilder.Domain.Installation
                 if (thisVersion.InstallationComponents.ContainsKey(failedComponentId))
                 {
                     var rollbackAction = thisVersion.InstallationComponents[failedComponentId].RollbackAction;
-                    rollbackAction.Compile().Invoke(customizationClient);
+                    rollbackAction.Invoke(customizationClient);
                 }
 
                 failedComponentId--;

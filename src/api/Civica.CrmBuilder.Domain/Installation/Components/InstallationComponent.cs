@@ -8,16 +8,16 @@ namespace Civica.CrmBuilder.Domain.Installation.Components
     {
         public string Description { get; }
 
-        public Expression<Action<ICrmPlusPlusCustomizationClient>> InstallationAction { get; }
+        public Action<ICrmPlusPlusCustomizationClient> InstallationAction { get; }
 
         public Action<ICrmPlusPlusEntityClient> DataChangeAction { get; }
 
-        public Expression<Action<ICrmPlusPlusCustomizationClient>> RollbackAction { get; }
+        public Action<ICrmPlusPlusCustomizationClient> RollbackAction { get; }
 
         public InstallationComponent(string activeDescription, 
-            Expression<Action<ICrmPlusPlusCustomizationClient>> installationAction,
+            Action<ICrmPlusPlusCustomizationClient> installationAction,
             Action<ICrmPlusPlusEntityClient> dataChangeAction,
-            Expression<Action<ICrmPlusPlusCustomizationClient>> rollbackAction)
+            Action<ICrmPlusPlusCustomizationClient> rollbackAction)
         {
             Description = activeDescription;
             InstallationAction = installationAction;

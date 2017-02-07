@@ -4,7 +4,7 @@ import { IAsyncActionState } from './AsyncActionState';
 
 export interface IBuildState {
     formState: INewBuildMainForm
-    builds: IBuildSummary[]
+    builds: IAsyncActionState<ApiClient.GlobalJsonResultOfIEnumerableOfBuildProperties>
 }
 
 export interface IBuildSummary {

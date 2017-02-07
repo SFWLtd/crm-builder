@@ -1,13 +1,32 @@
 import * as React from 'react';
 import * as ApiClient from '../../../api/ApiClient';
 import AddNewBuild from '../containers/AddNewBuild';
-import { Button, Container, Grid, Header, Icon, Image, Item, Menu, Rail, Segment } from 'semantic-ui-react';
+import { Button, Container, Dimmer, Grid, Header, Icon, Image, Item, Loader, Menu, Rail, Segment } from 'semantic-ui-react';
 
 export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefined> {
+
+    constructor(props: IBuildsOverviewProps) {
+        super(props);
+    }
+
+    componentDidMount() {
+        this.props.fetchBuilds();
+    }
+
     render() {
         if (!this.props.navigationIsActive) {
             return <div></div>;
         }
+
+        let builds = this.props.builds.map((build: ApiClient.BuildProperties): JSX.Element => {
+            return <Segment key={build.id} attached>
+                <Item>
+                    <Item.Content>
+                        <Item.Header as='a'><h3>{build.name}</h3></Item.Header>
+                    </Item.Content>
+                </Item>
+            </Segment>
+        });
 
         return <div>
                 <Menu text>
@@ -16,39 +35,21 @@ export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefi
                 <Header as='h2' attached='top'>
                     Your builds
                 </Header>
-                <Segment attached>
-                    <Item>
-                        <Item.Image size='tiny' src='http://semantic-ui.com/images/wireframe/image.png' />
-                        <Item.Content>
-                            <Item.Header as='a'>Header</Item.Header>
-                            <Item.Meta>Description</Item.Meta>
-                            <Item.Description>
-                            <Image src='http://semantic-ui.com/images/wireframe/short-paragraph.png' />
-                            </Item.Description>
-                            <Item.Extra>Additional Details</Item.Extra>
-                        </Item.Content>
-                    </Item>
-                </Segment>
-                <Segment attached>
-                    <Item>
-                        <Item.Image size='tiny' src='http://semantic-ui.com/images/wireframe/image.png' />
-
-                        <Item.Content>
-                            <Item.Header as='a'>Header</Item.Header>
-                            <Item.Meta>Description</Item.Meta>
-                            <Item.Description>
-                            <Image src='http://semantic-ui.com/images/wireframe/short-paragraph.png' />
-                            </Item.Description>
-                            <Item.Extra>Additional Details</Item.Extra>
-                        </Item.Content>
-                    </Item>
-                </Segment>
+                {builds}
                 <AddNewBuild/>
+                <Dimmer active={this.props.isFetchingBuilds} page>
+                    <Loader>
+                        <p>Fetching builds...</p>
+                    </Loader>
+                </Dimmer>
         </div>;
     }
 }
 
 export interface IBuildsOverviewProps {
+    isFetchingBuilds?: boolean;
+    fetchBuilds?: () => void;
+    builds?: Array<ApiClient.BuildProperties>;
     navigationIsActive?: boolean;
     newBuild?: () => void;
 }

@@ -9,6 +9,16 @@ const buildReducer = (state: IBuildState, action: IAction): IBuildState => {
 
     switch (action.type)
     {
+        case BuildActions.StartFetchingBuilds:
+            newState.builds.hasStarted = true;
+            newState.builds.hasCompleted = false;
+            newState.builds.result = null;
+            break;
+        case BuildActions.FinishFetchingBuilds:
+            newState.builds.hasStarted = false;
+            newState.builds.hasCompleted = true;
+            newState.builds.result = action.value;
+            break;
         case BuildActions.SetBuildName:
             newState.formState.name.value = action.value;
             break;

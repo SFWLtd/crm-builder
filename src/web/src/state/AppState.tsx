@@ -55,7 +55,11 @@ export const defaultAppState: IAppState = {
         message: null
     },
     buildState: {
-        builds: new Array<IBuildSummary>(),
+        builds: {
+            hasCompleted: false,
+            hasStarted: false,
+            result: null
+        },
         formState: {
             buildVersioningType: ApiClient.BuildVersioningType.JulianDate,
             name: {

@@ -6,6 +6,8 @@ import config from '../Config';
 import { BuildClient } from '../apiclient/BuildClient';
 
 export class BuildActions {
+    static StartFetchingBuilds: string = 'START_FETCH_BUILDS';
+    static FinishFetchingBuilds: string = 'FINISH_FETCH_BUILDS';
     static SetBuildVersioningType: string = 'SET_BUILD_VERSIONING_TYPE';
     static SetBuildName: string = 'SET_BUILD_NAME';
     static BlurBuildName: string = 'BLUR_BUILD_NAME';
@@ -15,6 +17,26 @@ export class BuildActions {
     static ValidateForm: string = 'VALIDATE_NEW_BUILD_FORM';
     static StartSubmittingNewBuild: string = 'START_SUBMIT_NEW_BUILD';
     static FinishSubmittingNewBuild: string = 'FINISH_SUBMIT_NEW_BUILD';
+}
+
+export const startFetchingBuilds = (dispatch: any): IAction => {
+
+    let client = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
+    client.fetchAll().then((result: ApiClient.GlobalJsonResultOfIEnumerableOfBuildProperties) => {
+        dispatch(finishFetchingBuilds(result));
+    });
+
+    return {
+        type: BuildActions.StartFetchingBuilds,
+        value: null
+    };
+};
+
+export const finishFetchingBuilds = (result: ApiClient.GlobalJsonResultOfIEnumerableOfBuildProperties): IAction => {
+    return {
+        type: BuildActions.FinishFetchingBuilds,
+        value: result
+    }
 }
 
 export const startSubmit = (props: IAddNewBuildProps, dispatch: any): IAction => {

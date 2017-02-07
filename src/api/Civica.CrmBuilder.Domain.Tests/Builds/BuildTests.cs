@@ -12,7 +12,7 @@ namespace Civica.CrmBuilder.Domain.Tests.Builds
         [Fact]
         public void WhenCreatingABuildFromProperties_ShouldThrowArgumentExceptionIfNameDoesNotExist()
         {
-            Assert.Throws<ArgumentException>(() => new Build(null, new NewBuildProperties()));
+            Assert.Throws<ArgumentException>(() => new Build(null, new BuildProperties()));
         }
 
         [Fact]
@@ -20,7 +20,7 @@ namespace Civica.CrmBuilder.Domain.Tests.Builds
         {
             var entityClient = A.Fake<ICrmPlusPlusEntityClient>();
 
-            var build = new Build(entityClient, new NewBuildProperties
+            var build = new Build(entityClient, new BuildProperties
             {
                 BuildVersioningType = Core.Enums.BuildVersioningType.JulianDate,
                 Name = "test"

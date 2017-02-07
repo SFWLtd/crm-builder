@@ -4,15 +4,15 @@ using Civica.CrmBuilder.Domain.Builds;
 
 namespace Civica.CrmBuilder.Api.ApiRequests
 {
-    public class NewBuildRequest : IMappableTo<NewBuildProperties>
+    public class NewBuildRequest : IMappableTo<BuildProperties>
     {
         public string Name { get; set; }
 
         public BuildVersioningType BuildVersioningType { get; set; }
 
-        public NewBuildProperties Map()
+        public BuildProperties Map()
         {
-            return new NewBuildProperties
+            return new BuildProperties
             {
                 BuildVersioningType = BuildVersioningType,
                 Name = Name

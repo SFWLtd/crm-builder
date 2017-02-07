@@ -11,7 +11,7 @@ namespace Civica.CrmBuilder.Domain.Builds
 
         internal Entities.Build Entity { get; set; }
 
-        internal Build(ICrmPlusPlusEntityClient client, NewBuildProperties newBuildProps)
+        internal Build(ICrmPlusPlusEntityClient client, BuildProperties newBuildProps)
         {
             Guard.This(newBuildProps.Name).AgainstNullOrEmpty();
 
@@ -32,12 +32,5 @@ namespace Civica.CrmBuilder.Domain.Builds
 
             Entity = client.Retrieve(retrieval);
         }
-    }
-
-    public class NewBuildProperties
-    {
-        public string Name { get; set; }
-
-        public BuildVersioningType BuildVersioningType { get; set; }
     }
 }

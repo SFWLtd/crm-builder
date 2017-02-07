@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Web.Http;
 using Civica.CrmBuilder.Api.ApiRequests;
 using Civica.CrmBuilder.Api.ApiResults;
 using Civica.CrmBuilder.Domain.Builds;
@@ -7,18 +8,25 @@ namespace Civica.CrmBuilder.Api.Controllers
 {
     public class BuildsController : ApiController
     {
-        private readonly IBuildBuilder buildBuilder;
+        private readonly IBuildService buildService;
 
-        public BuildsController(IBuildBuilder buildBuilder)
+        public BuildsController(IBuildService buildService)
         {
-            this.buildBuilder = buildBuilder;
+            this.buildService = buildService;
+        }
+
+        [ActionName("GetBuilds")]
+        [HttpGet]
+        public GlobalJsonResult<IEnumerable<BuildProperties>> GetBuilds()
+        {
+            return GlobalJsonResult<IEnumerable<BuildProperties>>.Success(System.Net.HttpStatusCode.OK, buildService.GetAll());
         }
 
         [ActionName("NewBuild")]
         [HttpPost]
         public GlobalJsonResult<NewBuildResult> NewBuild([FromBody]NewBuildRequest request)
         {
-            var build = buildBuilder.New(request);
+            var build = buildService.New(request);
 
             var result = new NewBuildResult();
             result.PopulateFrom(build);

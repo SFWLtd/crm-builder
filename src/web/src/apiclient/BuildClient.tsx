@@ -16,4 +16,8 @@ export class BuildClient {
 
         return this.client.newBuild(request, '');
     }
+
+    fetchAll(): Promise<ApiClient.GlobalJsonResultOfIEnumerableOfBuildProperties> {
+        return this.client.getBuilds('');
+    }
 }

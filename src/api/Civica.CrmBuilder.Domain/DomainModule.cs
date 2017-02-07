@@ -28,8 +28,8 @@ namespace Civica.CrmBuilder.Domain
             builder.RegisterType<Installation.Installation>()
                 .As<IInstallation>();
 
-            builder.RegisterType<BuildBuilder>()
-                .As<IBuildBuilder>();
+            builder.RegisterType<BuildService>()
+                .As<IBuildService>();
         }
     }
 }

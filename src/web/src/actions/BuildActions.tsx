@@ -65,6 +65,7 @@ export const finishSubmit = (dispatch: any, result: ApiClient.GlobalJsonResultOf
     if (result.successful) {
         dispatch(closeNewBuildForm());
         dispatch(resetForm());
+        dispatch(startFetchingBuilds(dispatch));
     }
 
     return {

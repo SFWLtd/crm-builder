@@ -1,8 +1,8 @@
 ﻿import * as React from 'react';
-import AuthenticationForm from '../containers/authentication/AuthenticationForm';
-import Navigation from '../containers/navigation/Navigation';
-import Installation from '../containers/installation/Installation';
-import BuildsOverview from '../containers/builds/BuildsOverview';
+import AuthenticationForm from '../containers/AuthenticationForm';
+import Navigation from '../containers/Navigation';
+import Installation from '../containers/Installation';
+import BuildsOverview from '../containers/BuildsOverview';
 import { Container, Dimmer, Loader } from 'semantic-ui-react';
 
 export class App extends React.Component<IAppProps, undefined> {

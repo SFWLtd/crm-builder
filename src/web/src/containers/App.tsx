@@ -1,7 +1,7 @@
 ﻿import { connect } from 'react-redux';
-import { IAppState } from '../state/IAppState';
+import { IAppState } from '../state/AppState';
 import * as AppPresenter from '../presentation/App';
-import * as AppActionCreators from '../actions/AppActionCreators';
+import * as AppActions from '../actions/AppActions';
 
 const mapStateToProps = (state: IAppState): AppPresenter.IAppProps => {
     return {
@@ -19,7 +19,7 @@ const mapStateToProps = (state: IAppState): AppPresenter.IAppProps => {
 
 const mapDispatchToProps = (dispatch: any): AppPresenter.IAppProps => {
     return {
-        load: () => dispatch(AppActionCreators.load(dispatch))
+        load: () => dispatch(AppActions.load(dispatch))
     };
 };
 

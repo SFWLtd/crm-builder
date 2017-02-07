@@ -14,9 +14,9 @@ namespace Civica.CrmBuilder.Api.Controllers
             this.buildBuilder = buildBuilder;
         }
 
-        [ActionName("New")]
+        [ActionName("NewBuild")]
         [HttpPost]
-        public GlobalJsonResult<NewBuildResult> New([FromBody]NewBuildRequest request)
+        public GlobalJsonResult<NewBuildResult> NewBuild([FromBody]NewBuildRequest request)
         {
             var build = buildBuilder.New(request);
 

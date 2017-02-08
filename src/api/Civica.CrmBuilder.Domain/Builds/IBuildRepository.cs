@@ -4,7 +4,7 @@ using Civica.CrmBuilder.Core.Mapping;
 
 namespace Civica.CrmBuilder.Domain.Builds
 {
-    public interface IBuildService
+    public interface IBuildRepository
     {
         IBuild New(IMappableTo<BuildProperties> buildProperties);
 

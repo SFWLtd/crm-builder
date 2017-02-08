@@ -10,11 +10,11 @@ using Civica.CrmPlusPlus.Sdk.Querying;
 
 namespace Civica.CrmBuilder.Domain.Builds
 {
-    public class BuildService : IBuildService
+    public class BuildRepository : IBuildRepository
     {
         private readonly ICrmPlusPlusEntityClient entityClient;
 
-        public BuildService(IClientStore clientStore)
+        public BuildRepository(IClientStore clientStore)
         {
             entityClient = clientStore.Get().Crm.EntityClient;
         }

@@ -8,9 +8,9 @@ namespace Civica.CrmBuilder.Api.Controllers
 {
     public class BuildsController : ApiController
     {
-        private readonly IBuildService buildService;
+        private readonly IBuildRepository buildService;
 
-        public BuildsController(IBuildService buildService)
+        public BuildsController(IBuildRepository buildService)
         {
             this.buildService = buildService;
         }

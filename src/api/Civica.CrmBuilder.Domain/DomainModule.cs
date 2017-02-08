@@ -29,8 +29,8 @@ namespace Civica.CrmBuilder.Domain
             builder.RegisterType<Installation.Installation>()
                 .As<IInstallation>();
 
-            builder.RegisterType<BuildService>()
-                .As<IBuildService>();
+            builder.RegisterType<BuildRepository>()
+                .As<IBuildRepository>();
         }
     }
 }

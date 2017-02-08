@@ -54,9 +54,9 @@
     <Compile Include="Authentication\InMemoryClientStore.cs" />
     <Compile Include="Builds\Build.cs" />
     <Compile Include="Builds\BuildProperties.cs" />
-    <Compile Include="Builds\BuildService.cs" />
+    <Compile Include="Builds\BuildRepository.cs" />
     <Compile Include="Builds\IBuild.cs" />
-    <Compile Include="Builds\IBuildService.cs" />
+    <Compile Include="Builds\IBuildRepository.cs" />
     <Compile Include="CrmPlusPlusQueries\SolutionQueries.cs" />
     <Compile Include="DomainModule.cs" />
     <Compile Include="ICrmPlusPlusCustomizationClientExtensions.cs" />

@@ -69,6 +69,7 @@
     <Compile Include="Installation\InstallationStatus.cs" />
     <Compile Include="Installation\InstallationVersionDiscovery.cs" />
     <Compile Include="Installation\Versions\AddBuildVersioningType.cs" />
+    <Compile Include="Installation\Versions\AddMajorAndMinorVersionToBuild.cs" />
     <Compile Include="Installation\Versions\CreateBuildEntity.cs" />
     <Compile Include="Time\SystemTime.cs" />
     <Compile Include="Versioning\IVersionable.cs" />

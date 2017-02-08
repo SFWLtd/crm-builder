@@ -19,5 +19,15 @@ namespace Civica.CrmBuilder.Entities
         [PropertyInfo("Build versioning type", AttributeRequiredLevel.ApplicationRequired, "The type of build versioning to use")]
         [OptionSet()]
         public BuildVersioningType BuildVersioningType { get; set; }
+
+        [PropertyName("buil_versionmajor")]
+        [PropertyInfo("Version Major", AttributeRequiredLevel.ApplicationRequired, "The major version of the build")]
+        [Integer(999, 0, IntegerFormat.None)]
+        public int VersionMajor { get; set; }
+
+        [PropertyName("buil_versionminor")]
+        [PropertyInfo("Version Minor", AttributeRequiredLevel.ApplicationRequired, "The minor version of the build")]
+        [Integer(999, 0, IntegerFormat.None)]
+        public int VersionMinor { get; set; }
     }
 }

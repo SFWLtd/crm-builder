@@ -11,14 +11,14 @@ namespace Civica.CrmBuilder.Domain.Builds
 
         internal Entities.Build Entity { get; set; }
 
-        internal Build(ICrmPlusPlusEntityClient client, BuildProperties newBuildProps)
+        internal Build(ICrmPlusPlusEntityClient client, BuildProperties buildProps)
         {
-            Guard.This(newBuildProps.Name).AgainstNullOrEmpty();
+            Guard.This(buildProps.Name).AgainstNullOrEmpty();
 
             Entity = new Entities.Build
             {
-                Name = newBuildProps.Name,
-                BuildVersioningType = newBuildProps.BuildVersioningType
+                Name = buildProps.Name,
+                BuildVersioningType = buildProps.BuildVersioningType
             };
 
             client.Create(Entity);

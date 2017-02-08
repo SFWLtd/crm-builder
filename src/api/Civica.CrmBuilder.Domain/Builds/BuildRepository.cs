@@ -24,6 +24,13 @@ namespace Civica.CrmBuilder.Domain.Builds
             return new Build(entityClient, id);
         }
 
+        public IBuild Get(string id)
+        {
+            Guard.This(id).AgainstNonGuidFormat();
+
+            return Get(Guid.Parse(id));
+        }
+
         public void Delete(Guid id)
         {
             var retrieval = Retrieval.ForEntity<Entities.Build>(id);

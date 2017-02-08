@@ -214,9 +214,10 @@
     <Compile Include="ApiRequests\GetSessionTokenRequest.cs" />
     <Compile Include="ApiRequests\RollbackRequest.cs" />
     <Compile Include="ApiRequests\StartInstallationRequest.cs" />
+    <Compile Include="ApiRequests\UpdateBuildRequest.cs" />
     <Compile Include="ApiResults\InstallationResult.cs" />
     <Compile Include="ApiResults\InstallationStatusResult.cs" />
-    <Compile Include="ApiResults\NewBuildResult.cs" />
+    <Compile Include="ApiResults\BuildResult.cs" />
     <Compile Include="ApiResults\RollbackResult.cs" />
     <Compile Include="ApiResults\SessionTokenResult.cs" />
     <Compile Include="Controllers\BuildsController.cs" />

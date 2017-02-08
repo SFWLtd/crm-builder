@@ -4,7 +4,7 @@ using Civica.CrmBuilder.Core.Mapping;
 
 namespace Civica.CrmBuilder.Api.ApiResults
 {
-    public class NewBuildResult : IPopulatableFrom<IBuild>
+    public class BuildResult : IPopulatableFrom<IBuild>
     {
         Guid Id { get; set; }
 

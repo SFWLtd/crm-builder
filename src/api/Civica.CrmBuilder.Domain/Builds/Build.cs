@@ -1,5 +1,5 @@
 ﻿using System;
-using Civica.CrmBuilder.Domain.Validation;
+using Civica.CrmBuilder.Core.Mapping;
 using Civica.CrmPlusPlus.Sdk.Client;
 
 namespace Civica.CrmBuilder.Domain.Builds
@@ -38,15 +38,13 @@ namespace Civica.CrmBuilder.Domain.Builds
             Entity = client.Retrieve(retrieval);
         }
 
-        public void UpdateName(string name)
+        public void Update(IMappableTo<BuildProperties> props)
         {
-            Entity.Name = name;
-        }
+            var buildProps = props.Map();
 
-        public void UpdateVersion(int versionMajor, int versionMinor)
-        {
-            Entity.VersionMajor = versionMajor;
-            Entity.VersionMinor = versionMinor;
+            Entity.Name = buildProps.Name;
+            Entity.VersionMajor = buildProps.VersionMajor;
+            Entity.VersionMinor = buildProps.VersionMinor;
         }
 
         public void DoThis(Action<Build> buildActions)

@@ -8,6 +8,8 @@ namespace Civica.CrmBuilder.Domain.Builds
     {
         IBuild New(IMappableTo<BuildProperties> buildProperties);
 
+        IBuild Get(string id);
+
         IBuild Get(Guid id);
 
         IEnumerable<BuildProperties> GetAll();

@@ -9,5 +9,9 @@ namespace Civica.CrmBuilder.Domain.Builds
         public string Name { get; set; }
 
         public BuildVersioningType BuildVersioningType { get; set; }
+
+        public int VersionMajor { get; set; }
+
+        public int VersionMinor { get; set; }
     }
 }

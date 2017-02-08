@@ -10,12 +10,18 @@ namespace Civica.CrmBuilder.Api.ApiRequests
 
         public BuildVersioningType BuildVersioningType { get; set; }
 
+        public int VersionMajor { get; set; }
+
+        public int VersionMinor { get; set; }
+
         public BuildProperties Map()
         {
             return new BuildProperties
             {
                 BuildVersioningType = BuildVersioningType,
-                Name = Name
+                Name = Name,
+                VersionMajor = VersionMajor,
+                VersionMinor = VersionMinor
             };
         }
     }

@@ -46,6 +46,10 @@
     <Compile Include="Mapping\IPopulateFrom.cs" />
     <Compile Include="Mapping\MappingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\Guard.cs" />
+    <Compile Include="Validation\GuardIntExtensions.cs" />
+    <Compile Include="Validation\GuardStringExtensions.cs" />
+    <Compile Include="Validation\GuardThis.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Civica.CrmPlusPlus.Sdk\Civica.CrmPlusPlus.Sdk.csproj">

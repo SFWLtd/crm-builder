@@ -16,10 +16,6 @@ namespace Civica.CrmBuilder.Domain.Builds
         {
             this.client = client;
 
-            Guard.This(buildProps.Name).AgainstNullOrEmpty();
-            Guard.This(buildProps.VersionMajor).AgainstNegative();
-            Guard.This(buildProps.VersionMinor).AgainstNegative();
-
             Entity = new Entities.Build
             {
                 Name = buildProps.Name,
@@ -42,14 +38,20 @@ namespace Civica.CrmBuilder.Domain.Builds
             Entity = client.Retrieve(retrieval);
         }
 
+        public void UpdateName(string name)
+        {
+            Entity.Name = name;
+        }
+
         public void UpdateVersion(int versionMajor, int versionMinor)
         {
-            Guard.This(versionMajor).AgainstNegative();
-            Guard.This(versionMinor).AgainstNegative();
-
             Entity.VersionMajor = versionMajor;
             Entity.VersionMinor = versionMinor;
+        }
 
+        public void DoThis(Action<Build> buildActions)
+        {
+            buildActions(this);
             client.Update(Entity);
         }
     }

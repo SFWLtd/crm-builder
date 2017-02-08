@@ -6,6 +6,6 @@ namespace Civica.CrmBuilder.Domain.Builds
     {
         Guid Id { get; }
 
-        void UpdateVersion(int versionMajor, int versionMinor);
+        void DoThis(Action<Build> buildActions);
     }
 }

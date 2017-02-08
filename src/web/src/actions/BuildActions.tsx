@@ -11,6 +11,10 @@ export class BuildActions {
     static SetBuildVersioningType: string = 'SET_BUILD_VERSIONING_TYPE';
     static SetBuildName: string = 'SET_BUILD_NAME';
     static BlurBuildName: string = 'BLUR_BUILD_NAME';
+    static SetBuildMajorVersion: string = 'SET_BUILD_MAJOR_VERSION';
+    static BlurBuildMajorVersion: string = 'BLUR_BUILD_MAJOR_VERSION';
+    static SetBuildMinorVersion: string = 'SET_BUILD_MINOR_VERSION';
+    static BlurBuildMinorVersion: string = 'BLUR_BUILD_MINOR_VERSION';
     static ShowNewBuildForm: string = 'SHOW_NEW_BUILD_FORM';
     static CloseNewBuildForm: string = 'CLOSE_NEW_BUILD_FORM';
     static ShowDeleteConfirmationDialog: string = 'SHOW_DELETE_BUILD_DIALOG';
@@ -92,9 +96,37 @@ export const setBuildVersioningType = (buildVersioningType: ApiClient.BuildVersi
     };
 };
 
+export const setBuildMajorVersion = (version: number): IAction => {
+    return {
+        type: BuildActions.SetBuildMajorVersion,
+        value: version
+    };
+};
+
+export const setBuildMinorVersion = (version: number): IAction => {
+    return {
+        type: BuildActions.SetBuildMinorVersion,
+        value: version
+    };
+};
+
 export const blurBuildName = (): IAction => {
     return {
         type: BuildActions.BlurBuildName,
+        value: null
+    };
+};
+
+export const blurBuildMajorVersion = (): IAction => {
+    return {
+        type: BuildActions.BlurBuildMajorVersion,
+        value: null
+    };
+};
+
+export const blurBuildMinorVersion = (): IAction => {
+    return {
+        type: BuildActions.BlurBuildMinorVersion,
         value: null
     };
 };

@@ -15,4 +15,12 @@ export class AddNewBuildFormValidator {
     validateName(name: string): boolean {
         return Validate.thisString(name).length(1, 100);
     }
+
+    validateVersionMajor(value: number): boolean {
+        return Validate.thisNumber(value).range(0, 999);
+    }
+
+    validateVersionMinor(value: number): boolean {
+        return Validate.thisNumber(value).range(0, 999);
+    }
 }

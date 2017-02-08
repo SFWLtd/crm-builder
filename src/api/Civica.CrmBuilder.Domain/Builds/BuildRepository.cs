@@ -43,16 +43,18 @@ namespace Civica.CrmBuilder.Domain.Builds
         {
             var query = Query.ForEntity<Entities.Build>()
                 .Include(b => b.Name)
-                .Include(b => b.BuildVersioningType);
+                .Include(b => b.BuildVersioningType)
+                .Include(b => b.VersionMajor)
+                .Include(b => b.VersionMinor);
 
             return entityClient
                 .RetrieveMultiple(query)
                 .OrderByDescending(e => e.CreatedOn)
-                .Select(b => new BuildProperties
+                .Select(b => 
                 {
-                    BuildVersioningType = b.BuildVersioningType,
-                    Name = b.Name,
-                    Id = b.Id.ToString()
+                    var properties = new BuildProperties();
+                    properties.PopulateFrom(b);
+                    return properties;
                 });
         }
 

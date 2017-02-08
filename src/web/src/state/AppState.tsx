@@ -75,6 +75,14 @@ export const defaultAppState: IAppState = {
                 hasBeenTouched: false,
                 value: ''
             },
+            versionMajor: {
+                hasBeenTouched: false,
+                value: 0
+            },
+            versionMinor: {
+                hasBeenTouched: false,
+                value: 0
+            },
             shouldValidate: false,
             show: false,
             submission: {

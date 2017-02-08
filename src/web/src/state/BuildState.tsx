@@ -18,6 +18,8 @@ export interface INewBuildMainForm {
     show: boolean,
     name: IFormInputState,
     buildVersioningType: ApiClient.BuildVersioningType,
+    versionMajor: IFormInputState,
+    versionMinor: IFormInputState,
     shouldValidate: boolean,
     submission: IAsyncActionState<ApiClient.GlobalJsonResultOfNewBuildResult>
 }

@@ -22,6 +22,14 @@ export class AddNewBuild extends React.Component<IAddNewBuildProps, undefined> {
                         <label>Build name</label>
                         <input value={this.props.name} placeholder='My build 1' onChange={e => { this.props.nameOnChange((e as any).target.value) } } onBlur={this.props.nameOnBlur} />
                     </Form.Field>
+                    <Form.Field error={this.props.versionMajorIsValid}>
+                        <label>Major version</label>
+                        <input type='number' value={this.props.versionMajor} placeholder='(Enter a value 0-999)' onChange={e => { this.props.versionMajorOnChange((e as any).target.value) } } onBlur={this.props.versionMajorOnBlur} />
+                    </Form.Field>
+                    <Form.Field error={this.props.versionMinorIsValid}>
+                        <label>Minor version</label>
+                        <input type='number' value={this.props.versionMinor} placeholder='(Enter a value 0-999)' onChange={e => { this.props.versionMinorOnChange((e as any).target.value) } } onBlur={this.props.versionMinorOnBlur} />
+                    </Form.Field>
                     <Form.Field>
                         <div className="ui form large">
                             <div className='field'>
@@ -55,6 +63,14 @@ export interface IAddNewBuildProps {
     nameIsValid?: boolean,
     nameOnBlur?: () => void,
     nameOnChange?: (name: string) => void,
+    versionMajor?: number,
+    versionMajorOnBlur?: () => void,
+    versionMajorIsValid?: boolean,
+    versionMajorOnChange?: (value: number) => void,
+    versionMinor?: number,
+    versionMinorOnBlur?: () => void,
+    versionMinorIsValid?: boolean,
+    versionMinorOnChange?: (value: number) => void,
     buildVersioningType?: ApiClient.BuildVersioningType,
     buildVersioningTypeOnChange?: (buildVersioningType: ApiClient.BuildVersioningType) => void,
     onFormCancel?: () => void,

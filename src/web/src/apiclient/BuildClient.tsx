@@ -13,6 +13,8 @@ export class BuildClient {
         let request = new ApiClient.NewBuildRequest();
         request.buildVersioningType = props.buildVersioningType;
         request.name = props.name;
+        request.versionMajor = props.versionMajor;
+        request.versionMinor = props.versionMinor;
 
         return this.client.newBuild(request, '');
     }

@@ -28,7 +28,14 @@ export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefi
                     <br/>
                     <Item.Content>
                         <Button.Group basic size='small'>
-                            <Button icon='archive' onClick={(e:any) => this.props.deleteBuild(build.id)}/>
+                            <Button animated='fade' onClick={(e:any) => this.props.deleteBuild(build.id)}>
+                                <Button.Content visible>
+                                    <Icon name='archive'/>
+                                </Button.Content>
+                                <Button.Content hidden>
+                                    Delete
+                                </Button.Content>
+                            </Button>
                         </Button.Group>
                     </Item.Content>
                 </Item>

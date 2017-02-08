@@ -1,8 +1,9 @@
 ﻿using Civica.CrmBuilder.Core.Enums;
+using Civica.CrmBuilder.Core.Mapping;
 
 namespace Civica.CrmBuilder.Domain.Builds
 {
-    public class BuildProperties
+    public class BuildProperties : IPopulatableFrom<Entities.Build>
     {
         public string Id { get; internal set; }
 
@@ -13,5 +14,14 @@ namespace Civica.CrmBuilder.Domain.Builds
         public int VersionMajor { get; set; }
 
         public int VersionMinor { get; set; }
+
+        public void PopulateFrom(Entities.Build source)
+        {
+            Id = source.Id.ToString();
+            Name = source.Name;
+            BuildVersioningType = source.BuildVersioningType;
+            VersionMajor = source.VersionMajor;
+            VersionMinor = source.VersionMinor;
+        }
     }
 }

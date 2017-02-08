@@ -25,8 +25,20 @@ const buildReducer = (state: IBuildState, action: IAction): IBuildState => {
         case BuildActions.SetBuildVersioningType:
             newState.newBuildFormState.buildVersioningType = action.value;
             break;
+        case BuildActions.SetBuildMajorVersion:
+            newState.newBuildFormState.versionMajor.value = action.value;
+            break;
+        case BuildActions.SetBuildMinorVersion:
+            newState.newBuildFormState.versionMinor.value = action.value;
+            break;
         case BuildActions.BlurBuildName:
             newState.newBuildFormState.name.hasBeenTouched = true;
+            break;
+        case BuildActions.BlurBuildMajorVersion:
+            newState.newBuildFormState.versionMajor.hasBeenTouched = true;
+            break;
+        case BuildActions.BlurBuildMinorVersion:
+            newState.newBuildFormState.versionMajor.hasBeenTouched = true;
             break;
         case BuildActions.ShowNewBuildForm:
             newState.newBuildFormState.show = true;
@@ -41,6 +53,10 @@ const buildReducer = (state: IBuildState, action: IAction): IBuildState => {
             newState.newBuildFormState.name.value = '';
             newState.newBuildFormState.buildVersioningType = ApiClient.BuildVersioningType.JulianDate;
             newState.newBuildFormState.name.hasBeenTouched = false;
+            newState.newBuildFormState.versionMajor.value = 0;
+            newState.newBuildFormState.versionMajor.hasBeenTouched = false;
+            newState.newBuildFormState.versionMinor.value = 0;
+            newState.newBuildFormState.versionMinor.hasBeenTouched = false;
             newState.newBuildFormState.submission.hasStarted = false;
             newState.newBuildFormState.submission.hasCompleted = false;
             newState.newBuildFormState.submission.result = null;

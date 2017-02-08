@@ -21,7 +21,7 @@ export class ConfirmDeleteBuild extends React.Component<IConfirmDeleteBuildProps
             </Modal.Content>
             <Modal.Actions>
             <Button primary onClick={(e: any) => this.props.onFormCancel()}>Cancel</Button>
-            <Button negative labelPosition='right' icon='archive' content='Delete' onClick={(e: any) => this.props.onFormSubmit(this.props.buildId)} />
+            <Button negative labelPosition='right' icon='delete' content='Delete' onClick={(e: any) => this.props.onFormSubmit(this.props.buildId)} />
           </Modal.Actions>
         </Modal>
         <Dimmer active={this.props.isSubmitting} page>

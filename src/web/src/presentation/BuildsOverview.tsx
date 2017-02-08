@@ -24,6 +24,7 @@ export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefi
                 <Item>
                     <Item.Content>
                         <Item.Header><h3>{build.name}</h3></Item.Header>
+                        <Item.Meta>Version: {build.versionMajor + '.' + build.versionMinor}</Item.Meta>
                     </Item.Content>
                     <br/>
                     <Item.Content>

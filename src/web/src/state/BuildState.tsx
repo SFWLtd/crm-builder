@@ -3,8 +3,8 @@ import { IFormInputState } from './FormInputState';
 import { IAsyncActionState } from './AsyncActionState';
 
 export interface IBuildState {
-    newBuildFormState: INewBuildMainForm
-    builds: IAsyncActionState<ApiClient.GlobalJsonResultOfIEnumerableOfBuildProperties>
+    editBuildFormState: IEditBuildFormState
+    builds: IAsyncActionState<ApiClient.GlobalJsonResultOfIEnumerableOfBuildDto>
     confirmDeleteDialog: IConfirmDeleteDialog;
 }
 
@@ -14,14 +14,15 @@ export interface IBuildSummary {
     buildVersioningType: ApiClient.BuildVersioningType
 }
 
-export interface INewBuildMainForm {
+export interface IEditBuildFormState {
+    currentBuild: IAsyncActionState<ApiClient.GlobalJsonResultOfBuildDto>
     show: boolean,
     name: IFormInputState,
     buildVersioningType: ApiClient.BuildVersioningType,
     versionMajor: IFormInputState,
     versionMinor: IFormInputState,
     shouldValidate: boolean,
-    submission: IAsyncActionState<ApiClient.GlobalJsonResultOfNewBuildResult>
+    submission: IAsyncActionState<ApiClient.GlobalJsonResultOfBuildDto>
 }
 
 export interface IConfirmDeleteDialog {

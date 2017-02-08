@@ -69,7 +69,12 @@ export const defaultAppState: IAppState = {
                 result: null
             }
         },
-        newBuildFormState: {
+        editBuildFormState: {
+            currentBuild: {
+                hasCompleted: false,
+                hasStarted: false,
+                result: null
+            },
             buildVersioningType: ApiClient.BuildVersioningType.JulianDate,
             name: {
                 hasBeenTouched: false,

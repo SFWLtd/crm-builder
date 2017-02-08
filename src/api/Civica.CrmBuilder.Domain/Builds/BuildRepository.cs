@@ -46,7 +46,7 @@ namespace Civica.CrmBuilder.Domain.Dtos
             Delete(Guid.Parse(id));
         }
 
-        public IEnumerable<BuildDto> GetAll()
+        public IEnumerable<IBuild> GetAll()
         {
             var query = Query.ForEntity<Entities.Build>()
                 .Include(b => b.Name)
@@ -57,17 +57,15 @@ namespace Civica.CrmBuilder.Domain.Dtos
             return entityClient
                 .RetrieveMultiple(query)
                 .OrderByDescending(e => e.CreatedOn)
-                .Select(b => 
-                {
-                    var properties = new BuildDto();
-                    properties.PopulateFrom(b);
-                    return properties;
-                });
+                .Select(b => new Build(entityClient, b));
         }
 
-        public IBuild New(IMappableTo<BuildDto> buildProperties)
+        public IBuild New(BuildDto buildProperties)
         {
-            return new Build(entityClient, buildProperties.Map());
+            var entity = buildProperties.Map();
+            entityClient.Create(entity);
+
+            return new Build(entityClient, entity);
         }
     }
 }

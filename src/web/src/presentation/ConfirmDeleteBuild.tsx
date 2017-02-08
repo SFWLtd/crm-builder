@@ -11,7 +11,7 @@ export class ConfirmDeleteBuild extends React.Component<IConfirmDeleteBuildProps
         return <div>
         <Modal open={this.props.shouldDisplay} onClose={(e: any) => this.props.onFormCancel()}>
             <Header as='h2' icon textAlign='center'>
-                <Icon name='archive' circular size='tiny' />
+                <Icon name='delete' circular size='tiny' />
                 <Header.Content>
                     Delete build
                 </Header.Content>

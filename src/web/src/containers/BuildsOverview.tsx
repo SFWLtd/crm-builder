@@ -12,8 +12,9 @@ const mapStateToProps = (state: IAppState): BuildsPresenter.IBuildsOverviewProps
             && state.authenticationState.loginStatus.result.successful,
         builds: state.buildState.builds.result !== null && state.buildState.builds.result.successful
             ? state.buildState.builds.result.result
-            : new Array<ApiClient.BuildProperties>(),
-        isFetchingBuilds: state.buildState.builds.hasStarted
+            : new Array<ApiClient.BuildDto>(),
+        isFetchingBuilds: state.buildState.builds.hasStarted,
+        isFetchingBuildForEdit: state.buildState.editBuildFormState.currentBuild.hasStarted
     };
 };
 
@@ -21,7 +22,8 @@ const mapDispatchToProps = (dispatch: any): BuildsPresenter.IBuildsOverviewProps
     return {
         newBuild: () => dispatch(BuildActions.showNewBuildForm()),
         fetchBuilds: () => dispatch(BuildActions.startFetchingBuilds(dispatch)),
-        deleteBuild: (buildId: string) => dispatch(BuildActions.showDeleteConfirmationDialog(buildId))
+        deleteBuild: (buildId: string) => dispatch(BuildActions.showDeleteConfirmationDialog(buildId)),
+        editBuild: (buildId: string) => dispatch(BuildActions.beginShowEditBuildForm(dispatch, buildId))
     }
 };
 

@@ -1,13 +1,13 @@
-import { IAddNewBuildProps } from '../presentation/AddNewBuild';
+import { IEditBuildProps } from '../presentation/EditBuild';
 import * as ApiClient from '../../../api/ApiClient';
 import { Validate } from './Validate';
 
-export class AddNewBuildFormValidator {
+export class EditBuildFormValidator {
 
     constructor() {
     }
 
-    isValid(props: IAddNewBuildProps) {
+    isValid(props: IEditBuildProps) {
         
         return this.validateName(props.name);
     }

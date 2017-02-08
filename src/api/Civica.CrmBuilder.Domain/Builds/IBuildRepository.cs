@@ -6,13 +6,13 @@ namespace Civica.CrmBuilder.Domain.Dtos
 {
     public interface IBuildRepository
     {
-        IBuild New(IMappableTo<BuildDto> buildProperties);
+        IBuild New(BuildDto build);
 
         IBuild Get(string id);
 
         IBuild Get(Guid id);
 
-        IEnumerable<BuildDto> GetAll();
+        IEnumerable<IBuild> GetAll();
 
         void Delete(Guid id);
 

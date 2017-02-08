@@ -1,7 +1,7 @@
 import * as ApiClient from '../../../api/ApiClient';
 import { IAction } from './IAction';
-import { AddNewBuildFormValidator } from '../validation/AddNewBuildFormValidator';
-import { IAddNewBuildProps } from '../presentation/AddNewBuild';
+import { EditBuildFormValidator } from '../validation/EditBuildFormValidator';
+import { IEditBuildProps } from '../presentation/EditBuild';
 import config from '../Config';
 import { BuildClient } from '../apiclient/BuildClient';
 
@@ -16,21 +16,24 @@ export class BuildActions {
     static SetBuildMinorVersion: string = 'SET_BUILD_MINOR_VERSION';
     static BlurBuildMinorVersion: string = 'BLUR_BUILD_MINOR_VERSION';
     static ShowNewBuildForm: string = 'SHOW_NEW_BUILD_FORM';
-    static CloseNewBuildForm: string = 'CLOSE_NEW_BUILD_FORM';
+    static CloseBuildForm: string = 'CLOSE_NEW_BUILD_FORM';
+    static BeginShowEditBuildForm: string = 'BEGIN_SHOW_EDIT_BUILD_FORM';
+    static FinishShowEditBuildForm: string = 'FINISH_SHOW_EDIT_BUILD_FORM';
+    static ClearEditableBuild: string = 'CLEAR_EDITABLE_BUILD';
     static ShowDeleteConfirmationDialog: string = 'SHOW_DELETE_BUILD_DIALOG';
     static CloseDeleteConfirmationDialog: string = 'CLOSE_DELETE_BUILD_DIALOG';
     static StartDeletingBuild: string = 'START_DELETING_BUILD';
     static FinishDeletingBuild: string = 'FINISH_DELETING_BUILD';
-    static ResetForm: string = 'RESET_NEW_BUILD_FORM';
-    static ValidateForm: string = 'VALIDATE_NEW_BUILD_FORM';
-    static StartSubmittingNewBuild: string = 'START_SUBMIT_NEW_BUILD';
-    static FinishSubmittingNewBuild: string = 'FINISH_SUBMIT_NEW_BUILD';
+    static ResetForm: string = 'RESET_EDIT_BUILD_FORM';
+    static ValidateForm: string = 'VALIDATE_EDIT_BUILD_FORM';
+    static StartSubmittingBuild: string = 'START_SUBMIT_BUILD';
+    static FinishSubmittingBuild: string = 'FINISH_SUBMIT_BUILD';
 }
 
 export const startFetchingBuilds = (dispatch: any): IAction => {
 
     let client = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
-    client.fetchAll().then((result: ApiClient.GlobalJsonResultOfIEnumerableOfBuildProperties) => {
+    client.fetchAll().then((result: ApiClient.GlobalJsonResultOfIEnumerableOfBuildDto) => {
         dispatch(finishFetchingBuilds(result));
     });
 
@@ -40,16 +43,16 @@ export const startFetchingBuilds = (dispatch: any): IAction => {
     };
 };
 
-export const finishFetchingBuilds = (result: ApiClient.GlobalJsonResultOfIEnumerableOfBuildProperties): IAction => {
+export const finishFetchingBuilds = (result: ApiClient.GlobalJsonResultOfIEnumerableOfBuildDto): IAction => {
     return {
         type: BuildActions.FinishFetchingBuilds,
         value: result
     }
 }
 
-export const startNewBuildSubmit = (props: IAddNewBuildProps, dispatch: any): IAction => {
+export const startBuildSubmit = (props: IEditBuildProps, dispatch: any): IAction => {
 
-    let validator = new AddNewBuildFormValidator();  
+    let validator = new EditBuildFormValidator();  
     if (!validator.isValid(props)) {
         return {
             type: BuildActions.ValidateForm,
@@ -57,27 +60,34 @@ export const startNewBuildSubmit = (props: IAddNewBuildProps, dispatch: any): IA
         };
     } else {
         let client = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
-        client.addNew(props).then((result: ApiClient.GlobalJsonResultOfNewBuildResult) => {
-            dispatch(finishNewBuildSubmit(dispatch, result));
-        });
+
+        if (!props.isEdit) {          
+            client.addNew(props).then((result: ApiClient.GlobalJsonResultOfBuildDto) => {
+                dispatch(finishBuildSubmit(dispatch, result));
+            });
+        } else {
+            client.edit(props).then((result: ApiClient.GlobalJsonResultOfBuildDto) => {
+                dispatch(finishBuildSubmit(dispatch, result));
+            });
+        }
     }
 
     return {
-        type: BuildActions.StartSubmittingNewBuild,
+        type: BuildActions.StartSubmittingBuild,
         value: null
     };
 };
 
-export const finishNewBuildSubmit = (dispatch: any, result: ApiClient.GlobalJsonResultOfNewBuildResult): IAction => {
+export const finishBuildSubmit = (dispatch: any, result: ApiClient.GlobalJsonResultOfBuildDto): IAction => {
 
     if (result.successful) {
-        dispatch(closeNewBuildForm());
+        dispatch(closeBuildForm(dispatch));
         dispatch(resetForm());
         dispatch(startFetchingBuilds(dispatch));
     }
 
     return {
-        type: BuildActions.FinishSubmittingNewBuild,
+        type: BuildActions.FinishSubmittingBuild,
         value: result
     };
 };
@@ -139,9 +149,48 @@ export const showNewBuildForm = (): IAction => {
     };
 };
 
-export const closeNewBuildForm = (): IAction => {
+export const closeBuildForm = (dispatch: any): IAction => {
+    dispatch(resetForm());
+    dispatch(clearEditableBuild());
+
     return {
-        type: BuildActions.CloseNewBuildForm,
+        type: BuildActions.CloseBuildForm,
+        value: null
+    };
+};
+
+export const beginShowEditBuildForm = (dispatch: any, buildId: string): IAction => {
+    
+    let client = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
+    client.fetch(buildId).then((result: ApiClient.GlobalJsonResultOfBuildDto) => {
+        dispatch(finishShowEditBuildForm(dispatch, result));
+    });
+
+    return {
+        type: BuildActions.BeginShowEditBuildForm,
+        value: null
+    };
+};
+
+export const finishShowEditBuildForm = (dispatch: any, editableBuild: ApiClient.GlobalJsonResultOfBuildDto): IAction => {
+
+    if (editableBuild.successful) {
+        dispatch(resetForm());
+        dispatch(setBuildName(editableBuild.result.name));
+        dispatch(setBuildVersioningType(editableBuild.result.buildVersioningType));
+        dispatch(setBuildMajorVersion(editableBuild.result.versionMajor));
+        dispatch(setBuildMinorVersion(editableBuild.result.versionMinor));
+    }
+
+    return {
+        type: BuildActions.FinishShowEditBuildForm,
+        value: editableBuild
+    };
+};
+
+export const clearEditableBuild = (): IAction => {
+    return {
+        type: BuildActions.ClearEditableBuild,
         value: null
     };
 };

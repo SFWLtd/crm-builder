@@ -4,7 +4,7 @@ namespace Civica.CrmBuilder.Domain.Dtos
 {
     public interface IBuild
     {
-        void DoThis(Action<Build> buildActions);
+        void DoThis(Action<Build> action);
 
         BuildDto AsDto();
     }

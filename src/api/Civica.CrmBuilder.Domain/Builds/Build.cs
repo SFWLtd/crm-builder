@@ -1,5 +1,5 @@
 ﻿using System;
-using Civica.CrmBuilder.Core.Mapping;
+using Civica.CrmBuilder.Core.Validation;
 using Civica.CrmPlusPlus.Sdk.Client;
 
 namespace Civica.CrmBuilder.Domain.Dtos
@@ -7,14 +7,12 @@ namespace Civica.CrmBuilder.Domain.Dtos
     public class Build : IBuild
     {
         private readonly ICrmPlusPlusEntityClient client;
-        private readonly Entities.Build entity;
+        private Entities.Build entity;
 
-        internal Build(ICrmPlusPlusEntityClient client, BuildDto buildDto)
+        internal Build(ICrmPlusPlusEntityClient client, Entities.Build entity)
         {
             this.client = client;
-            entity = buildDto.Map();
-
-            this.client.Create(entity);
+            this.entity = entity;
         }
 
         internal Build(ICrmPlusPlusEntityClient client, Guid id)
@@ -28,18 +26,20 @@ namespace Civica.CrmBuilder.Domain.Dtos
             entity = client.Retrieve(retrieval);
         }
 
-        public void Update(IMappableTo<BuildDto> props)
+        public void Update(BuildDto build)
         {
-            var buildProps = props.Map();
+            Guard.This(build.Id)
+                .AgainstNonGuidFormat();
 
-            entity.Name = buildProps.Name;
-            entity.VersionMajor = buildProps.VersionMajor;
-            entity.VersionMinor = buildProps.VersionMinor;
+            Guard.This(Guid.Parse(build.Id))
+                .AgainstNotEqual(entity.Id);
+
+            entity = build.Map();
         }
 
-        public void DoThis(Action<Build> buildActions)
+        public void DoThis(Action<Build> action)
         {
-            buildActions(this);
+            action(this);
             client.Update(entity);
         }
 

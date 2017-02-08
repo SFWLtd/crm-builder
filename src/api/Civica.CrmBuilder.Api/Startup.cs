@@ -22,6 +22,7 @@ namespace Civica.CrmBuilder.Api
 
             config.Routes.MapHttpRoute(name: "ControllerOnly", routeTemplate: "api/{controller}");
             config.Routes.MapHttpRoute(name: "ControllerAndAction", routeTemplate: "api/{controller}/{action}");
+            config.Routes.MapHttpRoute(name: "ControllerActionAndId", routeTemplate: "api/{controller}/{action}/{id}");
             config.Filters.Add(new GlobalExceptionFilter());
             config.Filters.Add(new GlobalActionFilter());
 

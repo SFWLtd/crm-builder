@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ApiClient from '../../../api/ApiClient';
-import AddNewBuild from '../containers/AddNewBuild';
+import AddNewBuild from '../containers/EditBuild';
 import ConfirmDeleteBuild from '../containers/ConfirmDeleteBuild';
 import { Button, Container, Dimmer, Grid, Header, Icon, Image, Item, Loader, Menu, Rail, Segment } from 'semantic-ui-react';
 
@@ -19,7 +19,7 @@ export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefi
             return <div></div>;
         }
 
-        let builds = this.props.builds.map((build: ApiClient.BuildProperties): JSX.Element => {
+        let builds = this.props.builds.map((build: ApiClient.BuildDto): JSX.Element => {
             return <Segment key={build.id} attached>
                 <Item>
                     <Item.Content>
@@ -29,6 +29,10 @@ export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefi
                     <br/>
                     <Item.Content>
                         <Button.Group basic size='small'>
+                            <Button animated='fade' onClick={(e:any) => this.props.editBuild(build.id)}>
+                                <Button.Content visible><Icon name='edit'/></Button.Content>
+                                <Button.Content hidden>Edit</Button.Content>
+                            </Button>
                             <Button animated='fade' onClick={(e:any) => this.props.deleteBuild(build.id)}>
                                 <Button.Content visible><Icon name='delete'/></Button.Content>
                                 <Button.Content hidden>Delete</Button.Content>
@@ -54,6 +58,11 @@ export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefi
                         <p>Fetching builds...</p>
                     </Loader>
                 </Dimmer>
+                <Dimmer active={this.props.isFetchingBuildForEdit} page>
+                    <Loader>
+                        <p>Loading...</p>
+                    </Loader>
+                </Dimmer>
         </div>;
     }
 }
@@ -61,8 +70,10 @@ export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefi
 export interface IBuildsOverviewProps {
     isFetchingBuilds?: boolean;
     fetchBuilds?: () => void;
-    builds?: Array<ApiClient.BuildProperties>;
+    builds?: Array<ApiClient.BuildDto>;
     navigationIsActive?: boolean;
     newBuild?: () => void;
+    editBuild?: (buildId: string) => void;
+    isFetchingBuildForEdit?: boolean;
     deleteBuild?: (id: string) => void;
 }

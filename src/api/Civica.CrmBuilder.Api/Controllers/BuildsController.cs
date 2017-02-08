@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using Civica.CrmBuilder.Api.ApiRequests;
 using Civica.CrmBuilder.Domain.Dtos;
@@ -14,16 +16,31 @@ namespace Civica.CrmBuilder.Api.Controllers
             this.buildRepo = buildRepo;
         }
 
+        [ActionName("GetBuild")]
+        [HttpGet]
+        public GlobalJsonResult<BuildDto> GetBuild(string id)
+        {
+            var result = buildRepo
+                .Get(id)
+                .AsDto();
+
+            return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.OK, result);
+        }
+
         [ActionName("GetBuilds")]
         [HttpGet]
         public GlobalJsonResult<IEnumerable<BuildDto>> GetBuilds()
         {
-            return GlobalJsonResult<IEnumerable<BuildDto>>.Success(System.Net.HttpStatusCode.OK, buildRepo.GetAll());
+            var builds = buildRepo
+                .GetAll()
+                .Select(b => b.AsDto());
+
+            return GlobalJsonResult<IEnumerable<BuildDto>>.Success(System.Net.HttpStatusCode.OK, builds);
         }
 
         [ActionName("NewBuild")]
         [HttpPost]
-        public GlobalJsonResult<BuildDto> NewBuild([FromBody]NewBuildRequest request)
+        public GlobalJsonResult<BuildDto> NewBuild([FromBody]BuildDto request)
         {
             var build = buildRepo.New(request);
 
@@ -32,7 +49,7 @@ namespace Civica.CrmBuilder.Api.Controllers
 
         [ActionName("UpdateBuild")]
         [HttpPost]
-        public GlobalJsonResult<BuildDto> UpdateBuild([FromBody]UpdateBuildRequest request)
+        public GlobalJsonResult<BuildDto> UpdateBuild([FromBody]BuildDto request)
         {
             var build = buildRepo.Get(request.Id);
             build.DoThis(b => b.Update(request));

@@ -2,8 +2,8 @@ import * as React from 'react';
 import * as ApiClient from '../../../api/ApiClient';
 import { Button, Dimmer, Form, Header, Icon, Loader, Modal } from 'semantic-ui-react';
 
-export class AddNewBuild extends React.Component<IAddNewBuildProps, undefined> {
-    constructor(props: IAddNewBuildProps) {
+export class EditBuild extends React.Component<IEditBuildProps, undefined> {
+    constructor(props: IEditBuildProps) {
         super(props);
     }
 
@@ -11,9 +11,9 @@ export class AddNewBuild extends React.Component<IAddNewBuildProps, undefined> {
         return <div>
         <Modal open={this.props.shouldDisplay} onClose={(e: any) => this.props.onFormCancel()}>
             <Header as='h2' icon textAlign='center'>
-                <Icon name='wrench' circular size='tiny' />
+                <Icon name={this.props.isEdit? 'edit': 'write'} circular size='tiny' />
                 <Header.Content>
-                    Add new build
+                    {this.props.isEdit? 'Edit build': 'Add new build'}
                 </Header.Content>
             </Header>
             <Modal.Content>
@@ -45,19 +45,24 @@ export class AddNewBuild extends React.Component<IAddNewBuildProps, undefined> {
             </Modal.Content>
             <Modal.Actions>
             <Button negative onClick={(e: any) => this.props.onFormCancel()}>Cancel</Button>
-            <Button primary labelPosition='right' icon='write' content='Submit' onClick={(e: any) => this.props.onFormSubmit(this.props)} />
+            <Button primary labelPosition='right' 
+                icon={this.props.isEdit ? 'edit': 'write'} 
+                content={this.props.isEdit ? 'Update': 'Create'} 
+                onClick={(e: any) => this.props.onFormSubmit(this.props)} />
           </Modal.Actions>
         </Modal>
         <Dimmer active={this.props.isSubmitting} page>
             <Loader>
-                <p>Creating...</p>
+                <p>{this.props.isEdit ? 'Updating...': 'Creating...'}</p>
             </Loader>
         </Dimmer>
         </div>
     }
 }
 
-export interface IAddNewBuildProps {
+export interface IEditBuildProps {
+    isEdit?: boolean,
+    editBuildId?: string,
     shouldDisplay?: boolean,
     name?: string,
     nameIsValid?: boolean,
@@ -74,6 +79,6 @@ export interface IAddNewBuildProps {
     buildVersioningType?: ApiClient.BuildVersioningType,
     buildVersioningTypeOnChange?: (buildVersioningType: ApiClient.BuildVersioningType) => void,
     onFormCancel?: () => void,
-    onFormSubmit?: (props: IAddNewBuildProps) => void,
+    onFormSubmit?: (props: IEditBuildProps) => void,
     isSubmitting?: boolean
 }

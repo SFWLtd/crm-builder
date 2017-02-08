@@ -16,6 +16,7 @@ namespace Civica.CrmBuilder.Api.Controllers
         }
 
         [ActionName("GetInstallationStatus")]
+        [HttpGet]
         public GlobalJsonResult<InstallationStatusResult> GetInstallationStatus()
         {
             var installationStatus = installation.GetStatus();
@@ -27,7 +28,7 @@ namespace Civica.CrmBuilder.Api.Controllers
         }
 
         [ActionName("StartInstallation")]
-        [HttpPost()]
+        [HttpPost]
         public GlobalJsonResult<InstallationResult> StartInstallation([FromBody]StartInstallationRequest request)
         {
             var installationResult = installation.StartInstallation();

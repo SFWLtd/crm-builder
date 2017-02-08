@@ -20,57 +20,73 @@ const buildReducer = (state: IBuildState, action: IAction): IBuildState => {
             newState.builds.result = action.value;
             break;
         case BuildActions.SetBuildName:
-            newState.newBuildFormState.name.value = action.value;
+            newState.editBuildFormState.name.value = action.value;
             break;
         case BuildActions.SetBuildVersioningType:
-            newState.newBuildFormState.buildVersioningType = action.value;
+            newState.editBuildFormState.buildVersioningType = action.value;
             break;
         case BuildActions.SetBuildMajorVersion:
-            newState.newBuildFormState.versionMajor.value = action.value;
+            newState.editBuildFormState.versionMajor.value = action.value;
             break;
         case BuildActions.SetBuildMinorVersion:
-            newState.newBuildFormState.versionMinor.value = action.value;
+            newState.editBuildFormState.versionMinor.value = action.value;
             break;
         case BuildActions.BlurBuildName:
-            newState.newBuildFormState.name.hasBeenTouched = true;
+            newState.editBuildFormState.name.hasBeenTouched = true;
             break;
         case BuildActions.BlurBuildMajorVersion:
-            newState.newBuildFormState.versionMajor.hasBeenTouched = true;
+            newState.editBuildFormState.versionMajor.hasBeenTouched = true;
             break;
         case BuildActions.BlurBuildMinorVersion:
-            newState.newBuildFormState.versionMajor.hasBeenTouched = true;
+            newState.editBuildFormState.versionMajor.hasBeenTouched = true;
             break;
         case BuildActions.ShowNewBuildForm:
-            newState.newBuildFormState.show = true;
+            newState.editBuildFormState.show = true;
             break;
-        case BuildActions.CloseNewBuildForm:
-            newState.newBuildFormState.show = false;
+        case BuildActions.CloseBuildForm:
+            newState.editBuildFormState.show = false;
+            break;
+        case BuildActions.BeginShowEditBuildForm:
+            newState.editBuildFormState.currentBuild.hasStarted = true;
+            newState.editBuildFormState.currentBuild.hasCompleted = false;
+            newState.editBuildFormState.currentBuild.result = null;
+            break;
+        case BuildActions.FinishShowEditBuildForm:
+            newState.editBuildFormState.show = true;
+            newState.editBuildFormState.currentBuild.hasStarted = false;
+            newState.editBuildFormState.currentBuild.hasCompleted = true;
+            newState.editBuildFormState.currentBuild.result = action.value;
+            break;
+        case BuildActions.ClearEditableBuild:
+            newState.editBuildFormState.currentBuild.result = null;
+            newState.editBuildFormState.currentBuild.hasStarted = false;
+            newState.editBuildFormState.currentBuild.hasCompleted = false;
             break;
         case BuildActions.ValidateForm:
-            newState.newBuildFormState.shouldValidate = true;
+            newState.editBuildFormState.shouldValidate = true;
             break;
         case BuildActions.ResetForm:
-            newState.newBuildFormState.name.value = '';
-            newState.newBuildFormState.buildVersioningType = ApiClient.BuildVersioningType.JulianDate;
-            newState.newBuildFormState.name.hasBeenTouched = false;
-            newState.newBuildFormState.versionMajor.value = 0;
-            newState.newBuildFormState.versionMajor.hasBeenTouched = false;
-            newState.newBuildFormState.versionMinor.value = 0;
-            newState.newBuildFormState.versionMinor.hasBeenTouched = false;
-            newState.newBuildFormState.submission.hasStarted = false;
-            newState.newBuildFormState.submission.hasCompleted = false;
-            newState.newBuildFormState.submission.result = null;
-            newState.newBuildFormState.shouldValidate = false;
+            newState.editBuildFormState.name.value = '';
+            newState.editBuildFormState.buildVersioningType = ApiClient.BuildVersioningType.JulianDate;
+            newState.editBuildFormState.name.hasBeenTouched = false;
+            newState.editBuildFormState.versionMajor.value = 0;
+            newState.editBuildFormState.versionMajor.hasBeenTouched = false;
+            newState.editBuildFormState.versionMinor.value = 0;
+            newState.editBuildFormState.versionMinor.hasBeenTouched = false;
+            newState.editBuildFormState.submission.hasStarted = false;
+            newState.editBuildFormState.submission.hasCompleted = false;
+            newState.editBuildFormState.submission.result = null;
+            newState.editBuildFormState.shouldValidate = false;
             break;
-        case BuildActions.StartSubmittingNewBuild:
-            newState.newBuildFormState.submission.hasStarted = true;
-            newState.newBuildFormState.submission.hasCompleted = false;
-            newState.newBuildFormState.submission.result = null;
+        case BuildActions.StartSubmittingBuild:
+            newState.editBuildFormState.submission.hasStarted = true;
+            newState.editBuildFormState.submission.hasCompleted = false;
+            newState.editBuildFormState.submission.result = null;
             break;
-        case BuildActions.FinishSubmittingNewBuild:
-            newState.newBuildFormState.submission.hasStarted = false;
-            newState.newBuildFormState.submission.hasCompleted = true;
-            newState.newBuildFormState.submission.result = action.value;
+        case BuildActions.FinishSubmittingBuild:
+            newState.editBuildFormState.submission.hasStarted = false;
+            newState.editBuildFormState.submission.hasCompleted = true;
+            newState.editBuildFormState.submission.result = action.value;
             break;
         case BuildActions.ShowDeleteConfirmationDialog:
             newState.confirmDeleteDialog.show = true;

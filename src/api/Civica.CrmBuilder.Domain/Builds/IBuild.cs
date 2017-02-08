@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Civica.CrmBuilder.Domain.Builds
+namespace Civica.CrmBuilder.Domain.Dtos
 {
     public interface IBuild
     {
-        Guid Id { get; }
-
         void DoThis(Action<Build> buildActions);
+
+        BuildDto AsDto();
     }
 }

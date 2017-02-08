@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using Civica.CrmBuilder.Api.ApiRequests;
-using Civica.CrmBuilder.Api.ApiResults;
-using Civica.CrmBuilder.Domain.Builds;
+using Civica.CrmBuilder.Domain.Dtos;
 
 namespace Civica.CrmBuilder.Api.Controllers
 {
@@ -17,35 +16,28 @@ namespace Civica.CrmBuilder.Api.Controllers
 
         [ActionName("GetBuilds")]
         [HttpGet]
-        public GlobalJsonResult<IEnumerable<BuildProperties>> GetBuilds()
+        public GlobalJsonResult<IEnumerable<BuildDto>> GetBuilds()
         {
-            return GlobalJsonResult<IEnumerable<BuildProperties>>.Success(System.Net.HttpStatusCode.OK, buildRepo.GetAll());
+            return GlobalJsonResult<IEnumerable<BuildDto>>.Success(System.Net.HttpStatusCode.OK, buildRepo.GetAll());
         }
 
         [ActionName("NewBuild")]
         [HttpPost]
-        public GlobalJsonResult<BuildResult> NewBuild([FromBody]NewBuildRequest request)
+        public GlobalJsonResult<BuildDto> NewBuild([FromBody]NewBuildRequest request)
         {
             var build = buildRepo.New(request);
 
-            var result = new BuildResult();
-            result.PopulateFrom(build);
-
-            return GlobalJsonResult<BuildResult>.Success(System.Net.HttpStatusCode.Created, result);
+            return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.Created, build.AsDto());
         }
 
         [ActionName("UpdateBuild")]
         [HttpPost]
-        public GlobalJsonResult<BuildResult> UpdateBuild([FromBody]UpdateBuildRequest request)
+        public GlobalJsonResult<BuildDto> UpdateBuild([FromBody]UpdateBuildRequest request)
         {
             var build = buildRepo.Get(request.Id);
-
             build.DoThis(b => b.Update(request));
 
-            var result = new BuildResult();
-            result.PopulateFrom(build);
-
-            return GlobalJsonResult<BuildResult>.Success(System.Net.HttpStatusCode.OK, result);
+            return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.OK, build.AsDto());
         }
 
         [ActionName("DeleteBuild")]

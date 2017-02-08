@@ -1,10 +1,10 @@
 ﻿using Civica.CrmBuilder.Core.Enums;
 using Civica.CrmBuilder.Core.Mapping;
-using Civica.CrmBuilder.Domain.Builds;
+using Civica.CrmBuilder.Domain.Dtos;
 
 namespace Civica.CrmBuilder.Api.ApiRequests
 {
-    public class NewBuildRequest : IMappableTo<BuildProperties>
+    public class NewBuildRequest : IMappableTo<BuildDto>
     {
         public string Name { get; set; }
 
@@ -14,9 +14,9 @@ namespace Civica.CrmBuilder.Api.ApiRequests
 
         public int VersionMinor { get; set; }
 
-        public BuildProperties Map()
+        public BuildDto Map()
         {
-            return new BuildProperties
+            return new BuildDto
             {
                 BuildVersioningType = BuildVersioningType,
                 Name = Name,

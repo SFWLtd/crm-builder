@@ -2,29 +2,19 @@
 using Civica.CrmBuilder.Core.Mapping;
 using Civica.CrmPlusPlus.Sdk.Client;
 
-namespace Civica.CrmBuilder.Domain.Builds
+namespace Civica.CrmBuilder.Domain.Dtos
 {
     public class Build : IBuild
     {
         private readonly ICrmPlusPlusEntityClient client;
+        private readonly Entities.Build entity;
 
-        public Guid Id { get { return Entity.Id; } }
-
-        internal Entities.Build Entity { get; set; }
-
-        internal Build(ICrmPlusPlusEntityClient client, BuildProperties buildProps)
+        internal Build(ICrmPlusPlusEntityClient client, BuildDto buildDto)
         {
             this.client = client;
+            entity = buildDto.Map();
 
-            Entity = new Entities.Build
-            {
-                Name = buildProps.Name,
-                BuildVersioningType = buildProps.BuildVersioningType,
-                VersionMajor = buildProps.VersionMajor,
-                VersionMinor = buildProps.VersionMinor
-            };
-
-            client.Create(Entity);
+            this.client.Create(entity);
         }
 
         internal Build(ICrmPlusPlusEntityClient client, Guid id)
@@ -35,22 +25,30 @@ namespace Civica.CrmBuilder.Domain.Builds
                 .ForEntity<Entities.Build>(id)
                 .IncludeAllColumns(true);
 
-            Entity = client.Retrieve(retrieval);
+            entity = client.Retrieve(retrieval);
         }
 
-        public void Update(IMappableTo<BuildProperties> props)
+        public void Update(IMappableTo<BuildDto> props)
         {
             var buildProps = props.Map();
 
-            Entity.Name = buildProps.Name;
-            Entity.VersionMajor = buildProps.VersionMajor;
-            Entity.VersionMinor = buildProps.VersionMinor;
+            entity.Name = buildProps.Name;
+            entity.VersionMajor = buildProps.VersionMajor;
+            entity.VersionMinor = buildProps.VersionMinor;
         }
 
         public void DoThis(Action<Build> buildActions)
         {
             buildActions(this);
-            client.Update(Entity);
+            client.Update(entity);
+        }
+
+        public BuildDto AsDto()
+        {
+            var dto = new BuildDto();
+            dto.PopulateFrom(this.entity);
+
+            return dto;
         }
     }
 }

@@ -8,7 +8,7 @@ using Civica.CrmPlusPlus.Sdk.Client;
 using Civica.CrmPlusPlus.Sdk.Client.Retrieve;
 using Civica.CrmPlusPlus.Sdk.Querying;
 
-namespace Civica.CrmBuilder.Domain.Builds
+namespace Civica.CrmBuilder.Domain.Dtos
 {
     public class BuildRepository : IBuildRepository
     {
@@ -46,7 +46,7 @@ namespace Civica.CrmBuilder.Domain.Builds
             Delete(Guid.Parse(id));
         }
 
-        public IEnumerable<BuildProperties> GetAll()
+        public IEnumerable<BuildDto> GetAll()
         {
             var query = Query.ForEntity<Entities.Build>()
                 .Include(b => b.Name)
@@ -59,13 +59,13 @@ namespace Civica.CrmBuilder.Domain.Builds
                 .OrderByDescending(e => e.CreatedOn)
                 .Select(b => 
                 {
-                    var properties = new BuildProperties();
+                    var properties = new BuildDto();
                     properties.PopulateFrom(b);
                     return properties;
                 });
         }
 
-        public IBuild New(IMappableTo<BuildProperties> buildProperties)
+        public IBuild New(IMappableTo<BuildDto> buildProperties)
         {
             return new Build(entityClient, buildProperties.Map());
         }

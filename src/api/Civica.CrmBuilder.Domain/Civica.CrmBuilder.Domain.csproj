@@ -53,7 +53,7 @@
     <Compile Include="Authentication\OnPremiseClient.cs" />
     <Compile Include="Authentication\InMemoryClientStore.cs" />
     <Compile Include="Builds\Build.cs" />
-    <Compile Include="Builds\BuildProperties.cs" />
+    <Compile Include="Dtos\BuildDto.cs" />
     <Compile Include="Builds\BuildRepository.cs" />
     <Compile Include="Builds\IBuild.cs" />
     <Compile Include="Builds\IBuildRepository.cs" />

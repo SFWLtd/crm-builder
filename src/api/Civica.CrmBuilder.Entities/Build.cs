@@ -1,4 +1,5 @@
-﻿using Civica.CrmBuilder.Core.Enums;
+﻿using System;
+using Civica.CrmBuilder.Core.Enums;
 using Civica.CrmBuilder.Core.Validation;
 using Civica.CrmPlusPlus;
 using Civica.CrmPlusPlus.Sdk.EntityAttributes;
@@ -14,6 +15,14 @@ namespace Civica.CrmBuilder.Entities
         private string name;
         private int versionMajor;
         private int versionMinor;
+
+        public Build()
+        {
+        }
+
+        public Build(Guid id) :base(id)
+        {
+        }
 
         [PropertyName("buil_name")]
         [PropertyInfo("Name", AttributeRequiredLevel.ApplicationRequired, "The name of the build")]

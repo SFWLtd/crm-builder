@@ -1,5 +1,5 @@
 ﻿using System;
-using Civica.CrmBuilder.Domain.Builds;
+using Civica.CrmBuilder.Domain.Dtos;
 using Civica.CrmPlusPlus.Sdk.Client;
 using Civica.CrmPlusPlus.Sdk.Client.Retrieve;
 using FakeItEasy;
@@ -12,7 +12,7 @@ namespace Civica.CrmBuilder.Domain.Tests.Builds
         [Fact]
         public void WhenCreatingABuildFromProperties_ShouldThrowArgumentExceptionIfNameDoesNotExist()
         {
-            Assert.Throws<ArgumentException>(() => new Build(null, new BuildProperties()));
+            Assert.Throws<ArgumentException>(() => new Build(null, new BuildDto()));
         }
 
         [Fact]
@@ -20,7 +20,7 @@ namespace Civica.CrmBuilder.Domain.Tests.Builds
         {
             var entityClient = A.Fake<ICrmPlusPlusEntityClient>();
 
-            var build = new Build(entityClient, new BuildProperties
+            var build = new Build(entityClient, new BuildDto
             {
                 BuildVersioningType = Core.Enums.BuildVersioningType.JulianDate,
                 Name = "test"

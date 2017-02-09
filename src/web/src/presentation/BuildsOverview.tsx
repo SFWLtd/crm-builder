@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ApiClient from '../../../api/ApiClient';
 import AddNewBuild from '../containers/EditBuild';
 import ConfirmDeleteBuild from '../containers/ConfirmDeleteBuild';
-import { Button, Container, Dimmer, Grid, Header, Icon, Image, Item, Loader, Menu, Rail, Segment } from 'semantic-ui-react';
+import { Button, Container, Dimmer, Grid, Header, Icon, Image, Item, Label, Loader, Menu, Rail, Segment } from 'semantic-ui-react';
 
 export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefined> {
 
@@ -21,26 +21,31 @@ export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefi
 
         let builds = this.props.builds.map((build: ApiClient.BuildDto): JSX.Element => {
             return <Segment key={build.id} attached>
-                <Item>
-                    <Item.Content>
-                        <Item.Header><h3>{build.name}</h3></Item.Header>
-                        <Item.Meta>Version: {build.versionMajor + '.' + build.versionMinor}</Item.Meta>
-                    </Item.Content>
-                    <br/>
-                    <Item.Content>
-                        <Button.Group basic size='small'>
-                            <Button animated='fade' onClick={(e:any) => this.props.editBuild(build.id)}>
-                                <Button.Content visible><Icon name='edit'/></Button.Content>
-                                <Button.Content hidden>Edit</Button.Content>
-                            </Button>
-                            <Button animated='fade' onClick={(e:any) => this.props.deleteBuild(build.id)}>
-                                <Button.Content visible><Icon name='delete'/></Button.Content>
-                                <Button.Content hidden>Delete</Button.Content>
-                            </Button>
-                        </Button.Group>
-                    </Item.Content>
-                </Item>
-            </Segment>
+                        <Item>
+                            <Item.Content>
+                                <Item.Header><h3>{build.name}</h3></Item.Header>
+                                <Item.Meta>Version: {build.versionMajor + '.' + build.versionMinor}</Item.Meta>
+                            </Item.Content>
+                            <br/>
+                            <Item.Content>
+                                <Button.Group basic size='small'>
+                                    <Button animated='fade' onClick={(e:any) => this.props.editBuild(build.id)}>
+                                        <Button.Content visible><Icon name='edit'/></Button.Content>
+                                        <Button.Content hidden>Edit</Button.Content>
+                                    </Button>
+                                    <Button animated='fade' onClick={(e:any) => this.props.deleteBuild(build.id)}>
+                                        <Button.Content visible><Icon name='delete'/></Button.Content>
+                                        <Button.Content hidden>Delete</Button.Content>
+                                    </Button>
+                                </Button.Group>
+                            </Item.Content>                         
+                        </Item>
+                        <Rail internal position='right'>
+                            <Segment textAlign='right' basic>
+                                <Label as='a' color='green' tag>Ready to run</Label>   
+                            </Segment>
+                        </Rail>
+                    </Segment>
         });
 
         return <div>

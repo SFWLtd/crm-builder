@@ -52,7 +52,7 @@ namespace Civica.CrmBuilder.Api.Controllers
         public GlobalJsonResult<BuildDto> UpdateBuild([FromBody]BuildDto request)
         {
             var build = buildRepo.Get(request.Id);
-            build.DoThis(b => b.Update(request));
+            build.DoThis(b => b.UpdateProperties(request));
 
             return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.OK, build.AsDto());
         }

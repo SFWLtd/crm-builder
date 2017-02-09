@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,11 +47,10 @@
   <ItemGroup>
     <Compile Include="Authentication\AuthenticationType.cs" />
     <Compile Include="Authentication\Client.cs" />
-    <Compile Include="Authentication\Dynamics365Client.cs" />
+    <Compile Include="Authentication\CrmConnectionString.cs" />
+    <Compile Include="Authentication\CrmClient.cs" />
     <Compile Include="Authentication\IClient.cs" />
-    <Compile Include="Authentication\IfdClient.cs" />
     <Compile Include="Authentication\IClientStore.cs" />
-    <Compile Include="Authentication\OnPremiseClient.cs" />
     <Compile Include="Authentication\InMemoryClientStore.cs" />
     <Compile Include="Builds\Build.cs" />
     <Compile Include="Dtos\BuildDto.cs" />
@@ -71,6 +71,7 @@
     <Compile Include="Installation\Versions\AddBuildVersioningType.cs" />
     <Compile Include="Installation\Versions\AddMajorAndMinorVersionToBuild.cs" />
     <Compile Include="Installation\Versions\CreateBuildEntity.cs" />
+    <Compile Include="Protection\Protector.cs" />
     <Compile Include="Time\SystemTime.cs" />
     <Compile Include="Versioning\IVersionable.cs" />
     <Compile Include="Installation\Versions\IInstallationVersion.cs" />

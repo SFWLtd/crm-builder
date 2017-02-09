@@ -23,11 +23,8 @@ namespace Civica.CrmBuilder.Api.ApiRequests
             switch (AuthenticationType)
             {
                 case AuthenticationType.Dynamics365:
-                    return new Dynamics365Client(Url, EmailAddress, Password);
-                case AuthenticationType.Ifd:
-                    return  new IfdClient(Url, Domain, UserName, Password);
-                case AuthenticationType.OnPremise:
-                    return new OnPremiseClient(Url, Domain, UserName, Password);
+                    return new CrmClient(new CrmConnectionString(Url, EmailAddress, Password));
+                default: return new CrmClient(new CrmConnectionString(Url, Domain, UserName, Password));
             }
 
             throw new ArgumentException("Unrecognized authentication type");

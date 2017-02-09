@@ -68,5 +68,10 @@ namespace Civica.CrmBuilder.Entities
                 versionMinor = value;
             }
         }
+
+        [PropertyName("build_targetEnvConnectionString")]
+        [PropertyInfo("Target Environment Connection String", AttributeRequiredLevel.None, "The encrypted connection string of the target environment")]
+        [String(3999, StringFormatName.TextArea)]
+        public string ProtectedTargetConnectionString { get; set; }
     }
 }

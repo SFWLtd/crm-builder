@@ -15,33 +15,27 @@ namespace Civica.CrmBuilder.Api.Controllers
             this.clientStore = clientStore;
         }
 
-        [ActionName("GetSessionToken")]
-        [HttpGet()]
-        public GlobalJsonResult<SessionTokenResult> GetSessionToken([FromBody]GetSessionTokenRequest request)
+        [ActionName("CheckSessionExists")]
+        [HttpGet]
+        public GlobalJsonResult<bool> CheckSessionExists()
         {
-            var client = clientStore.Get();
+            var result = clientStore.CheckClientExists();
 
-            var result = new SessionTokenResult();
-            result.PopulateFrom(client);
-
-            return GlobalJsonResult<SessionTokenResult>.Success(System.Net.HttpStatusCode.OK, result);
+            return GlobalJsonResult<bool>.Success(System.Net.HttpStatusCode.OK, result);
         }
 
         [ActionName("NewSession")]
-        [HttpPost()]
-        public GlobalJsonResult<SessionTokenResult> NewSession([FromBody]NewSessionRequest request)
+        [HttpPost]
+        public GlobalJsonResult<bool> NewSession([FromBody]NewSessionRequest request)
         {
             var client = request.Map();
             clientStore.Set(client);
 
-            var result = new SessionTokenResult();
-            result.PopulateFrom(client);
-
-            return GlobalJsonResult<SessionTokenResult>.Success(System.Net.HttpStatusCode.OK, result);
+            return GlobalJsonResult<bool>.Success(System.Net.HttpStatusCode.OK, true);
         }
 
         [ActionName("EndSession")]
-        [HttpPost()]
+        [HttpPost]
         public GlobalJsonResult<EmptyResult> EndSession()
         {
             clientStore.Clear();

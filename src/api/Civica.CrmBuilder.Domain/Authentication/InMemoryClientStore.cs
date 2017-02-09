@@ -20,6 +20,11 @@ namespace Civica.CrmBuilder.Domain.Authentication
             this.client = client;
         }
 
+        public bool CheckClientExists()
+        {
+            return client != null;
+        }
+
         public IClient Get()
         {
             if (client == null || SystemTime.Now.Subtract(client.LastAccess).CompareTo(slidingExpiryPeriod) > 0)

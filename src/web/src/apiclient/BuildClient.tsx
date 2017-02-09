@@ -20,7 +20,7 @@ export class BuildClient {
     }
 
     fetch(buildId: string): Promise<ApiClient.GlobalJsonResultOfBuildDto> {
-        return this.client.getBuild(null, buildId);
+        return this.client.getBuild(buildId);
     }
 
     fetchAll(): Promise<ApiClient.GlobalJsonResultOfIEnumerableOfBuildDto> {

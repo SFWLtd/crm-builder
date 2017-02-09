@@ -126,7 +126,7 @@ export const submit = (dispatch: any, props: IAuthenticationFormProps): IAction 
     let authenticationClient = new AuthenticationClient(new ApiClient.SessionClient(config.apiUrl));
     let newSessionResult = authenticationClient.newSession(props);
     newSessionResult
-        .then((result: ApiClient.GlobalJsonResultOfSessionTokenResult) => {
+        .then((result: ApiClient.GlobalJsonResultOfBoolean) => {
             let setAuthAction: IAction = setLoginAuthenticationResult(dispatch, result);
             dispatch(setAuthAction);
         });
@@ -140,9 +140,9 @@ export const submit = (dispatch: any, props: IAuthenticationFormProps): IAction 
 export const getLoginStatus = (dispatch: any): IAction => {
 
     let authenticationClient = new AuthenticationClient(new ApiClient.SessionClient(config.apiUrl));
-    let getSessionResult = authenticationClient.getSession();
+    let getSessionResult = authenticationClient.checkSessionExists();
     getSessionResult
-        .then((result: ApiClient.GlobalJsonResultOfSessionTokenResult) => {
+        .then((result: ApiClient.GlobalJsonResultOfBoolean) => {
             let setAuthAction: IAction = setAuthenticationResult(dispatch, result);
             dispatch(setAuthAction);
         });
@@ -153,7 +153,7 @@ export const getLoginStatus = (dispatch: any): IAction => {
     }
 }
 
-export const setLoginAuthenticationResult = (dispatch: any, result: ApiClient.GlobalJsonResultOfSessionTokenResult): IAction => {
+export const setLoginAuthenticationResult = (dispatch: any, result: ApiClient.GlobalJsonResultOfBoolean): IAction => {
 
     return {
         type: AuthenticationActions.SetLoginAuthenticationState,
@@ -161,7 +161,7 @@ export const setLoginAuthenticationResult = (dispatch: any, result: ApiClient.Gl
     };
 };
 
-export const setAuthenticationResult = (dispatch: any, result: ApiClient.GlobalJsonResultOfSessionTokenResult): IAction => {
+export const setAuthenticationResult = (dispatch: any, result: ApiClient.GlobalJsonResultOfBoolean): IAction => {
 
     return {
         type: AuthenticationActions.SetAuthenticationState,

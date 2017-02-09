@@ -12,6 +12,6 @@ export interface IAuthenticationState {
     shouldValidateForm: boolean;
     lastErrorMessage: string;
     hasBeenSubmitted: boolean;
-    loginStatus: IAsyncActionState<ApiClient.GlobalJsonResultOfSessionTokenResult>;
+    loginStatus: IAsyncActionState<ApiClient.GlobalJsonResultOfBoolean>;
     logOutStatus: IAsyncActionState<ApiClient.GlobalJsonResultOfEmptyResult>;
 }

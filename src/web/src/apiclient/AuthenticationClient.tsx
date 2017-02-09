@@ -9,7 +9,7 @@ export class AuthenticationClient {
         this.client = client;
     }
 
-    newSession(props: IAuthenticationFormProps): Promise<ApiClient.GlobalJsonResultOfSessionTokenResult> {
+    newSession(props: IAuthenticationFormProps): Promise<ApiClient.GlobalJsonResultOfBoolean> {
 
         let request = new ApiClient.NewSessionRequest();
         request.authenticationType = props.authenticationTypeSelectedValue;
@@ -22,11 +22,8 @@ export class AuthenticationClient {
         return this.client.newSession(request, '');
     }
 
-    getSession(): Promise<ApiClient.GlobalJsonResultOfSessionTokenResult> {
-
-        let request = new ApiClient.GetSessionTokenRequest();
-
-        return this.client.getSessionToken(request, '');
+    checkSessionExists(): Promise<ApiClient.GlobalJsonResultOfBoolean> {
+        return this.client.checkSessionExists('');
     }
 
     endSession(): Promise<ApiClient.GlobalJsonResultOfEmptyResult> {

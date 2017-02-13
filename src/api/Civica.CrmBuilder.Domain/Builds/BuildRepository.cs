@@ -48,10 +48,7 @@ namespace Civica.CrmBuilder.Domain.Dtos
         public IEnumerable<IBuild> GetAll()
         {
             var query = Query.ForEntity<Entities.Build>()
-                .Include(b => b.Name)
-                .Include(b => b.BuildVersioningType)
-                .Include(b => b.VersionMajor)
-                .Include(b => b.VersionMinor);
+                .IncludeAllProperties();
 
             return entityClient
                 .RetrieveMultiple(query)

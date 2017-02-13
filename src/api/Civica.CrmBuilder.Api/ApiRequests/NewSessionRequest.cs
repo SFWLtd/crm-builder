@@ -1,4 +1,5 @@
 ﻿using System;
+using Civica.CrmBuilder.Core.Enums;
 using Civica.CrmBuilder.Core.Mapping;
 using Civica.CrmBuilder.Domain.Authentication;
 

@@ -116,7 +116,7 @@ export const submit = (dispatch: any, props: IAuthenticationFormProps): IAction 
 
     let validator = new AuthenticationFormValidator();
     
-    if (!validator.IsValid(props)) {
+    if (!validator.isValid(props)) {
         return {
             type: AuthenticationActions.ValidateForm,
             value: null

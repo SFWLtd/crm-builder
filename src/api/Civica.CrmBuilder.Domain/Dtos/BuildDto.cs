@@ -1,8 +1,8 @@
 ﻿using System;
 using Civica.CrmBuilder.Core.Enums;
 using Civica.CrmBuilder.Core.Mapping;
+using Civica.CrmBuilder.Core.Protection;
 using Civica.CrmBuilder.Core.Validation;
-using Civica.CrmBuilder.Domain.Protection;
 
 namespace Civica.CrmBuilder.Domain.Dtos
 {
@@ -18,7 +18,17 @@ namespace Civica.CrmBuilder.Domain.Dtos
 
         public int VersionMinor { get; set; }
 
-        public string TargetCrmConnectionString { get; set; }
+        public AuthenticationType TargetAuthenticationType { get; set; }
+
+        public string TargetCrmUrl { get; set; }
+
+        public string TargetDomain { get; set; }
+
+        public string TargetUsername { get; set; }
+
+        public string TargetEmailAddress { get; set; }
+
+        public string TargetPassword { get; set; }
 
         public void PopulateFrom(Entities.Build source)
         {
@@ -27,26 +37,46 @@ namespace Civica.CrmBuilder.Domain.Dtos
             BuildVersioningType = source.BuildVersioningType;
             VersionMajor = source.VersionMajor;
             VersionMinor = source.VersionMinor;
-            TargetCrmConnectionString = Protector.UnprotectString(source.ProtectedTargetConnectionString);
+            TargetAuthenticationType = source.TargetEnvironmentAuthenticationType;
+            TargetCrmUrl = source.TargetEnvironmentCrmUrl;
+            TargetDomain = source.TargetEnvironmentDomain;
+            TargetEmailAddress = source.TargetEnvironmentEmail;
+            TargetPassword = Protector.UnprotectString(source.ProtectedTargetEnvironmentPassword);
         }
 
         public Entities.Build Map()
         {
-            Guard.This(Name)
+            Guard.This(TargetPassword)
                 .AgainstNullOrEmpty();
 
             var id = string.IsNullOrEmpty(Id)
                 ? Guid.NewGuid()
                 : Guid.Parse(Id);
 
-            return new Entities.Build(id)
+            var entity = new Entities.Build(id)
             {
                 Name = Name,
                 BuildVersioningType = BuildVersioningType,
                 VersionMajor = VersionMajor,
                 VersionMinor = VersionMinor,
-                ProtectedTargetConnectionString = Protector.ProtectString(TargetCrmConnectionString)
+                TargetEnvironmentAuthenticationType = TargetAuthenticationType,
+                TargetEnvironmentCrmUrl = TargetCrmUrl,
+                ProtectedTargetEnvironmentPassword = Protector.ProtectString(TargetPassword)
             };
+
+
+            switch (TargetAuthenticationType)
+            {
+                case AuthenticationType.Dynamics365:
+                    entity.TargetEnvironmentEmail = TargetEmailAddress;
+                    break;
+                default:
+                    entity.TargetEnvironmentDomain = TargetDomain;
+                    entity.TargetEnvironmentUsername = TargetUsername;
+                    break;
+            }
+
+            return entity;
         }
     }
 }

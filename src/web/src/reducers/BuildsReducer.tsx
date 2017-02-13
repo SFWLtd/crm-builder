@@ -40,6 +40,39 @@ const buildReducer = (state: IBuildState, action: IAction): IBuildState => {
         case BuildActions.BlurBuildMinorVersion:
             newState.editBuildFormState.versionMajor.hasBeenTouched = true;
             break;
+        case BuildActions.SetTargetEnvironmentAuthenticationType:
+            newState.editBuildFormState.authenticationType = action.value;
+            break;
+        case BuildActions.SetTargetEnvironmentCrmUrl:
+            newState.editBuildFormState.crmUrl.value = action.value;
+            break;
+        case BuildActions.BlurTargetEnvironmentCrmUrl:
+            newState.editBuildFormState.crmUrl.hasBeenTouched = true;
+            break;
+        case BuildActions.SetTargetEnvironmentDomain:
+            newState.editBuildFormState.domain.value = action.value;
+            break;
+        case BuildActions.BlurTargetEnvironmentDomain:
+            newState.editBuildFormState.domain.hasBeenTouched = true;
+            break;
+        case BuildActions.SetTargetEnvironmentEmail:
+            newState.editBuildFormState.emailAddress.value = action.value;
+            break;
+        case BuildActions.BlurTargetEnvironmentEmail:
+            newState.editBuildFormState.emailAddress.hasBeenTouched = true;
+            break;
+        case BuildActions.SetTargetEnvironmentUsername: 
+            newState.editBuildFormState.username.value = action.value;
+            break;
+        case BuildActions.BlurTargetEnvironmentUsername:
+            newState.editBuildFormState.emailAddress.hasBeenTouched = true;
+            break;
+        case BuildActions.SetTargetEnvironmentPassword:
+            newState.editBuildFormState.password.value = action.value;
+            break;
+        case BuildActions.BlurTargetEnvironmentPassword:
+            newState.editBuildFormState.password.hasBeenTouched = true;
+            break;
         case BuildActions.ShowNewBuildForm:
             newState.editBuildFormState.show = true;
             break;
@@ -73,6 +106,17 @@ const buildReducer = (state: IBuildState, action: IAction): IBuildState => {
             newState.editBuildFormState.versionMajor.hasBeenTouched = false;
             newState.editBuildFormState.versionMinor.value = 0;
             newState.editBuildFormState.versionMinor.hasBeenTouched = false;
+            newState.editBuildFormState.authenticationType = ApiClient.AuthenticationType.Dynamics365;
+            newState.editBuildFormState.crmUrl.value = '';
+            newState.editBuildFormState.crmUrl.hasBeenTouched = false;
+            newState.editBuildFormState.emailAddress.value = '';
+            newState.editBuildFormState.emailAddress.hasBeenTouched = false;
+            newState.editBuildFormState.username.value = '';
+            newState.editBuildFormState.username.hasBeenTouched = false;
+            newState.editBuildFormState.domain.value = '';
+            newState.editBuildFormState.domain.hasBeenTouched = false;
+            newState.editBuildFormState.password.value = '';
+            newState.editBuildFormState.password.hasBeenTouched = false;
             newState.editBuildFormState.submission.hasStarted = false;
             newState.editBuildFormState.submission.hasCompleted = false;
             newState.editBuildFormState.submission.result = null;

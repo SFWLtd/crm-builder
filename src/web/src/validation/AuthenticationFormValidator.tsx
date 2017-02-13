@@ -7,38 +7,38 @@ export class AuthenticationFormValidator {
     constructor() {
     }
 
-    IsValid(props: IAuthenticationFormProps) {
+    isValid(props: IAuthenticationFormProps) {
         let dynamics365SubmissionIsValid = props.authenticationTypeSelectedValue == ApiClient.AuthenticationType.Dynamics365
-            && this.ValidateCrmUrl(props.crmUrl)
-            && this.ValidateEmailAddress(props.emailAddress)
-            && this.ValidatePassword(props.password);
+            && this.validateCrmUrl(props.crmUrl)
+            && this.validateEmailAddress(props.emailAddress)
+            && this.validatePassword(props.password);
 
         let otherSubmissionIsValid = (props.authenticationTypeSelectedValue == ApiClient.AuthenticationType.Ifd || props.authenticationTypeSelectedValue == ApiClient.AuthenticationType.OnPremise)
-            && this.ValidateCrmUrl(props.crmUrl)
-            && this.ValidateDomain(props.domain)
-            && this.ValidateUsername(props.username)
-            && this.ValidatePassword(props.password);
+            && this.validateCrmUrl(props.crmUrl)
+            && this.validateDomain(props.domain)
+            && this.validateUsername(props.username)
+            && this.validatePassword(props.password);
 
         return dynamics365SubmissionIsValid || otherSubmissionIsValid;
     }
 
-    ValidateCrmUrl(crmUrl: string): boolean {
+    validateCrmUrl(crmUrl: string): boolean {
         return Validate.thisString(crmUrl).url();
     }
 
-    ValidateEmailAddress(emailAddress: string): boolean {
+    validateEmailAddress(emailAddress: string): boolean {
         return Validate.thisString(emailAddress).email();
     }
 
-    ValidateUsername(username: string): boolean {
+    validateUsername(username: string): boolean {
         return Validate.thisString(username).length(1, 100);
     }
 
-    ValidateDomain(domain: string): boolean {
+    validateDomain(domain: string): boolean {
         return Validate.thisString(domain).length(1, 100);
     }
 
-    ValidatePassword(password: string): boolean {
+    validatePassword(password: string): boolean {
         return Validate.thisString(password).length(1, 100);
     }
 }

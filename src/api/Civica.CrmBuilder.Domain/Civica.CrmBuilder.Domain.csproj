@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authentication\AuthenticationType.cs" />
     <Compile Include="Authentication\Client.cs" />
     <Compile Include="Authentication\CrmConnectionString.cs" />
     <Compile Include="Authentication\CrmClient.cs" />
@@ -68,10 +67,10 @@
     <Compile Include="Installation\Installation.cs" />
     <Compile Include="Installation\InstallationStatus.cs" />
     <Compile Include="Installation\InstallationVersionDiscovery.cs" />
+    <Compile Include="Installation\Versions\AddBuildTargetAuthenticationDetails.cs" />
     <Compile Include="Installation\Versions\AddBuildVersioningType.cs" />
     <Compile Include="Installation\Versions\AddMajorAndMinorVersionToBuild.cs" />
     <Compile Include="Installation\Versions\CreateBuildEntity.cs" />
-    <Compile Include="Protection\Protector.cs" />
     <Compile Include="Time\SystemTime.cs" />
     <Compile Include="Versioning\IVersionable.cs" />
     <Compile Include="Installation\Versions\IInstallationVersion.cs" />

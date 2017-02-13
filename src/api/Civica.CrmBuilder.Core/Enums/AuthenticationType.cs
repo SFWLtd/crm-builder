@@ -1,4 +1,4 @@
-﻿namespace Civica.CrmBuilder.Domain.Authentication
+﻿namespace Civica.CrmBuilder.Core.Enums
 {
     public enum AuthenticationType
     {

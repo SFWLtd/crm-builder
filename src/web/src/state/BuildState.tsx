@@ -21,6 +21,12 @@ export interface IEditBuildFormState {
     buildVersioningType: ApiClient.BuildVersioningType,
     versionMajor: IFormInputState,
     versionMinor: IFormInputState,
+    authenticationType: ApiClient.AuthenticationType,
+    crmUrl: IFormInputState,
+    domain: IFormInputState,
+    username: IFormInputState,
+    password: IFormInputState,
+    emailAddress: IFormInputState,
     shouldValidate: boolean,
     submission: IAsyncActionState<ApiClient.GlobalJsonResultOfBuildDto>
 }

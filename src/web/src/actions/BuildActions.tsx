@@ -15,6 +15,17 @@ export class BuildActions {
     static BlurBuildMajorVersion: string = 'BLUR_BUILD_MAJOR_VERSION';
     static SetBuildMinorVersion: string = 'SET_BUILD_MINOR_VERSION';
     static BlurBuildMinorVersion: string = 'BLUR_BUILD_MINOR_VERSION';
+    static SetTargetEnvironmentAuthenticationType: string = 'SET_TARGET_ENVIRONMENT_AUTHENTICATION_TYPE';
+    static SetTargetEnvironmentCrmUrl: string = 'SET_TARGET_ENVIRONMENT_CRM_URL';
+    static BlurTargetEnvironmentCrmUrl: string = 'BLUR_TARGET_ENVIRONMENT_CRM_URL';
+    static SetTargetEnvironmentEmail: string = 'SET_TARGET_ENVIRONMENT_EMAIL';
+    static BlurTargetEnvironmentEmail: string = 'BLUR_TARGET_ENVIRONMENT_EMAIL';
+    static SetTargetEnvironmentDomain: string = 'SET_TARGET_ENVIRONMENT_DOMAIN';
+    static BlurTargetEnvironmentDomain: string = 'BLUR_TARGET_ENVIRONMENT_DOMAIN';
+    static SetTargetEnvironmentUsername: string = 'SET_TARGET_ENVIRONMENT_USERNAME';
+    static BlurTargetEnvironmentUsername: string = 'BLUR_TARGET_ENVIRONMENT_USERNAME';
+    static SetTargetEnvironmentPassword: string = 'SET_TARGET_ENVIRONMENT_PASSWORD';
+    static BlurTargetEnvironmentPassword: string = 'BLUR_TARGET_ENVIRONMENT_PASSWORD';
     static ShowNewBuildForm: string = 'SHOW_NEW_BUILD_FORM';
     static CloseBuildForm: string = 'CLOSE_NEW_BUILD_FORM';
     static BeginShowEditBuildForm: string = 'BEGIN_SHOW_EDIT_BUILD_FORM';
@@ -120,6 +131,48 @@ export const setBuildMinorVersion = (version: number): IAction => {
     };
 };
 
+export const setTargetEnvironmentAuthenticationType = (authenticationType: ApiClient.AuthenticationType): IAction => {
+    return {
+        type: BuildActions.SetTargetEnvironmentAuthenticationType,
+        value: authenticationType
+    };
+};
+
+export const setTargetEnvironmentCrmUrl = (crmUrl: string): IAction => {
+    return {
+        type: BuildActions.SetTargetEnvironmentCrmUrl,
+        value: crmUrl
+    };
+};
+
+export const setTargetEnvironmentEmail = (email: string): IAction => {
+    return {
+        type: BuildActions.SetTargetEnvironmentEmail,
+        value: email
+    };
+};
+
+export const setTargetEnvironmentDomain = (domain: string): IAction => {
+    return {
+        type: BuildActions.SetTargetEnvironmentDomain,
+        value: domain
+    };
+};
+
+export const setTargetEnvironmentUsername = (username: string): IAction => {
+    return {
+        type: BuildActions.SetTargetEnvironmentUsername,
+        value: username
+    };
+};
+
+export const setTargetEnvironmentPassword = (password: string): IAction => {
+    return {
+        type: BuildActions.SetTargetEnvironmentPassword,
+        value: password
+    };
+};
+
 export const blurBuildName = (): IAction => {
     return {
         type: BuildActions.BlurBuildName,
@@ -137,6 +190,41 @@ export const blurBuildMajorVersion = (): IAction => {
 export const blurBuildMinorVersion = (): IAction => {
     return {
         type: BuildActions.BlurBuildMinorVersion,
+        value: null
+    };
+};
+
+export const blurTargetEnvironmentCrmUrl = (): IAction => {
+    return {
+        type: BuildActions.BlurTargetEnvironmentCrmUrl,
+        value: null
+    };
+};
+
+export const blurTargetEnvironmentEmail = (): IAction => {
+    return {
+        type: BuildActions.BlurTargetEnvironmentEmail,
+        value: null
+    };
+};
+
+export const blurTargetEnvironmentDomain = (): IAction => {
+    return {
+        type: BuildActions.BlurTargetEnvironmentDomain,
+        value: null
+    };
+};
+
+export const blurTargetEnvironmentUsername = (): IAction => {
+    return {
+        type: BuildActions.BlurTargetEnvironmentUsername,
+        value: null
+    };
+};
+
+export const BlurTargetEnvironmentPassword = (): IAction => {
+    return {
+        type: BuildActions.BlurTargetEnvironmentPassword,
         value: null
     };
 };
@@ -180,6 +268,12 @@ export const finishShowEditBuildForm = (dispatch: any, editableBuild: ApiClient.
         dispatch(setBuildVersioningType(editableBuild.result.buildVersioningType));
         dispatch(setBuildMajorVersion(editableBuild.result.versionMajor));
         dispatch(setBuildMinorVersion(editableBuild.result.versionMinor));
+        dispatch(setTargetEnvironmentAuthenticationType(editableBuild.result.targetAuthenticationType));
+        dispatch(setTargetEnvironmentCrmUrl(editableBuild.result.targetCrmUrl));
+        dispatch(setTargetEnvironmentEmail(editableBuild.result.targetEmailAddress));
+        dispatch(setTargetEnvironmentDomain(editableBuild.result.targetDomain));
+        dispatch(setTargetEnvironmentUsername(editableBuild.result.targetUsername));
+        dispatch(setTargetEnvironmentPassword(editableBuild.result.targetPassword));
     }
 
     return {

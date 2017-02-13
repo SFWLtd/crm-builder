@@ -41,7 +41,11 @@ namespace Civica.CrmBuilder.Domain.Tests.Builds
 
             var build = new BuildDto
             {
-                Name = "Test"
+                Name = "Test",
+                TargetPassword = "password",
+                TargetAuthenticationType = Core.Enums.AuthenticationType.Dynamics365,
+                TargetEmailAddress = "a@b.c",
+                TargetCrmUrl = "https://something"
             };
 
             new BuildRepository(clientStore).New(build);

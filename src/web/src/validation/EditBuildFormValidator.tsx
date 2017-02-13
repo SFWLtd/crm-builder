@@ -1,15 +1,16 @@
 import { IEditBuildProps } from '../presentation/EditBuild';
 import * as ApiClient from '../../../api/ApiClient';
+import { AuthenticationFormValidator } from './AuthenticationFormValidator';
 import { Validate } from './Validate';
 
-export class EditBuildFormValidator {
-
-    constructor() {
-    }
+export class EditBuildFormValidator extends AuthenticationFormValidator {
 
     isValid(props: IEditBuildProps) {
         
-        return this.validateName(props.name);
+        return this.validateName(props.name)
+            && this.validateVersionMajor(props.versionMajor)
+            && this.validateVersionMinor(props.versionMinor)
+            && super.isValid(props);
     }
 
     validateName(name: string): boolean {

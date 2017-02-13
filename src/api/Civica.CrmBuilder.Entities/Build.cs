@@ -15,6 +15,10 @@ namespace Civica.CrmBuilder.Entities
         private string name;
         private int versionMajor;
         private int versionMinor;
+        private string crmUrl;
+        private string email;
+        private string domain;
+        private string username;
 
         public Build()
         {
@@ -40,7 +44,7 @@ namespace Civica.CrmBuilder.Entities
 
         [PropertyName("buil_versioningtype")]
         [PropertyInfo("Build versioning type", AttributeRequiredLevel.ApplicationRequired, "The type of build versioning to use")]
-        [OptionSet()]
+        [OptionSet]
         public BuildVersioningType BuildVersioningType { get; set; }
 
         [PropertyName("buil_versionmajor")]
@@ -69,9 +73,66 @@ namespace Civica.CrmBuilder.Entities
             }
         }
 
-        [PropertyName("build_targetEnvConnectionString")]
-        [PropertyInfo("Target Environment Connection String", AttributeRequiredLevel.None, "The encrypted connection string of the target environment")]
-        [String(3999, StringFormatName.TextArea)]
-        public string ProtectedTargetConnectionString { get; set; }
+        [PropertyName("buil_targetenvauthtype")]
+        [PropertyInfo("Target Environment authentication type", AttributeRequiredLevel.None, "The authentication type of the target environment")]
+        [OptionSet]
+        public AuthenticationType TargetEnvironmentAuthenticationType { get; set; }
+
+        [PropertyName("buil_targetenvcrmurl")]
+        [PropertyInfo("Target environment CRM Url", AttributeRequiredLevel.None, "The target environment URL")]
+        [String(99, StringFormatName.Url)]
+        public string TargetEnvironmentCrmUrl
+        {
+            get { return crmUrl; }
+            set
+            {
+                Guard.This(value).AgainstInvalidLength(1, 99);
+                crmUrl = value;
+            }
+        }
+
+        [PropertyName("buil_targetenvemail")]
+        [PropertyInfo("Target environment email address", AttributeRequiredLevel.None, "The target environment email address")]
+        [String(99, StringFormatName.Email)]
+        public string TargetEnvironmentEmail
+        {
+            get { return email; }
+            set
+            {
+                Guard.This(value).AgainstInvalidLength(1, 99);
+                email = value;
+            }
+        }
+
+        [PropertyName("buil_targetenvdomain")]
+        [PropertyInfo("Target environment Domain", AttributeRequiredLevel.None, "The target environment domain")]
+        [String(99, StringFormatName.Text)]
+        public string TargetEnvironmentDomain
+        {
+            get { return domain; }
+            set
+            {
+                Guard.This(value).AgainstInvalidLength(1, 99);
+                domain = value;
+            }
+        }
+
+        [PropertyName("buil_targetenvusername")]
+        [PropertyInfo("Target environment username", AttributeRequiredLevel.None, "The target environment username")]
+        [String(99, StringFormatName.Text)]
+        public string TargetEnvironmentUsername
+        {
+            get { return username; }
+            set
+            {
+                Guard.This(value).AgainstInvalidLength(1, 99);
+                username = value;
+            }
+        }
+
+        [PropertyName("buil_targetenvpassword")]
+        [PropertyInfo("Target environment password", AttributeRequiredLevel.None, "The target environment password")]
+        [String(3999, StringFormatName.Text)]
+        public string ProtectedTargetEnvironmentPassword { get; set; }
     }
 }

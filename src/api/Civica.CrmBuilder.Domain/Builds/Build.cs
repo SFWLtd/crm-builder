@@ -28,12 +28,6 @@ namespace Civica.CrmBuilder.Domain.Dtos
 
         public void UpdateProperties(BuildDto build)
         {
-            Guard.This(build.Id)
-                .AgainstNonGuidFormat();
-
-            Guard.This(Guid.Parse(build.Id))
-                .AgainstNotEqual(entity.Id);
-
             entity = build.Map();
         }
 

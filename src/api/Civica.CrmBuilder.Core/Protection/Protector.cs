@@ -1,7 +1,8 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 
-namespace Civica.CrmBuilder.Domain.Protection
+namespace Civica.CrmBuilder.Core.Protection
 {
     public static class Protector
     {
@@ -16,7 +17,7 @@ namespace Civica.CrmBuilder.Domain.Protection
 
             var bytes = Encoding.Default.GetBytes(plainText);
             var result = ProtectedData.Protect(bytes, entropy, DataProtectionScope.CurrentUser);
-            return Encoding.Default.GetString(result);
+            return Convert.ToBase64String(result);
         }
 
         public static string UnprotectString(string encryptedString)
@@ -26,7 +27,7 @@ namespace Civica.CrmBuilder.Domain.Protection
                 return encryptedString;
             }
 
-            var bytes = Encoding.Default.GetBytes(encryptedString);
+            var bytes = Convert.FromBase64String(encryptedString);
             var result = ProtectedData.Unprotect(bytes, entropy, DataProtectionScope.CurrentUser);
             return Encoding.Default.GetString(result);
         }

@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6854858F-65FC-4FEC-93C9-E0335B9F227C}</ProjectGuid>
+    <ProjectGuid>{F2C468C8-B121-47E5-A267-09ECED1AE9B7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Civica.CrmBuilder.Domain.Tests</RootNamespace>
-    <AssemblyName>Civica.CrmBuilder.Domain.Tests</AssemblyName>
+    <RootNamespace>Civica.CrmBuilder.Core.Tests</RootNamespace>
+    <AssemblyName>Civica.CrmBuilder.Core.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -33,10 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FakeItEasy, Version=2.3.3.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
-      <HintPath>..\packages\FakeItEasy.2.3.3\lib\net40\FakeItEasy.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -63,38 +59,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authentication\InMemoryClientStoreTests.cs" />
-    <Compile Include="Builds\BuildRepositoryTests.cs" />
-    <Compile Include="Builds\BuildTests.cs" />
-    <Compile Include="Installation\InstallationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Time\SystemTimeTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="Protection\ProtectorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Civica.CrmBuilder.Core\Civica.CrmBuilder.Core.csproj">
       <Project>{1522e461-c092-4720-bbae-ec0443f8e780}</Project>
       <Name>Civica.CrmBuilder.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Civica.CrmBuilder.Domain\Civica.CrmBuilder.Domain.csproj">
-      <Project>{d31a19da-eaf3-45c3-bc02-f4741408f849}</Project>
-      <Name>Civica.CrmBuilder.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Civica.CrmBuilder.Entities\Civica.CrmBuilder.Entities.csproj">
-      <Project>{1dd387cb-6475-4ea9-933e-1e44d48ba065}</Project>
-      <Name>Civica.CrmBuilder.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Civica.CrmPlusPlus.Sdk\Civica.CrmPlusPlus.Sdk.csproj">
-      <Project>{20E43A48-CB82-4B7D-900A-5F3DFFE285CB}</Project>
-      <Name>Civica.CrmPlusPlus.Sdk</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

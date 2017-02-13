@@ -40,19 +40,19 @@ namespace Civica.CrmBuilder.Api.Controllers
 
         [ActionName("NewBuild")]
         [HttpPost]
-        public GlobalJsonResult<BuildDto> NewBuild([FromBody]BuildDto request)
+        public GlobalJsonResult<BuildDto> NewBuild([FromBody]NewBuildRequest request)
         {
-            var build = buildRepo.New(request);
+            var build = buildRepo.New(request.Map());
 
             return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.Created, build.AsDto());
         }
 
         [ActionName("UpdateBuild")]
         [HttpPost]
-        public GlobalJsonResult<BuildDto> UpdateBuild([FromBody]BuildDto request)
+        public GlobalJsonResult<BuildDto> UpdateBuild([FromBody]UpdateBuildRequest request)
         {
             var build = buildRepo.Get(request.Id);
-            build.DoThis(b => b.UpdateProperties(request));
+            build.DoThis(b => b.UpdateProperties(request.Map()));
 
             return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.OK, build.AsDto());
         }

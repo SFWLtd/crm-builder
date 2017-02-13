@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Civica.CrmBuilder.Domain.Protection;
+using Civica.CrmBuilder.Core.Protection;
 using Xunit;
 
 namespace Civica.CrmBuilder.Domain.Tests.Protection

@@ -33,14 +33,14 @@ namespace Civica.CrmBuilder.Domain.Installation.Versions
         {
             return (ICrmPlusPlusCustomizationClient client) =>
             {
-                client.CreateProperty<Build, int>(e => e.VersionMajor);
-                client.CreateProperty<Build, int>(e => e.VersionMinor);
+                client.CreateProperty<Entities.Build, int>(e => e.VersionMajor);
+                client.CreateProperty<Entities.Build, int>(e => e.VersionMinor);
             };
         }
 
         private Action<ICrmPlusPlusEntityClient> UpdateExistingBuildsToHaveDefaultMajorAndMinorVersions()
         {
-            var existingBuildsQuery = Query.ForEntity<Build>()
+            var existingBuildsQuery = Query.ForEntity<Entities.Build>()
                 .Include(e => e.VersionMajor)
                 .Include(e => e.VersionMinor);
 

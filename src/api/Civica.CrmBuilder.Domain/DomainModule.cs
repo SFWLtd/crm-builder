@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Civica.CrmBuilder.Domain.Authentication;
+using Civica.CrmBuilder.Domain.Builds;
 using Civica.CrmBuilder.Domain.Dtos;
 using Civica.CrmBuilder.Domain.Installation;
 using Civica.CrmPlusPlus.Sdk;

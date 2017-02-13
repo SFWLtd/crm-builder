@@ -22,7 +22,7 @@ namespace Civica.CrmBuilder.Api.Controllers
         {
             var result = buildRepo
                 .Get(id)
-                .AsDto();
+                .ReturnThis(b => b.AsDto());
 
             return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.OK, result);
         }
@@ -33,7 +33,7 @@ namespace Civica.CrmBuilder.Api.Controllers
         {
             var builds = buildRepo
                 .GetAll()
-                .Select(b => b.AsDto());
+                .Select(b => b.ReturnThis(e => e.AsDto()));
 
             return GlobalJsonResult<IEnumerable<BuildDto>>.Success(System.Net.HttpStatusCode.OK, builds);
         }
@@ -43,8 +43,9 @@ namespace Civica.CrmBuilder.Api.Controllers
         public GlobalJsonResult<BuildDto> NewBuild([FromBody]NewBuildRequest request)
         {
             var build = buildRepo.New(request.Map());
+            var result = build.ReturnThis(b => b.AsDto());
 
-            return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.Created, build.AsDto());
+            return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.Created, result);
         }
 
         [ActionName("UpdateBuild")]
@@ -53,8 +54,9 @@ namespace Civica.CrmBuilder.Api.Controllers
         {
             var build = buildRepo.Get(request.Id);
             build.DoThis(b => b.UpdateProperties(request.Map()));
+            var result = build.ReturnThis(b => b.AsDto());
 
-            return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.OK, build.AsDto());
+            return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.OK, result);
         }
 
         [ActionName("DeleteBuild")]

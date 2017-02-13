@@ -16,7 +16,7 @@ namespace Civica.CrmBuilder.Domain.Installation.Versions
         private void RegisterComponents()
         {
             var createBuildVersioningTypeOption = new InstallationComponent("Adding build versioning type option",
-                client => client.CreateProperty<Build, BuildVersioningType>(e => e.BuildVersioningType),
+                client => client.CreateProperty<Entities.Build, BuildVersioningType>(e => e.BuildVersioningType),
                 client => client.DoNothing(),
                 client => client.DoNothing());
 

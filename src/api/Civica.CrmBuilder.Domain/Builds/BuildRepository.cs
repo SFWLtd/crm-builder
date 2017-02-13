@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Civica.CrmBuilder.Domain.Authentication;
+using Civica.CrmBuilder.Domain.Dtos;
 using Civica.CrmBuilder.Domain.Validation;
 using Civica.CrmPlusPlus.Sdk.Client;
 using Civica.CrmPlusPlus.Sdk.Client.Retrieve;
 using Civica.CrmPlusPlus.Sdk.Querying;
 
-namespace Civica.CrmBuilder.Domain.Dtos
+namespace Civica.CrmBuilder.Domain.Builds
 {
     public class BuildRepository : IBuildRepository
     {
@@ -18,12 +19,20 @@ namespace Civica.CrmBuilder.Domain.Dtos
             entityClient = clientStore.Get().Crm.EntityClient;
         }
 
-        public IBuild Get(Guid id)
+        public IDomainComponent<Build.Build> Get(Guid id)
         {
-            return new Build(entityClient, id);
+            var retrieval = Retrieval
+                .ForEntity<Entities.Build>(id)
+                .IncludeAllColumns(true);
+
+            var entity = entityClient.Retrieve(retrieval);
+
+            return new DomainComponent<Build.Build>(
+                new Build.Build(entity),
+                build => PersistChanges(build.Entity));
         }
 
-        public IBuild Get(string id)
+        public IDomainComponent<Build.Build> Get(string id)
         {
             Guard.This(id).AgainstNonGuidFormat();
 
@@ -45,7 +54,7 @@ namespace Civica.CrmBuilder.Domain.Dtos
             Delete(Guid.Parse(id));
         }
 
-        public IEnumerable<IBuild> GetAll()
+        public IEnumerable<IDomainComponent<Build.Build>> GetAll()
         {
             var query = Query.ForEntity<Entities.Build>()
                 .IncludeAllProperties();
@@ -53,15 +62,38 @@ namespace Civica.CrmBuilder.Domain.Dtos
             return entityClient
                 .RetrieveMultiple(query)
                 .OrderByDescending(e => e.CreatedOn)
-                .Select(b => new Build(entityClient, b));
+                .Select(e => new DomainComponent<Build.Build>(
+                    new Build.Build(e),
+                    build => PersistChanges(build.Entity)));
         }
 
-        public IBuild New(BuildDto buildProperties)
+        public IDomainComponent<Build.Build> New(BuildDto buildProperties)
         {
             var entity = buildProperties.Map();
-            entityClient.Create(entity);
 
-            return new Build(entityClient, entity);
+            return new DomainComponent<Build.Build>(
+                new Build.Build(entity),
+                build => PersistChanges(build.Entity));
+        }
+
+        private void PersistChanges(Entities.Build entity)
+        {
+            var retrieval = Query.ForEntity<Entities.Build>()
+                .Filter(FilterType.And, f =>
+                {
+                    f.Condition(b => b.Id, ConditionOperator.Equal, entity.Id.ToString());
+                });
+
+            var exists = entityClient.RetrieveMultiple(retrieval).Any();
+
+            if (exists)
+            {
+                entityClient.Update(entity);
+            }
+            else
+            {
+                entityClient.Create(entity);
+            }
         }
     }
 }

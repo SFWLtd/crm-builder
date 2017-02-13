@@ -1,46 +1,25 @@
-﻿using System;
-using Civica.CrmBuilder.Core.Validation;
-using Civica.CrmPlusPlus.Sdk.Client;
+﻿using Civica.CrmBuilder.Domain.Dtos;
 
-namespace Civica.CrmBuilder.Domain.Dtos
+namespace Civica.CrmBuilder.Domain.Build
 {
-    public class Build : IBuild
+    public class Build
     {
-        private readonly ICrmPlusPlusEntityClient client;
-        private Entities.Build entity;
+        internal Entities.Build Entity;
 
-        internal Build(ICrmPlusPlusEntityClient client, Entities.Build entity)
+        internal Build(Entities.Build entity)
         {
-            this.client = client;
-            this.entity = entity;
-        }
-
-        internal Build(ICrmPlusPlusEntityClient client, Guid id)
-        {
-            this.client = client;
-
-            var retrieval = CrmPlusPlus.Sdk.Client.Retrieve.Retrieval
-                .ForEntity<Entities.Build>(id)
-                .IncludeAllColumns(true);
-
-            entity = client.Retrieve(retrieval);
+            Entity = entity;
         }
 
         public void UpdateProperties(BuildDto build)
         {
-            entity = build.Map();
-        }
-
-        public void DoThis(Action<Build> action)
-        {
-            action(this);
-            client.Update(entity);
+            Entity = build.Map();
         }
 
         public BuildDto AsDto()
         {
             var dto = new BuildDto();
-            dto.PopulateFrom(this.entity);
+            dto.PopulateFrom(Entity);
 
             return dto;
         }

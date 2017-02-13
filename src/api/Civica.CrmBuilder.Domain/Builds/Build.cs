@@ -1,7 +1,5 @@
 ﻿using System;
-using Civica.CrmBuilder.Domain.Protection;
 using Civica.CrmBuilder.Core.Validation;
-using Civica.CrmBuilder.Domain.Authentication;
 using Civica.CrmPlusPlus.Sdk.Client;
 
 namespace Civica.CrmBuilder.Domain.Dtos
@@ -37,11 +35,6 @@ namespace Civica.CrmBuilder.Domain.Dtos
                 .AgainstNotEqual(entity.Id);
 
             entity = build.Map();
-        }
-
-        public void UpdateTargetConnectionString(CrmConnectionString connectionString)
-        {
-            entity.ProtectedTargetConnectionString = Protector.ProtectString(connectionString.ToString());
         }
 
         public void DoThis(Action<Build> action)

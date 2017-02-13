@@ -1,6 +1,8 @@
 ﻿using System;
 using Civica.CrmBuilder.Core.Enums;
 using Civica.CrmBuilder.Core.Mapping;
+using Civica.CrmBuilder.Core.Validation;
+using Civica.CrmBuilder.Domain.Protection;
 
 namespace Civica.CrmBuilder.Domain.Dtos
 {
@@ -16,6 +18,8 @@ namespace Civica.CrmBuilder.Domain.Dtos
 
         public int VersionMinor { get; set; }
 
+        public string TargetCrmConnectionString { get; set; }
+
         public void PopulateFrom(Entities.Build source)
         {
             Id = source.Id.ToString();
@@ -23,10 +27,14 @@ namespace Civica.CrmBuilder.Domain.Dtos
             BuildVersioningType = source.BuildVersioningType;
             VersionMajor = source.VersionMajor;
             VersionMinor = source.VersionMinor;
+            TargetCrmConnectionString = Protector.UnprotectString(source.ProtectedTargetConnectionString);
         }
 
         public Entities.Build Map()
         {
+            Guard.This(Name)
+                .AgainstNullOrEmpty();
+
             var id = string.IsNullOrEmpty(Id)
                 ? Guid.NewGuid()
                 : Guid.Parse(Id);
@@ -36,7 +44,8 @@ namespace Civica.CrmBuilder.Domain.Dtos
                 Name = Name,
                 BuildVersioningType = BuildVersioningType,
                 VersionMajor = VersionMajor,
-                VersionMinor = VersionMinor
+                VersionMinor = VersionMinor,
+                ProtectedTargetConnectionString = Protector.ProtectString(TargetCrmConnectionString)
             };
         }
     }

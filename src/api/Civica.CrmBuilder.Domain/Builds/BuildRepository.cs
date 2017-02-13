@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Civica.CrmBuilder.Core.Mapping;
 using Civica.CrmBuilder.Domain.Authentication;
 using Civica.CrmBuilder.Domain.Validation;
 using Civica.CrmPlusPlus.Sdk.Client;

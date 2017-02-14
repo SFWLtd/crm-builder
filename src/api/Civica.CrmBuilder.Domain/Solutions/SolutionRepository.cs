@@ -22,8 +22,8 @@ namespace Civica.CrmBuilder.Domain.Solutions
                 .IncludeAllProperties()
                 .Filter(FilterType.And, a =>
                 {
-                    // Do not include the CRM Builder solution in the available solutions
-                    a.Condition(s => s.Name, ConditionOperator.NotEqual, CrmConstants.DefaultSolutionSettings.Name);
+                    a.Condition(s => s.Name, ConditionOperator.NotEqual, CrmConstants.DefaultSolutionSettings.Name); // Do not include the CRM Builder solution in the available solutions
+                    a.Condition(s => s.Name, ConditionOperator.NotEqual, "Default"); // Exclude the default solution
                     a.Condition(s => s.IsVisible, ConditionOperator.Equal, true.ToString());
 
                     if (!includeManaged)

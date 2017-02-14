@@ -54,6 +54,7 @@ namespace Civica.CrmBuilder.Api.Controllers
                 a.SetName(request.Name);
                 a.SetBuildVersioningType(request.BuildVersioningType);
                 a.SetVersion(request.VersionMajor, request.VersionMinor);
+                a.SetSolution(request.SolutionId);
                 a.SetTargetEnvironment(request.Map());
             });
 
@@ -73,6 +74,7 @@ namespace Civica.CrmBuilder.Api.Controllers
                 a.SetName(request.Name);
                 a.SetBuildVersioningType(request.BuildVersioningType);
                 a.SetVersion(request.VersionMajor, request.VersionMinor);
+                a.SetSolution(request.SolutionId);
                 a.SetTargetEnvironment(request.Map());
             });
 

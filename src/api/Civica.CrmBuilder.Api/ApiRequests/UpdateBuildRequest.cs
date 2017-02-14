@@ -16,6 +16,8 @@ namespace Civica.CrmBuilder.Api.ApiRequests
 
         public int VersionMinor { get; set; }
 
+        public string SolutionId { get; set; }
+
         public AuthenticationType AuthenticationType { get; set; }
 
         public string UserName { get; set; }

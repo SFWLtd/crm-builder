@@ -31,8 +31,6 @@ namespace Civica.CrmBuilder.Domain.Dtos
 
         public string TargetPassword { get; set; }
 
-        public IEnumerable<SolutionDto> AvailableSolutions { get; set; }
-
         public string SelectedSolutionId { get; set; }
 
         public void PopulateFrom(IDomainComponent<Builds.Build> source)
@@ -48,7 +46,6 @@ namespace Civica.CrmBuilder.Domain.Dtos
             TargetCrmUrl = entity.TargetEnvironmentCrmUrl;
             TargetDomain = entity.TargetEnvironmentDomain;
             TargetEmailAddress = entity.TargetEnvironmentEmail;
-            AvailableSolutions = source.ReturnThis(b => b.AvailableSolutions);
             SelectedSolutionId = entity.SolutionId;
             TargetPassword = Protector.UnprotectString(entity.ProtectedTargetEnvironmentPassword);
         }

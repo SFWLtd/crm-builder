@@ -1,11 +1,13 @@
-﻿using Civica.CrmBuilder.Core.Enums;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Civica.CrmBuilder.Core.Enums;
 using Civica.CrmBuilder.Core.Mapping;
 using Civica.CrmBuilder.Core.Protection;
 using Civica.CrmBuilder.Domain.Componentization;
 
 namespace Civica.CrmBuilder.Domain.Dtos
 {
-    public class BuildDto : IPopulatableFrom<IDomainComponent<Build.Build>>
+    public class BuildDto : IPopulatableFrom<IDomainComponent<Builds.Build>>
     {
         public string Id { get; set; }
 
@@ -29,7 +31,11 @@ namespace Civica.CrmBuilder.Domain.Dtos
 
         public string TargetPassword { get; set; }
 
-        public void PopulateFrom(IDomainComponent<Build.Build> source)
+        public IEnumerable<SolutionDto> AvailableSolutions { get; set; }
+
+        public string SelectedSolutionId { get; set; }
+
+        public void PopulateFrom(IDomainComponent<Builds.Build> source)
         {
             var entity = source.ReturnThis(b => b.Entity);
 
@@ -42,6 +48,8 @@ namespace Civica.CrmBuilder.Domain.Dtos
             TargetCrmUrl = entity.TargetEnvironmentCrmUrl;
             TargetDomain = entity.TargetEnvironmentDomain;
             TargetEmailAddress = entity.TargetEnvironmentEmail;
+            AvailableSolutions = source.ReturnThis(b => b.AvailableSolutions);
+            SelectedSolutionId = entity.SolutionId;
             TargetPassword = Protector.UnprotectString(entity.ProtectedTargetEnvironmentPassword);
         }
     }

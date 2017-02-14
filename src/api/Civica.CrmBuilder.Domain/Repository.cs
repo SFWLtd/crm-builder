@@ -1,17 +1,16 @@
-﻿using System.Linq;
+﻿using Civica.CrmBuilder.Domain.Authentication;
 using Civica.CrmPlusPlus;
 using Civica.CrmPlusPlus.Sdk.Client;
-using Civica.CrmPlusPlus.Sdk.Querying;
 
-namespace Civica.CrmBuilder.Domain.Builds
+namespace Civica.CrmBuilder.Domain
 {
     public abstract class Repository<T> where T : CrmPlusPlusEntity, new()
     {
         protected readonly ICrmPlusPlusEntityClient Client;
 
-        protected Repository(ICrmPlusPlusEntityClient client)
+        protected Repository(IClientStore clientStore)
         {
-            Client = client;
+            Client = clientStore.Get().Crm.EntityClient;
         }
 
         protected void Create(T entity)

@@ -52,7 +52,7 @@
     <Compile Include="Authentication\IClientStore.cs" />
     <Compile Include="Authentication\InMemoryClientStore.cs" />
     <Compile Include="Builds\Build.cs" />
-    <Compile Include="Builds\Repository.cs" />
+    <Compile Include="Repository.cs" />
     <Compile Include="Componentization\CreatableDomainComponent.cs" />
     <Compile Include="Componentization\DomainComponent.cs" />
     <Compile Include="Componentization\IDomainComponent.cs" />
@@ -82,6 +82,9 @@
     <Compile Include="Installation\Versions\CreateBuildEntity.cs" />
     <Compile Include="Installation\Versions\CreateBuildRunAndBuildRunMessageEntities.cs" />
     <Compile Include="IPersistable.cs" />
+    <Compile Include="Solutions\ISolutionRepository.cs" />
+    <Compile Include="Solutions\Solution.cs" />
+    <Compile Include="Solutions\SolutionRepository.cs" />
     <Compile Include="Time\SystemTime.cs" />
     <Compile Include="Versioning\IVersionable.cs" />
     <Compile Include="Installation\Versions\IInstallationVersion.cs" />

@@ -3,6 +3,7 @@ using Civica.CrmBuilder.Domain.Authentication;
 using Civica.CrmBuilder.Domain.Builds;
 using Civica.CrmBuilder.Domain.Dtos;
 using Civica.CrmBuilder.Domain.Installation;
+using Civica.CrmBuilder.Domain.Solutions;
 using Civica.CrmPlusPlus.Sdk;
 
 namespace Civica.CrmBuilder.Domain
@@ -32,6 +33,9 @@ namespace Civica.CrmBuilder.Domain
 
             builder.RegisterType<BuildRepository>()
                 .As<IBuildRepository>();
+
+            builder.RegisterType<SolutionRepository>()
+                .As<ISolutionRepository>();
         }
     }
 }

@@ -33,32 +33,32 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
                         </Form.Field>
                         <Form.Field error={(this.props.crmUrlHasBeenTouched || this.props.shouldValidateForm) && !this.props.crmUrlIsValid }>
                             <label>CRM Url</label>
-                            <input placeholder='https://myorg.dynamics.com' onChange={e => { this.props.crmUrlOnChange((e as any).target.value) }} onBlur={this.props.crmUrlOnBlur}/>
+                            <input autoComplete='true' placeholder='https://myorg.dynamics.com' onChange={e => { this.props.crmUrlOnChange((e as any).target.value) }} onBlur={this.props.crmUrlOnBlur}/>
                         </Form.Field>
                         {
                             this.props.authenticationTypeSelectedValue == ApiClient.AuthenticationType.Dynamics365 &&
                             <Form.Field error={(this.props.emailAddressHasBeenTouched || this.props.shouldValidateForm) && !this.props.emailAddressIsValid}>
                                 <label>Email address</label>
-                                <input placeholder='myemail@dynamics.com' onChange={e => { this.props.emailAddressOnChange((e as any).target.value) } } onBlur={this.props.emailAddressOnBlur} />
+                                <input autoComplete='true' placeholder='myemail@dynamics.com' onChange={e => { this.props.emailAddressOnChange((e as any).target.value) } } onBlur={this.props.emailAddressOnBlur} />
                             </Form.Field>
                         }
                         {
                             this.props.authenticationTypeSelectedValue != ApiClient.AuthenticationType.Dynamics365 &&
                             <Form.Field error={(this.props.domainHasBeenTouched || this.props.shouldValidateForm) && !this.props.domainIsValid}>
                                 <label>Domain</label>
-                                <input placeholder='mydomain' onChange={e => { this.props.domainOnChange((e as any).target.value) } } onBlur={this.props.domainOnBlur} />
+                                <input autoComplete='true' placeholder='mydomain' onChange={e => { this.props.domainOnChange((e as any).target.value) } } onBlur={this.props.domainOnBlur} />
                             </Form.Field>
                         }
                         {
                             this.props.authenticationTypeSelectedValue != ApiClient.AuthenticationType.Dynamics365 &&
                             <Form.Field error={(this.props.usernameHasBeenTouched || this.props.shouldValidateForm) && !this.props.usernameIsValid}>
                                 <label>Username</label>
-                                <input placeholder='myusername' onChange={e => { this.props.usernameOnChange((e as any).target.value) } } onBlur={this.props.usernameOnBlur} />
+                                <input autoComplete='true' placeholder='myusername' onChange={e => { this.props.usernameOnChange((e as any).target.value) } } onBlur={this.props.usernameOnBlur} />
                             </Form.Field>
                         }
                         <Form.Field error={(this.props.passwordHasBeenTouched || this.props.shouldValidateForm) && !this.props.passwordIsValid}>
                             <label>Password</label>
-                            <input type='password' onChange={e => { this.props.passwordOnChange((e as any).target.value) } } onBlur={this.props.passwordOnBlur} />
+                            <input autoComplete='true' type='password' onChange={e => { this.props.passwordOnChange((e as any).target.value) } } onBlur={this.props.passwordOnBlur} />
                         </Form.Field>
                         <br/>
                         <Button primary onClick={(e: any) => { e.preventDefault(); this.props.onSubmit(this.props) } }>Log in</Button>

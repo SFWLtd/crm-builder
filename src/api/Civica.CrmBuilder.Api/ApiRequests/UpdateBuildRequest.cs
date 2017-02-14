@@ -4,7 +4,7 @@ using Civica.CrmBuilder.Domain.Dtos;
 
 namespace Civica.CrmBuilder.Api.ApiRequests
 {
-    public class UpdateBuildRequest : IMappableTo<BuildDto>
+    public class UpdateBuildRequest : IMappableTo<AuthenticationDto>
     {
         public string Id { get; set; }
 
@@ -28,21 +28,16 @@ namespace Civica.CrmBuilder.Api.ApiRequests
 
         public string Url { get; set; }
 
-        public BuildDto Map()
+        public AuthenticationDto Map()
         {
-            return new BuildDto
+            return new AuthenticationDto
             {
-                Id = Id,
-                TargetAuthenticationType = AuthenticationType,
-                TargetCrmUrl = Url,
-                TargetDomain = Domain,
-                TargetEmailAddress = EmailAddress,
-                TargetPassword = Password,
-                TargetUsername = UserName,
-                BuildVersioningType = BuildVersioningType,
-                Name = Name,
-                VersionMajor = VersionMajor,
-                VersionMinor = VersionMinor
+                AuthenticationType = AuthenticationType,
+                Url = Url,
+                Domain = Domain,
+                EmailAddress = EmailAddress,
+                Password = Password,
+                UserName = UserName
             };
         }
     }

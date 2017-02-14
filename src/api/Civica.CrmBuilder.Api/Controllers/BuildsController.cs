@@ -20,9 +20,10 @@ namespace Civica.CrmBuilder.Api.Controllers
         [HttpGet]
         public GlobalJsonResult<BuildDto> GetBuild(string id)
         {
-            var result = buildRepo
-                .Get(id)
-                .ReturnThis(b => b.AsDto());
+            var build = buildRepo.Get(id);
+
+            var result = new BuildDto();
+            result.PopulateFrom(build);
 
             return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.OK, result);
         }
@@ -31,9 +32,14 @@ namespace Civica.CrmBuilder.Api.Controllers
         [HttpGet]
         public GlobalJsonResult<IEnumerable<BuildDto>> GetBuilds()
         {
-            var builds = buildRepo
-                .GetAll()
-                .Select(b => b.ReturnThis(e => e.AsDto()));
+            var builds = buildRepo.GetAll()
+                .Select(b =>
+                {
+                    var result = new BuildDto();
+                    result.PopulateFrom(b);
+
+                    return result;
+                });
 
             return GlobalJsonResult<IEnumerable<BuildDto>>.Success(System.Net.HttpStatusCode.OK, builds);
         }
@@ -42,8 +48,17 @@ namespace Civica.CrmBuilder.Api.Controllers
         [HttpPost]
         public GlobalJsonResult<BuildDto> NewBuild([FromBody]NewBuildRequest request)
         {
-            var build = buildRepo.New(request.Map());
-            var result = build.ReturnThis(b => b.AsDto());
+            var build = buildRepo.New();
+            build.CreateAs(a =>
+            {
+                a.SetName(request.Name);
+                a.SetBuildVersioningType(request.BuildVersioningType);
+                a.SetVersion(request.VersionMajor, request.VersionMinor);
+                a.SetTargetEnvironment(request.Map());
+            });
+
+            var result = new BuildDto();
+            result.PopulateFrom(build);
 
             return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.Created, result);
         }
@@ -53,8 +68,16 @@ namespace Civica.CrmBuilder.Api.Controllers
         public GlobalJsonResult<BuildDto> UpdateBuild([FromBody]UpdateBuildRequest request)
         {
             var build = buildRepo.Get(request.Id);
-            build.DoThis(b => b.UpdateProperties(request.Map()));
-            var result = build.ReturnThis(b => b.AsDto());
+            build.UpdateAs(a =>
+            {
+                a.SetName(request.Name);
+                a.SetBuildVersioningType(request.BuildVersioningType);
+                a.SetVersion(request.VersionMajor, request.VersionMinor);
+                a.SetTargetEnvironment(request.Map());
+            });
+
+            var result = new BuildDto();
+            result.PopulateFrom(build);
 
             return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.OK, result);
         }

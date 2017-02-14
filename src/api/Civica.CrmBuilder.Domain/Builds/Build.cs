@@ -1,4 +1,6 @@
-﻿using Civica.CrmBuilder.Domain.Dtos;
+﻿using Civica.CrmBuilder.Core.Enums;
+using Civica.CrmBuilder.Core.Protection;
+using Civica.CrmBuilder.Domain.Dtos;
 
 namespace Civica.CrmBuilder.Domain.Build
 {
@@ -11,17 +13,38 @@ namespace Civica.CrmBuilder.Domain.Build
             Entity = entity;
         }
 
-        public void UpdateProperties(BuildDto build)
+        public void SetName(string name)
         {
-            Entity = build.Map();
+            Entity.Name = name;
         }
 
-        public BuildDto AsDto()
+        public void SetBuildVersioningType(BuildVersioningType buildVersioningType)
         {
-            var dto = new BuildDto();
-            dto.PopulateFrom(Entity);
+            Entity.BuildVersioningType = buildVersioningType;
+        }
 
-            return dto;
+        public void SetVersion(int versionMajor, int versionMinor)
+        {
+            Entity.VersionMajor = versionMajor;
+            Entity.VersionMinor = versionMinor;
+        }
+
+        public void SetTargetEnvironment(AuthenticationDto authenticationDto)
+        {
+            Entity.TargetEnvironmentAuthenticationType = authenticationDto.AuthenticationType;
+            Entity.TargetEnvironmentCrmUrl = authenticationDto.Url;
+            Entity.ProtectedTargetEnvironmentPassword = Protector.ProtectString(authenticationDto.Password);
+
+            switch (authenticationDto.AuthenticationType)
+            {
+                case AuthenticationType.Dynamics365:
+                    Entity.TargetEnvironmentEmail = authenticationDto.EmailAddress;
+                    break;
+                default:
+                    Entity.TargetEnvironmentUsername = authenticationDto.UserName;
+                    Entity.TargetEnvironmentDomain = authenticationDto.Domain;
+                    break;
+            }
         }
     }
 }

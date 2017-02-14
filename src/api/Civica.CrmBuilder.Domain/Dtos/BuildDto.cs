@@ -1,12 +1,11 @@
-﻿using System;
-using Civica.CrmBuilder.Core.Enums;
+﻿using Civica.CrmBuilder.Core.Enums;
 using Civica.CrmBuilder.Core.Mapping;
 using Civica.CrmBuilder.Core.Protection;
-using Civica.CrmBuilder.Core.Validation;
+using Civica.CrmBuilder.Domain.Componentization;
 
 namespace Civica.CrmBuilder.Domain.Dtos
 {
-    public class BuildDto : IMappableTo<Entities.Build>, IPopulatableFrom<Entities.Build>
+    public class BuildDto : IPopulatableFrom<IDomainComponent<Build.Build>>
     {
         public string Id { get; set; }
 
@@ -30,53 +29,20 @@ namespace Civica.CrmBuilder.Domain.Dtos
 
         public string TargetPassword { get; set; }
 
-        public void PopulateFrom(Entities.Build source)
+        public void PopulateFrom(IDomainComponent<Build.Build> source)
         {
-            Id = source.Id.ToString();
-            Name = source.Name;
-            BuildVersioningType = source.BuildVersioningType;
-            VersionMajor = source.VersionMajor;
-            VersionMinor = source.VersionMinor;
-            TargetAuthenticationType = source.TargetEnvironmentAuthenticationType;
-            TargetCrmUrl = source.TargetEnvironmentCrmUrl;
-            TargetDomain = source.TargetEnvironmentDomain;
-            TargetEmailAddress = source.TargetEnvironmentEmail;
-            TargetPassword = Protector.UnprotectString(source.ProtectedTargetEnvironmentPassword);
-        }
+            var entity = source.ReturnThis(b => b.Entity);
 
-        public Entities.Build Map()
-        {
-            Guard.This(TargetPassword)
-                .AgainstNullOrEmpty();
-
-            var id = string.IsNullOrEmpty(Id)
-                ? Guid.NewGuid()
-                : Guid.Parse(Id);
-
-            var entity = new Entities.Build(id)
-            {
-                Name = Name,
-                BuildVersioningType = BuildVersioningType,
-                VersionMajor = VersionMajor,
-                VersionMinor = VersionMinor,
-                TargetEnvironmentAuthenticationType = TargetAuthenticationType,
-                TargetEnvironmentCrmUrl = TargetCrmUrl,
-                ProtectedTargetEnvironmentPassword = Protector.ProtectString(TargetPassword)
-            };
-
-
-            switch (TargetAuthenticationType)
-            {
-                case AuthenticationType.Dynamics365:
-                    entity.TargetEnvironmentEmail = TargetEmailAddress;
-                    break;
-                default:
-                    entity.TargetEnvironmentDomain = TargetDomain;
-                    entity.TargetEnvironmentUsername = TargetUsername;
-                    break;
-            }
-
-            return entity;
+            Id = entity.Id.ToString();
+            Name = entity.Name;
+            BuildVersioningType = entity.BuildVersioningType;
+            VersionMajor = entity.VersionMajor;
+            VersionMinor = entity.VersionMinor;
+            TargetAuthenticationType = entity.TargetEnvironmentAuthenticationType;
+            TargetCrmUrl = entity.TargetEnvironmentCrmUrl;
+            TargetDomain = entity.TargetEnvironmentDomain;
+            TargetEmailAddress = entity.TargetEnvironmentEmail;
+            TargetPassword = Protector.UnprotectString(entity.ProtectedTargetEnvironmentPassword);
         }
     }
 }

@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using Civica.CrmBuilder.Domain.Componentization;
 
 namespace Civica.CrmBuilder.Domain.Dtos
 {
     public interface IBuildRepository
     {
-        IDomainComponent<Build.Build> New(BuildDto build);
+        ICreatableDomainComponent<Build.Build> New();
 
-        IDomainComponent<Build.Build> Get(string id);
+        IUpdatableDomainComponent<Build.Build> Get(string id);
 
-        IDomainComponent<Build.Build> Get(Guid id);
+        IUpdatableDomainComponent<Build.Build> Get(Guid id);
 
-        IEnumerable<IDomainComponent<Build.Build>> GetAll();
+        IEnumerable<IUpdatableDomainComponent<Build.Build>> GetAll();
 
         void Delete(Guid id);
 

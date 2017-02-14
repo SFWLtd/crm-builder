@@ -2,37 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using Civica.CrmBuilder.Domain.Authentication;
+using Civica.CrmBuilder.Domain.Componentization;
 using Civica.CrmBuilder.Domain.Dtos;
 using Civica.CrmBuilder.Domain.Validation;
-using Civica.CrmPlusPlus.Sdk.Client;
 using Civica.CrmPlusPlus.Sdk.Client.Retrieve;
 using Civica.CrmPlusPlus.Sdk.Querying;
 
 namespace Civica.CrmBuilder.Domain.Builds
 {
-    public class BuildRepository : IBuildRepository
+    public class BuildRepository : Repository<Entities.Build>, IBuildRepository
     {
-        private readonly ICrmPlusPlusEntityClient entityClient;
-
         public BuildRepository(IClientStore clientStore)
+            : base(clientStore.Get().Crm.EntityClient)
         {
-            entityClient = clientStore.Get().Crm.EntityClient;
         }
 
-        public IDomainComponent<Build.Build> Get(Guid id)
+        public IUpdatableDomainComponent<Build.Build> Get(Guid id)
         {
             var retrieval = Retrieval
                 .ForEntity<Entities.Build>(id)
                 .IncludeAllColumns(true);
 
-            var entity = entityClient.Retrieve(retrieval);
+            var entity = Client.Retrieve(retrieval);
 
-            return new DomainComponent<Build.Build>(
+            return new UpdatableDomainComponent<Build.Build>(
                 new Build.Build(entity),
-                build => PersistChanges(build.Entity));
+                build => Update(build.Entity));
         }
 
-        public IDomainComponent<Build.Build> Get(string id)
+        public IUpdatableDomainComponent<Build.Build> Get(string id)
         {
             Guard.This(id).AgainstNonGuidFormat();
 
@@ -42,9 +40,9 @@ namespace Civica.CrmBuilder.Domain.Builds
         public void Delete(Guid id)
         {
             var retrieval = Retrieval.ForEntity<Entities.Build>(id);
-            var build = entityClient.Retrieve(retrieval);
+            var build = Client.Retrieve(retrieval);
 
-            entityClient.Delete(build);
+            Client.Delete(build);
         }
 
         public void Delete(string id)
@@ -54,46 +52,26 @@ namespace Civica.CrmBuilder.Domain.Builds
             Delete(Guid.Parse(id));
         }
 
-        public IEnumerable<IDomainComponent<Build.Build>> GetAll()
+        public IEnumerable<IUpdatableDomainComponent<Build.Build>> GetAll()
         {
             var query = Query.ForEntity<Entities.Build>()
                 .IncludeAllProperties();
 
-            return entityClient
+            return Client
                 .RetrieveMultiple(query)
                 .OrderByDescending(e => e.CreatedOn)
-                .Select(e => new DomainComponent<Build.Build>(
+                .Select(e => new UpdatableDomainComponent<Build.Build>(
                     new Build.Build(e),
-                    build => PersistChanges(build.Entity)));
+                    build => Update(build.Entity)));
         }
 
-        public IDomainComponent<Build.Build> New(BuildDto buildProperties)
+        public ICreatableDomainComponent<Build.Build> New()
         {
-            var entity = buildProperties.Map();
+            var entity = new Entities.Build();
 
-            return new DomainComponent<Build.Build>(
+            return new CreatableDomainComponent<Build.Build>(
                 new Build.Build(entity),
-                build => PersistChanges(build.Entity));
-        }
-
-        private void PersistChanges(Entities.Build entity)
-        {
-            var retrieval = Query.ForEntity<Entities.Build>()
-                .Filter(FilterType.And, f =>
-                {
-                    f.Condition(b => b.Id, ConditionOperator.Equal, entity.Id.ToString());
-                });
-
-            var exists = entityClient.RetrieveMultiple(retrieval).Any();
-
-            if (exists)
-            {
-                entityClient.Update(entity);
-            }
-            else
-            {
-                entityClient.Create(entity);
-            }
+                build => Create(build.Entity));
         }
     }
 }

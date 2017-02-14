@@ -14,7 +14,7 @@ export class App extends React.Component<IAppProps, undefined> {
     render() {
 
         return <div>
-        <Container textAlign='center'>
+            <Container textAlign='center'>
                 <Dimmer active={this.props.isLoading} page>
                     <Loader>
                         <p>Checking log in status...</p>
@@ -45,7 +45,7 @@ export class App extends React.Component<IAppProps, undefined> {
                 }
 
             </Container>
-            </div>;
+        </div>;
     }
 }
 

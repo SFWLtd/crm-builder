@@ -4,6 +4,7 @@ import { NavigationIds } from '../constants/NavigationIds';
 import * as ApiClient from '../../../api/ApiClient';
 import { IAsyncActionState } from './AsyncActionState';
 import { IInstallationState } from './InstallationState';
+import { ISolutionsState } from './SolutionsState'; 
 import { IBuildState, IBuildSummary } from './BuildState';
 import { ILoadingState } from './LoadingState';
 
@@ -11,6 +12,7 @@ export interface IAppState {
     authenticationState: IAuthenticationState;
     navigationState: INavigationState;
     installationState: IInstallationState;
+    solutionsState: ISolutionsState;
     buildState: IBuildState;
 }
 
@@ -54,6 +56,13 @@ export const defaultAppState: IAppState = {
         description: null,
         message: null
     },
+    solutionsState: {
+        availableSolutions: {
+            hasStarted: false,
+            hasCompleted: false,
+            result: null
+        }
+    },
     buildState: {
         builds: {
             hasCompleted: false,
@@ -94,6 +103,7 @@ export const defaultAppState: IAppState = {
             username: { hasBeenTouched: false, value: '' },
             password: { hasBeenTouched: false, value: '' },
             emailAddress: { hasBeenTouched: false, value: '' },
+            solutionId: { hasBeenTouched: false, value: ''},
             shouldValidate: false,
             show: false,
             submission: {

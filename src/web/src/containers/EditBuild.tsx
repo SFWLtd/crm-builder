@@ -22,6 +22,12 @@ const mapStateToProps = (state: IAppState): EditBuildPresenter.IEditBuildProps =
         versionMinor: state.buildState.editBuildFormState.versionMinor.value as number,
         versionMinorIsValid: !(state.buildState.editBuildFormState.shouldValidate && !validator.validateVersionMinor(state.buildState.editBuildFormState.versionMinor.value as number)
             || state.buildState.editBuildFormState.versionMinor.hasBeenTouched && !validator.validateVersionMinor(state.buildState.editBuildFormState.versionMinor.value as number)),
+        selectedSolutionId: state.buildState.editBuildFormState.solutionId.value as string,
+        availableSolutions: state.solutionsState.availableSolutions.hasCompleted && state.solutionsState.availableSolutions.result.successful
+            ? state.solutionsState.availableSolutions.result.result
+            : new Array<ApiClient.SolutionDto>(),
+        selectedSolutionIdIsValid: !(state.buildState.editBuildFormState.shouldValidate && !validator.validateSolutionId(state.buildState.editBuildFormState.solutionId.value as string)
+            || state.buildState.editBuildFormState.solutionId.hasBeenTouched && !validator.validateSolutionId(state.buildState.editBuildFormState.solutionId.value as string)),
         authenticationTypeSelectedValue: state.buildState.editBuildFormState.authenticationType,
         crmUrl: state.buildState.editBuildFormState.crmUrl.value as string,
         crmUrlIsValid: !(state.buildState.editBuildFormState.shouldValidate && !validator.validateCrmUrl(state.buildState.editBuildFormState.crmUrl.value as string)
@@ -59,6 +65,8 @@ const mapDispatchToProps = (dispatch: any): EditBuildPresenter.IEditBuildProps =
         versionMajorOnChange: (value: number) => dispatch(BuildActions.setBuildMajorVersion(value)),
         versionMinorOnBlur: () => dispatch(BuildActions.blurBuildMinorVersion()),
         versionMinorOnChange: (value: number) => dispatch(BuildActions.setBuildMinorVersion(value)),
+        selectedSolutionIdOnChange: (solutionId: string) => dispatch(BuildActions.setSolutionId(solutionId)),
+        selectedSolutionIdOnBlur: () => dispatch(BuildActions.blurSolutionId()),
         authenticationTypeOnChange: (authType: ApiClient.AuthenticationType) => dispatch(BuildActions.setTargetEnvironmentAuthenticationType(authType)),
         crmUrlOnChange: (url: string) => dispatch(BuildActions.setTargetEnvironmentCrmUrl(url)),
         crmUrlOnBlur: () => dispatch(BuildActions.blurTargetEnvironmentCrmUrl()),

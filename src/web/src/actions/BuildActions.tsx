@@ -4,6 +4,7 @@ import { EditBuildFormValidator } from '../validation/EditBuildFormValidator';
 import { IEditBuildProps } from '../presentation/EditBuild';
 import config from '../Config';
 import { BuildClient } from '../apiclient/BuildClient';
+import * as SolutionActions from './SolutionActions';
 
 export class BuildActions {
     static StartFetchingBuilds: string = 'START_FETCH_BUILDS';
@@ -15,6 +16,8 @@ export class BuildActions {
     static BlurBuildMajorVersion: string = 'BLUR_BUILD_MAJOR_VERSION';
     static SetBuildMinorVersion: string = 'SET_BUILD_MINOR_VERSION';
     static BlurBuildMinorVersion: string = 'BLUR_BUILD_MINOR_VERSION';
+    static SetSolutionId: string = 'SET_SOLUTION_ID';
+    static BlurSolutionId: string = 'BLUR_SOLUTION_ID';
     static SetTargetEnvironmentAuthenticationType: string = 'SET_TARGET_ENVIRONMENT_AUTHENTICATION_TYPE';
     static SetTargetEnvironmentCrmUrl: string = 'SET_TARGET_ENVIRONMENT_CRM_URL';
     static BlurTargetEnvironmentCrmUrl: string = 'BLUR_TARGET_ENVIRONMENT_CRM_URL';
@@ -42,6 +45,8 @@ export class BuildActions {
 }
 
 export const startFetchingBuilds = (dispatch: any): IAction => {
+
+    dispatch(SolutionActions.startGetAllSolutions(dispatch)); // also retrieve available solutions asynchronously
 
     let client = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
     client.fetchAll().then((result: ApiClient.GlobalJsonResultOfIEnumerableOfBuildDto) => {
@@ -131,6 +136,13 @@ export const setBuildMinorVersion = (version: number): IAction => {
     };
 };
 
+export const setSolutionId = (solutionId: string): IAction => {
+    return {
+        type: BuildActions.SetSolutionId,
+        value: solutionId
+    };
+};
+
 export const setTargetEnvironmentAuthenticationType = (authenticationType: ApiClient.AuthenticationType): IAction => {
     return {
         type: BuildActions.SetTargetEnvironmentAuthenticationType,
@@ -194,6 +206,13 @@ export const blurBuildMinorVersion = (): IAction => {
     };
 };
 
+export const blurSolutionId = (): IAction => {
+    return {
+        type: BuildActions.BlurSolutionId,
+        value: null
+    };
+};
+
 export const blurTargetEnvironmentCrmUrl = (): IAction => {
     return {
         type: BuildActions.BlurTargetEnvironmentCrmUrl,
@@ -249,8 +268,8 @@ export const closeBuildForm = (dispatch: any): IAction => {
 
 export const beginShowEditBuildForm = (dispatch: any, buildId: string): IAction => {
     
-    let client = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
-    client.fetch(buildId).then((result: ApiClient.GlobalJsonResultOfBuildDto) => {
+    let buildClient = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
+    buildClient.fetch(buildId).then((result: ApiClient.GlobalJsonResultOfBuildDto) => {
         dispatch(finishShowEditBuildForm(dispatch, result));
     });
 
@@ -268,6 +287,7 @@ export const finishShowEditBuildForm = (dispatch: any, editableBuild: ApiClient.
         dispatch(setBuildVersioningType(editableBuild.result.buildVersioningType));
         dispatch(setBuildMajorVersion(editableBuild.result.versionMajor));
         dispatch(setBuildMinorVersion(editableBuild.result.versionMinor));
+        dispatch(setSolutionId(editableBuild.result.selectedSolutionId));
         dispatch(setTargetEnvironmentAuthenticationType(editableBuild.result.targetAuthenticationType));
         dispatch(setTargetEnvironmentCrmUrl(editableBuild.result.targetCrmUrl));
         dispatch(setTargetEnvironmentEmail(editableBuild.result.targetEmailAddress));

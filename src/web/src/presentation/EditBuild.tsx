@@ -11,7 +11,6 @@ export class EditBuild extends React.Component<IEditBuildProps, undefined> {
         return <div>
         <Modal open={this.props.shouldDisplay} onClose={(e: any) => this.props.onFormCancel()}>
             <Header as='h2' icon textAlign='center'>
-                <Icon name={this.props.isEdit? 'edit': 'write'} circular size='tiny' />
                 <Header.Content>
                     {this.props.isEdit? 'Edit build': 'Add new build'}
                 </Header.Content>
@@ -46,6 +45,22 @@ export class EditBuild extends React.Component<IEditBuildProps, undefined> {
                         </Form.Field>
                     </Form.Group>
                     <br/>
+                    <Header size='medium'>Solution target</Header>
+                    <Form.Field error={!this.props.selectedSolutionIdIsValid}>
+                        <div className="ui form large">
+                            <div className='field'>
+                                <label>Solution</label>
+                                <select className="ui dropdown" value={!this.props.selectedSolutionId ? 'empty': this.props.selectedSolutionId} onChange={e => { this.props.selectedSolutionIdOnChange((e as any).target.value) } }>
+                                    <option value='empty'>Please select a solution</option>
+                                    {
+                                        this.props.availableSolutions.map((sol: ApiClient.SolutionDto) => {
+                                            return <option key={sol.id} value={sol.id}>{sol.displayName}</option>;
+                                        })
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </Form.Field>
                     <Header size='medium'>Target environment</Header>
                     <Form.Field>
                         <div className="ui form large">
@@ -124,6 +139,11 @@ export interface IEditBuildProps {
     versionMinorOnChange?: (value: number) => void,
     buildVersioningType?: ApiClient.BuildVersioningType,
     buildVersioningTypeOnChange?: (buildVersioningType: ApiClient.BuildVersioningType) => void,
+    selectedSolutionId?: string,
+    selectedSolutionIdIsValid?: boolean,
+    selectedSolutionIdOnBlur?: () => void,
+    selectedSolutionIdOnChange?: (solutionId: string) => void,
+    availableSolutions?: Array<ApiClient.SolutionDto>,
     authenticationTypeSelectedValue?: number
     authenticationTypeOnChange?: (value: number) => void;
     crmUrlOnChange?: (value: string) => void;

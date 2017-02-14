@@ -15,6 +15,7 @@ export class BuildClient {
         request.name = props.name;
         request.versionMajor = props.versionMajor;
         request.versionMinor = props.versionMinor;
+        request.solutionId = props.selectedSolutionId;
         request.authenticationType = props.authenticationTypeSelectedValue;
         request.url = props.crmUrl;
         request.emailAddress = props.emailAddress;
@@ -39,6 +40,7 @@ export class BuildClient {
         request.name = props.name;
         request.versionMajor = props.versionMajor;
         request.versionMinor = props.versionMinor;
+        request.solutionId = props.selectedSolutionId;
         request.authenticationType = props.authenticationTypeSelectedValue;
         request.url = props.crmUrl;
         request.emailAddress = props.emailAddress;

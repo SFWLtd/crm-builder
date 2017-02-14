@@ -3,6 +3,7 @@ import authenticationReducer from './AuthenticationReducer';
 import navigationReducer from './NavigationReducer';
 import installationReducer from './InstallationReducer';
 import buildReducer from './BuildsReducer';
+import solutionsReducer from './SolutionsReducer';
 import * as AppState from '../state/AppState';
 import { IAction } from '../actions/IAction';
 
@@ -11,6 +12,7 @@ const appReducer = (state: AppState.IAppState = AppState.defaultAppState, action
         authenticationState: authenticationReducer(state.authenticationState, action),
         navigationState: navigationReducer(state.navigationState, action),
         installationState: installationReducer(state.installationState, action),
+        solutionsState: solutionsReducer(state.solutionsState, action),
         buildState: buildReducer(state.buildState, action)
     }
 }

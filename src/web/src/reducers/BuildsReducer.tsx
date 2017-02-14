@@ -40,6 +40,12 @@ const buildReducer = (state: IBuildState, action: IAction): IBuildState => {
         case BuildActions.BlurBuildMinorVersion:
             newState.editBuildFormState.versionMajor.hasBeenTouched = true;
             break;
+        case BuildActions.SetSolutionId:
+            newState.editBuildFormState.solutionId.value = action.value;
+            break;
+        case BuildActions.BlurSolutionId:
+            newState.editBuildFormState.solutionId.hasBeenTouched = true;
+            break;
         case BuildActions.SetTargetEnvironmentAuthenticationType:
             newState.editBuildFormState.authenticationType = action.value;
             break;
@@ -106,6 +112,8 @@ const buildReducer = (state: IBuildState, action: IAction): IBuildState => {
             newState.editBuildFormState.versionMajor.hasBeenTouched = false;
             newState.editBuildFormState.versionMinor.value = 0;
             newState.editBuildFormState.versionMinor.hasBeenTouched = false;
+            newState.editBuildFormState.solutionId.value = '';
+            newState.editBuildFormState.solutionId.hasBeenTouched = false;
             newState.editBuildFormState.authenticationType = ApiClient.AuthenticationType.Dynamics365;
             newState.editBuildFormState.crmUrl.value = '';
             newState.editBuildFormState.crmUrl.hasBeenTouched = false;

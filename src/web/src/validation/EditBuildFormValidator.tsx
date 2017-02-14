@@ -10,6 +10,7 @@ export class EditBuildFormValidator extends AuthenticationFormValidator {
         return this.validateName(props.name)
             && this.validateVersionMajor(props.versionMajor)
             && this.validateVersionMinor(props.versionMinor)
+            && this.validateSolutionId(props.selectedSolutionId)
             && super.isValid(props);
     }
 
@@ -23,5 +24,9 @@ export class EditBuildFormValidator extends AuthenticationFormValidator {
 
     validateVersionMinor(value: number): boolean {
         return Validate.thisNumber(value).range(0, 999);
+    }
+
+    validateSolutionId(solutionId: string): boolean {
+        return Validate.thisString(solutionId).length(36, 36);
     }
 }

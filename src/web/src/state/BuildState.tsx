@@ -22,6 +22,7 @@ export interface IEditBuildFormState {
     versionMajor: IFormInputState,
     versionMinor: IFormInputState,
     authenticationType: ApiClient.AuthenticationType,
+    solutionId: IFormInputState,
     crmUrl: IFormInputState,
     domain: IFormInputState,
     username: IFormInputState,

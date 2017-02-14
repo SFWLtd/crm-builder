@@ -68,7 +68,7 @@ namespace Civica.CrmBuilder.Api.Controllers
         public GlobalJsonResult<BuildDto> UpdateBuild([FromBody]UpdateBuildRequest request)
         {
             var build = buildRepo.Get(request.Id);
-            build.UpdateAs(a =>
+            build.DoThis(a =>
             {
                 a.SetName(request.Name);
                 a.SetBuildVersioningType(request.BuildVersioningType);

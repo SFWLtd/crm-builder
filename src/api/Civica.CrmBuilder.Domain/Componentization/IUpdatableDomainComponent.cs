@@ -3,6 +3,6 @@ namespace Civica.CrmBuilder.Domain.Componentization
 {
     public interface IUpdatableDomainComponent<T> : IDomainComponent<T>
     {
-        void UpdateAs(Action<T> action);
+        void DoThis(Action<T> action);
     }
 }

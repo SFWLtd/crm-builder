@@ -12,7 +12,7 @@ namespace Civica.CrmBuilder.Domain.Componentization
             this.update = update;
         }
 
-        public void UpdateAs(Action<TComponent> action)
+        public void DoThis(Action<TComponent> action)
         {
             action(Component);
             update(Component);

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Civica.CrmBuilder.Core.Enums;
 using Civica.CrmBuilder.Core.Validation;
 using Civica.CrmPlusPlus;
@@ -134,5 +136,7 @@ namespace Civica.CrmBuilder.Entities
         [PropertyInfo("Target environment password", AttributeRequiredLevel.None, "The target environment password")]
         [String(3999, StringFormatName.Text)]
         public string ProtectedTargetEnvironmentPassword { get; set; }
+
+        public IEnumerable<BuildRun> BuildRunInstances { get; set; }
     }
 }

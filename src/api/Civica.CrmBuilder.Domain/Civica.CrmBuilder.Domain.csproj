@@ -78,6 +78,7 @@
     <Compile Include="Installation\Versions\AddBuildVersioningType.cs" />
     <Compile Include="Installation\Versions\AddMajorAndMinorVersionToBuild.cs" />
     <Compile Include="Installation\Versions\CreateBuildEntity.cs" />
+    <Compile Include="Installation\Versions\CreateBuildRunAndBuildRunMessageEntities.cs" />
     <Compile Include="IPersistable.cs" />
     <Compile Include="Time\SystemTime.cs" />
     <Compile Include="Versioning\IVersionable.cs" />

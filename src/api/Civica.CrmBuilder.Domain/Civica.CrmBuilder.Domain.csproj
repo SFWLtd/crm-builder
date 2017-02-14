@@ -64,6 +64,7 @@
     <Compile Include="Builds\IBuildRepository.cs" />
     <Compile Include="CrmPlusPlusQueries\SolutionQueries.cs" />
     <Compile Include="DomainModule.cs" />
+    <Compile Include="Dtos\SolutionDto.cs" />
     <Compile Include="ICrmPlusPlusCustomizationClientExtensions.cs" />
     <Compile Include="ICrmPlusPlusEntityClientExtensions.cs" />
     <Compile Include="Componentization\ICreatableDomainComponent.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Installation\Versions\AddBuildTargetAuthenticationDetails.cs" />
     <Compile Include="Installation\Versions\AddBuildVersioningType.cs" />
     <Compile Include="Installation\Versions\AddMajorAndMinorVersionToBuild.cs" />
+    <Compile Include="Installation\Versions\AddSolutionIdToBuildEntity.cs" />
     <Compile Include="Installation\Versions\CreateBuildEntity.cs" />
     <Compile Include="Installation\Versions\CreateBuildRunAndBuildRunMessageEntities.cs" />
     <Compile Include="IPersistable.cs" />

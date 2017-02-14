@@ -21,6 +21,7 @@ namespace Civica.CrmBuilder.Entities
         private string email;
         private string domain;
         private string username;
+        private string solutionId;
 
         public Build()
         {
@@ -136,6 +137,19 @@ namespace Civica.CrmBuilder.Entities
         [PropertyInfo("Target environment password", AttributeRequiredLevel.None, "The target environment password")]
         [String(3999, StringFormatName.Text)]
         public string ProtectedTargetEnvironmentPassword { get; set; }
+
+        [PropertyName("buil_solutionid")]
+        [PropertyInfo("Solution Id", AttributeRequiredLevel.ApplicationRequired, "The id of the solution the build relates to")]
+        [String(36, StringFormatName.Text)]
+        public string SolutionId
+        {
+            get { return solutionId; }
+            set
+            {
+                Guard.This(value).AgainstNonGuidFormat();
+                solutionId = value;
+            }
+        }
 
         public IEnumerable<BuildRun> BuildRunInstances { get; set; }
     }

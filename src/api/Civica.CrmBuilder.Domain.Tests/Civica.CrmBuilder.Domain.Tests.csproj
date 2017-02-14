@@ -64,8 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\InMemoryClientStoreTests.cs" />
-    <Compile Include="Builds\BuildRepositoryTests.cs" />
-    <Compile Include="Builds\BuildTests.cs" />
     <Compile Include="Installation\InstallationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Time\SystemTimeTests.cs" />

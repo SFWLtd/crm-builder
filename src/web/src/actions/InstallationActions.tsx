@@ -1,20 +1,20 @@
-﻿import * as ApiClient from '../../../api/ApiClient';
-import config from '../Config';
-import { IAction } from './IAction';
-import { InstallationClient } from '../apiclient/InstallationClient';
+﻿import * as ApiClient from "../../../api/ApiClient";
+import { InstallationClient } from "../apiclient/InstallationClient";
+import config from "../Config";
+import { IAction } from "./IAction";
 
 export class InstallationActions {
-    static LoadStatus = 'LOAD_INSTALLATION_STATUS';
-    static SetStatus = 'SET_INSTALLATION_STATUS';
-    static Install = 'INSTALL';
-    static SetInstallationMessage = 'SET_INSTALLATION_MESSAGE';
-    static SetInstallationDescription = 'SET_INSTALLATION_DESCRIPTION';
-    static FinishInstall = 'FINISH_INSTALL';
+    public static LoadStatus = "LOAD_INSTALLATION_STATUS";
+    public static SetStatus = "SET_INSTALLATION_STATUS";
+    public static Install = "INSTALL";
+    public static SetInstallationMessage = "SET_INSTALLATION_MESSAGE";
+    public static SetInstallationDescription = "SET_INSTALLATION_DESCRIPTION";
+    public static FinishInstall = "FINISH_INSTALL";
 }
 
 export const loadInstallationStatus = (dispatch: any): IAction => {
 
-    dispatch(setInstallationStatusMessage('Checking installation status...'));
+    dispatch(setInstallationStatusMessage("Checking installation status..."));
 
     let client = new InstallationClient(new ApiClient.InstallationClient(config.apiUrl));
     let statusResult = client.getStatus();
@@ -22,35 +22,35 @@ export const loadInstallationStatus = (dispatch: any): IAction => {
         .then((result: ApiClient.GlobalJsonResultOfInstallationStatusResult) => {
             let setAuthAction: IAction = setAuthenticationResult(result);
             dispatch(setAuthAction);
-            dispatch(setInstallationStatusMessage('Finished checking installation status'));
+            dispatch(setInstallationStatusMessage("Finished checking installation status"));
         });
 
     return {
         type: InstallationActions.LoadStatus,
-        value: null
-    }
+        value: null,
+    };
 };
 
 export const setAuthenticationResult = (result: ApiClient.GlobalJsonResultOfInstallationStatusResult): IAction => {
     return {
         type: InstallationActions.SetStatus,
-        value: result
-    }
-}
+        value: result,
+    };
+};
 
 export const setInstallationStatusMessage = (message: string): IAction => {
     return {
         type: InstallationActions.SetInstallationMessage,
-        value: message
-    }
-}
+        value: message,
+    };
+};
 
 export const setInstallationStatusDescription = (description: string): IAction => {
     return {
         type: InstallationActions.SetInstallationDescription,
-        value: description
-    }
-}
+        value: description,
+    };
+};
 
 export const install = (dispatch: any, previousResult: ApiClient.GlobalJsonResultOfInstallationResult = null): IAction => {
 
@@ -65,8 +65,8 @@ export const install = (dispatch: any, previousResult: ApiClient.GlobalJsonResul
 
         return {
             type: InstallationActions.Install,
-            value: null
-        }
+            value: null,
+        };
     }
 
     if (!previousResult.successful || (previousResult.result.isSuccess && !previousResult.result.moreToInstall)) {
@@ -74,7 +74,7 @@ export const install = (dispatch: any, previousResult: ApiClient.GlobalJsonResul
     }
 
     if (!previousResult.result.isSuccess) {
-        dispatch(setInstallationStatusMessage('Failed installation.Rolling back...'));
+        dispatch(setInstallationStatusMessage("Failed installation.Rolling back..."));
         client.rollback(previousResult)
             .then((result: ApiClient.GlobalJsonResultOfRollbackResult) => {
                 dispatch(finishInstallation(previousResult));
@@ -89,17 +89,17 @@ export const install = (dispatch: any, previousResult: ApiClient.GlobalJsonResul
         });
     }
 
-    dispatch(setInstallationStatusMessage('Starting installation...'));
+    dispatch(setInstallationStatusMessage("Starting installation..."));
 
     return {
         type: InstallationActions.Install,
-        value: null
-    }
-}
+        value: null,
+    };
+};
 
 export const finishInstallation = (result: ApiClient.GlobalJsonResultOfInstallationResult): IAction => {
     return {
         type: InstallationActions.FinishInstall,
-        value: result
-    }
-}
+        value: result,
+    };
+};

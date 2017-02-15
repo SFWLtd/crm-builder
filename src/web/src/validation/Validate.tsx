@@ -1,12 +1,12 @@
-﻿import { ValidateString } from './ValidateString';
-import { ValidateNumber } from './ValidateNumber';
+﻿import { ValidateNumber } from "./ValidateNumber";
+import { ValidateString } from "./ValidateString";
 
 export class Validate {
-    static thisString = function (val: string) {
+    public static thisString(val: string) {
         return new ValidateString(val);
-    }
+    };
 
-    static thisNumber = function(val: number) {
+    public static thisNumber(val: number) {
         return new ValidateNumber(val);
-    }
+    };
 }

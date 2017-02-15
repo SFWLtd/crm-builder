@@ -1,5 +1,5 @@
-﻿import * as ApiClient from '../../../api/ApiClient';
-import { IAsyncActionState } from './AsyncActionState';
+﻿import * as ApiClient from "../../../api/ApiClient";
+import { IAsyncActionState } from "./AsyncActionState";
 
 export interface IInstallationState {
     hasLoadedState: boolean;

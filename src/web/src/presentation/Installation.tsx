@@ -1,5 +1,5 @@
-﻿import * as React from 'react';
-import { Button, Card, Dimmer, Header, Icon, Loader, Message } from 'semantic-ui-react';
+﻿import * as React from "react";
+import { Button, Card, Dimmer, Header, Icon, Loader, Message } from "semantic-ui-react";
 
 export class Installation extends React.Component<IInstallationProps, undefined> {
 
@@ -7,19 +7,19 @@ export class Installation extends React.Component<IInstallationProps, undefined>
         super(props);
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         if (!this.props.hasLoaded) {
             this.props.load();
         }
     }
 
-    componentDidUpdate() {
+    public componentDidUpdate() {
         if (this.props.hasCompletedInstallation) {
             this.props.load(); // Reload to check latest installation status
         }
     }
 
-    render() {
+    public render() {
         return <div>
                 <br />
                 {
@@ -33,20 +33,20 @@ export class Installation extends React.Component<IInstallationProps, undefined>
                 {
                     this.props.hasLoaded && this.props.requiresInstallation &&
                     <div>
-                        <Header as='h2' icon textAlign='center'>
-                            <Icon name='info' circular />
+                        <Header as="h2" icon textAlign="center">
+                            <Icon name="info" circular />
                         </Header>
-                        <Header as='h3' textAlign='center'>{this.props.installationIsUpdate ? 'Update required' : 'Installation required'}</Header>
+                        <Header as="h3" textAlign="center">{this.props.installationIsUpdate ? "Update required" : "Installation required"}</Header>
                         <Card centered>
                             <Card.Content>
                                 <h4>
                                     {
                                         this.props.installationIsUpdate
-                                            ? 'This version of CRM builder needs to apply some updates to your CRM instance'
-                                            : 'It looks like this is the first time you\'ve used CRM builder with this CRM instance. Click install to continue'
+                                            ? "This version of CRM builder needs to apply some updates to your CRM instance"
+                                            : "It looks like this is the first time you've used CRM builder with this CRM instance. Click install to continue"
                                     }</h4>
 
-                                <Button primary fluid type='submit' onClick={(e: any) => { e.preventDefault(); this.props.install() } }>{this.props.installationIsUpdate ? 'Update' : 'Install'}</Button>
+                                <Button primary fluid type="submit" onClick={(e: any) => { e.preventDefault(); this.props.install(); } }>{this.props.installationIsUpdate ? "Update" : "Install"}</Button>
                             </Card.Content>
                         </Card>
                     </div>

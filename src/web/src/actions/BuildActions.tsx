@@ -1,47 +1,47 @@
-import * as ApiClient from '../../../api/ApiClient';
-import { IAction } from './IAction';
-import { EditBuildFormValidator } from '../validation/EditBuildFormValidator';
-import { IEditBuildProps } from '../presentation/EditBuild';
-import config from '../Config';
-import { BuildClient } from '../apiclient/BuildClient';
-import * as SolutionActions from './SolutionActions';
+import * as ApiClient from "../../../api/ApiClient";
+import { BuildClient } from "../apiclient/BuildClient";
+import config from "../Config";
+import { IEditBuildProps } from "../presentation/EditBuild";
+import { EditBuildFormValidator } from "../validation/EditBuildFormValidator";
+import { IAction } from "./IAction";
+import * as SolutionActions from "./SolutionActions";
 
 export class BuildActions {
-    static StartFetchingBuilds: string = 'START_FETCH_BUILDS';
-    static FinishFetchingBuilds: string = 'FINISH_FETCH_BUILDS';
-    static SetBuildVersioningType: string = 'SET_BUILD_VERSIONING_TYPE';
-    static SetBuildName: string = 'SET_BUILD_NAME';
-    static BlurBuildName: string = 'BLUR_BUILD_NAME';
-    static SetBuildMajorVersion: string = 'SET_BUILD_MAJOR_VERSION';
-    static BlurBuildMajorVersion: string = 'BLUR_BUILD_MAJOR_VERSION';
-    static SetBuildMinorVersion: string = 'SET_BUILD_MINOR_VERSION';
-    static BlurBuildMinorVersion: string = 'BLUR_BUILD_MINOR_VERSION';
-    static SetSolutionId: string = 'SET_SOLUTION_ID';
-    static BlurSolutionId: string = 'BLUR_SOLUTION_ID';
-    static SetTargetEnvironmentAuthenticationType: string = 'SET_TARGET_ENVIRONMENT_AUTHENTICATION_TYPE';
-    static SetTargetEnvironmentCrmUrl: string = 'SET_TARGET_ENVIRONMENT_CRM_URL';
-    static BlurTargetEnvironmentCrmUrl: string = 'BLUR_TARGET_ENVIRONMENT_CRM_URL';
-    static SetTargetEnvironmentEmail: string = 'SET_TARGET_ENVIRONMENT_EMAIL';
-    static BlurTargetEnvironmentEmail: string = 'BLUR_TARGET_ENVIRONMENT_EMAIL';
-    static SetTargetEnvironmentDomain: string = 'SET_TARGET_ENVIRONMENT_DOMAIN';
-    static BlurTargetEnvironmentDomain: string = 'BLUR_TARGET_ENVIRONMENT_DOMAIN';
-    static SetTargetEnvironmentUsername: string = 'SET_TARGET_ENVIRONMENT_USERNAME';
-    static BlurTargetEnvironmentUsername: string = 'BLUR_TARGET_ENVIRONMENT_USERNAME';
-    static SetTargetEnvironmentPassword: string = 'SET_TARGET_ENVIRONMENT_PASSWORD';
-    static BlurTargetEnvironmentPassword: string = 'BLUR_TARGET_ENVIRONMENT_PASSWORD';
-    static ShowNewBuildForm: string = 'SHOW_NEW_BUILD_FORM';
-    static CloseBuildForm: string = 'CLOSE_NEW_BUILD_FORM';
-    static BeginShowEditBuildForm: string = 'BEGIN_SHOW_EDIT_BUILD_FORM';
-    static FinishShowEditBuildForm: string = 'FINISH_SHOW_EDIT_BUILD_FORM';
-    static ClearEditableBuild: string = 'CLEAR_EDITABLE_BUILD';
-    static ShowDeleteConfirmationDialog: string = 'SHOW_DELETE_BUILD_DIALOG';
-    static CloseDeleteConfirmationDialog: string = 'CLOSE_DELETE_BUILD_DIALOG';
-    static StartDeletingBuild: string = 'START_DELETING_BUILD';
-    static FinishDeletingBuild: string = 'FINISH_DELETING_BUILD';
-    static ResetForm: string = 'RESET_EDIT_BUILD_FORM';
-    static ValidateForm: string = 'VALIDATE_EDIT_BUILD_FORM';
-    static StartSubmittingBuild: string = 'START_SUBMIT_BUILD';
-    static FinishSubmittingBuild: string = 'FINISH_SUBMIT_BUILD';
+    public static StartFetchingBuilds: string = "START_FETCH_BUILDS";
+    public static FinishFetchingBuilds: string = "FINISH_FETCH_BUILDS";
+    public static SetBuildVersioningType: string = "SET_BUILD_VERSIONING_TYPE";
+    public static SetBuildName: string = "SET_BUILD_NAME";
+    public static BlurBuildName: string = "BLUR_BUILD_NAME";
+    public static SetBuildMajorVersion: string = "SET_BUILD_MAJOR_VERSION";
+    public static BlurBuildMajorVersion: string = "BLUR_BUILD_MAJOR_VERSION";
+    public static SetBuildMinorVersion: string = "SET_BUILD_MINOR_VERSION";
+    public static BlurBuildMinorVersion: string = "BLUR_BUILD_MINOR_VERSION";
+    public static SetSolutionId: string = "SET_SOLUTION_ID";
+    public static BlurSolutionId: string = "BLUR_SOLUTION_ID";
+    public static SetTargetEnvironmentAuthenticationType: string = "SET_TARGET_ENVIRONMENT_AUTHENTICATION_TYPE";
+    public static SetTargetEnvironmentCrmUrl: string = "SET_TARGET_ENVIRONMENT_CRM_URL";
+    public static BlurTargetEnvironmentCrmUrl: string = "BLUR_TARGET_ENVIRONMENT_CRM_URL";
+    public static SetTargetEnvironmentEmail: string = "SET_TARGET_ENVIRONMENT_EMAIL";
+    public static BlurTargetEnvironmentEmail: string = "BLUR_TARGET_ENVIRONMENT_EMAIL";
+    public static SetTargetEnvironmentDomain: string = "SET_TARGET_ENVIRONMENT_DOMAIN";
+    public static BlurTargetEnvironmentDomain: string = "BLUR_TARGET_ENVIRONMENT_DOMAIN";
+    public static SetTargetEnvironmentUsername: string = "SET_TARGET_ENVIRONMENT_USERNAME";
+    public static BlurTargetEnvironmentUsername: string = "BLUR_TARGET_ENVIRONMENT_USERNAME";
+    public static SetTargetEnvironmentPassword: string = "SET_TARGET_ENVIRONMENT_PASSWORD";
+    public static BlurTargetEnvironmentPassword: string = "BLUR_TARGET_ENVIRONMENT_PASSWORD";
+    public static ShowNewBuildForm: string = "SHOW_NEW_BUILD_FORM";
+    public static CloseBuildForm: string = "CLOSE_NEW_BUILD_FORM";
+    public static BeginShowEditBuildForm: string = "BEGIN_SHOW_EDIT_BUILD_FORM";
+    public static FinishShowEditBuildForm: string = "FINISH_SHOW_EDIT_BUILD_FORM";
+    public static ClearEditableBuild: string = "CLEAR_EDITABLE_BUILD";
+    public static ShowDeleteConfirmationDialog: string = "SHOW_DELETE_BUILD_DIALOG";
+    public static CloseDeleteConfirmationDialog: string = "CLOSE_DELETE_BUILD_DIALOG";
+    public static StartDeletingBuild: string = "START_DELETING_BUILD";
+    public static FinishDeletingBuild: string = "FINISH_DELETING_BUILD";
+    public static ResetForm: string = "RESET_EDIT_BUILD_FORM";
+    public static ValidateForm: string = "VALIDATE_EDIT_BUILD_FORM";
+    public static StartSubmittingBuild: string = "START_SUBMIT_BUILD";
+    public static FinishSubmittingBuild: string = "FINISH_SUBMIT_BUILD";
 }
 
 export const startFetchingBuilds = (dispatch: any): IAction => {
@@ -55,29 +55,29 @@ export const startFetchingBuilds = (dispatch: any): IAction => {
 
     return {
         type: BuildActions.StartFetchingBuilds,
-        value: null
+        value: null,
     };
 };
 
 export const finishFetchingBuilds = (result: ApiClient.GlobalJsonResultOfIEnumerableOfBuildDto): IAction => {
     return {
         type: BuildActions.FinishFetchingBuilds,
-        value: result
-    }
-}
+        value: result,
+    };
+};
 
 export const startBuildSubmit = (props: IEditBuildProps, dispatch: any): IAction => {
 
-    let validator = new EditBuildFormValidator();  
+    let validator = new EditBuildFormValidator();
     if (!validator.isValid(props)) {
         return {
             type: BuildActions.ValidateForm,
-            value: null
+            value: null,
         };
     } else {
         let client = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
 
-        if (!props.isEdit) {          
+        if (!props.isEdit) {
             client.addNew(props).then((result: ApiClient.GlobalJsonResultOfBuildDto) => {
                 dispatch(finishBuildSubmit(dispatch, result));
             });
@@ -90,7 +90,7 @@ export const startBuildSubmit = (props: IEditBuildProps, dispatch: any): IAction
 
     return {
         type: BuildActions.StartSubmittingBuild,
-        value: null
+        value: null,
     };
 };
 
@@ -104,147 +104,147 @@ export const finishBuildSubmit = (dispatch: any, result: ApiClient.GlobalJsonRes
 
     return {
         type: BuildActions.FinishSubmittingBuild,
-        value: result
+        value: result,
     };
 };
 
 export const setBuildName = (name: string): IAction => {
     return {
         type: BuildActions.SetBuildName,
-        value: name
+        value: name,
     };
 };
 
 export const setBuildVersioningType = (buildVersioningType: ApiClient.BuildVersioningType): IAction => {
     return {
         type: BuildActions.SetBuildVersioningType,
-        value: buildVersioningType
+        value: buildVersioningType,
     };
 };
 
 export const setBuildMajorVersion = (version: number): IAction => {
     return {
         type: BuildActions.SetBuildMajorVersion,
-        value: version
+        value: version,
     };
 };
 
 export const setBuildMinorVersion = (version: number): IAction => {
     return {
         type: BuildActions.SetBuildMinorVersion,
-        value: version
+        value: version,
     };
 };
 
 export const setSolutionId = (solutionId: string): IAction => {
     return {
         type: BuildActions.SetSolutionId,
-        value: solutionId
+        value: solutionId,
     };
 };
 
 export const setTargetEnvironmentAuthenticationType = (authenticationType: ApiClient.AuthenticationType): IAction => {
     return {
         type: BuildActions.SetTargetEnvironmentAuthenticationType,
-        value: authenticationType
+        value: authenticationType,
     };
 };
 
 export const setTargetEnvironmentCrmUrl = (crmUrl: string): IAction => {
     return {
         type: BuildActions.SetTargetEnvironmentCrmUrl,
-        value: crmUrl
+        value: crmUrl,
     };
 };
 
 export const setTargetEnvironmentEmail = (email: string): IAction => {
     return {
         type: BuildActions.SetTargetEnvironmentEmail,
-        value: email
+        value: email,
     };
 };
 
 export const setTargetEnvironmentDomain = (domain: string): IAction => {
     return {
         type: BuildActions.SetTargetEnvironmentDomain,
-        value: domain
+        value: domain,
     };
 };
 
 export const setTargetEnvironmentUsername = (username: string): IAction => {
     return {
         type: BuildActions.SetTargetEnvironmentUsername,
-        value: username
+        value: username,
     };
 };
 
 export const setTargetEnvironmentPassword = (password: string): IAction => {
     return {
         type: BuildActions.SetTargetEnvironmentPassword,
-        value: password
+        value: password,
     };
 };
 
 export const blurBuildName = (): IAction => {
     return {
         type: BuildActions.BlurBuildName,
-        value: null
+        value: null,
     };
 };
 
 export const blurBuildMajorVersion = (): IAction => {
     return {
         type: BuildActions.BlurBuildMajorVersion,
-        value: null
+        value: null,
     };
 };
 
 export const blurBuildMinorVersion = (): IAction => {
     return {
         type: BuildActions.BlurBuildMinorVersion,
-        value: null
+        value: null,
     };
 };
 
 export const blurSolutionId = (): IAction => {
     return {
         type: BuildActions.BlurSolutionId,
-        value: null
+        value: null,
     };
 };
 
 export const blurTargetEnvironmentCrmUrl = (): IAction => {
     return {
         type: BuildActions.BlurTargetEnvironmentCrmUrl,
-        value: null
+        value: null,
     };
 };
 
 export const blurTargetEnvironmentEmail = (): IAction => {
     return {
         type: BuildActions.BlurTargetEnvironmentEmail,
-        value: null
+        value: null,
     };
 };
 
 export const blurTargetEnvironmentDomain = (): IAction => {
     return {
         type: BuildActions.BlurTargetEnvironmentDomain,
-        value: null
+        value: null,
     };
 };
 
 export const blurTargetEnvironmentUsername = (): IAction => {
     return {
         type: BuildActions.BlurTargetEnvironmentUsername,
-        value: null
+        value: null,
     };
 };
 
 export const BlurTargetEnvironmentPassword = (): IAction => {
     return {
         type: BuildActions.BlurTargetEnvironmentPassword,
-        value: null
+        value: null,
     };
 };
 
@@ -252,7 +252,7 @@ export const showNewBuildForm = (): IAction => {
 
     return {
         type: BuildActions.ShowNewBuildForm,
-        value: null
+        value: null,
     };
 };
 
@@ -262,12 +262,12 @@ export const closeBuildForm = (dispatch: any): IAction => {
 
     return {
         type: BuildActions.CloseBuildForm,
-        value: null
+        value: null,
     };
 };
 
 export const beginShowEditBuildForm = (dispatch: any, buildId: string): IAction => {
-    
+
     let buildClient = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
     buildClient.fetch(buildId).then((result: ApiClient.GlobalJsonResultOfBuildDto) => {
         dispatch(finishShowEditBuildForm(dispatch, result));
@@ -275,7 +275,7 @@ export const beginShowEditBuildForm = (dispatch: any, buildId: string): IAction 
 
     return {
         type: BuildActions.BeginShowEditBuildForm,
-        value: null
+        value: null,
     };
 };
 
@@ -298,42 +298,42 @@ export const finishShowEditBuildForm = (dispatch: any, editableBuild: ApiClient.
 
     return {
         type: BuildActions.FinishShowEditBuildForm,
-        value: editableBuild
+        value: editableBuild,
     };
 };
 
 export const clearEditableBuild = (): IAction => {
     return {
         type: BuildActions.ClearEditableBuild,
-        value: null
+        value: null,
     };
 };
 
 export const resetForm = (): IAction => {
     return {
         type: BuildActions.ResetForm,
-        value: null
+        value: null,
     };
 };
 
 export const validateForm = (): IAction => {
     return {
         type: BuildActions.ValidateForm,
-        value: null
+        value: null,
     };
 };
 
 export const showDeleteConfirmationDialog = (buildId: string): IAction => {
     return {
         type: BuildActions.ShowDeleteConfirmationDialog,
-        value: buildId
+        value: buildId,
     };
 };
 
 export const closeDeleteConfirmationDialog = (): IAction => {
     return {
         type: BuildActions.CloseDeleteConfirmationDialog,
-        value: null
+        value: null,
     };
 };
 
@@ -341,11 +341,11 @@ export const startDeletingBuild = (dispatch: any, buildId: string): IAction => {
     let client = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
     client.delete(buildId).then((result: ApiClient.GlobalJsonResultOfEmptyResult) => {
         dispatch(finishDeletingBuild(dispatch, result));
-    })
+    });
 
     return {
         type: BuildActions.StartDeletingBuild,
-        value: null
+        value: null,
     };
 };
 
@@ -357,6 +357,6 @@ export const finishDeletingBuild = (dispatch: any, result: ApiClient.GlobalJsonR
 
     return {
         type: BuildActions.FinishDeletingBuild,
-        value: null
+        value: null,
     };
 };

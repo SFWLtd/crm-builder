@@ -1,5 +1,5 @@
 ﻿export class NavigationIds {
-    static Dashboard: string = 'HOME';
-    static Builds: string = 'BUILDS';
-    static Settings: string = 'SETTINGS';
+    public static Dashboard: string = "HOME";
+    public static Builds: string = "BUILDS";
+    public static Settings: string = "SETTINGS";
 }

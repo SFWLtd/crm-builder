@@ -10,11 +10,6 @@
       "dom"
     ],
     "baseUrl": ".",
-    "paths": {
-      "react-toolbox/*": [
-        "node_modules/react-toolbox"
-      ]
-    },
     "types": [
       "reflect-metadata"
     ],
@@ -22,7 +17,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "jsx": "react",
-    "compileOnSave": false
+    "compileOnSave": true
   },
   "include": [
     "./src/**/*"

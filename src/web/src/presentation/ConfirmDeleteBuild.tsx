@@ -1,17 +1,17 @@
-import * as React from 'react';
-import * as ApiClient from '../../../api/ApiClient';
-import { Button, Dimmer, Form, Header, Icon, Loader, Modal } from 'semantic-ui-react';
+import * as React from "react";
+import { Button, Dimmer, Form, Header, Icon, Loader, Modal } from "semantic-ui-react";
+import * as ApiClient from "../../../api/ApiClient";
 
 export class ConfirmDeleteBuild extends React.Component<IConfirmDeleteBuildProps, undefined> {
     constructor(props: IConfirmDeleteBuildProps) {
         super(props);
     }
 
-    render() {
+    public render() {
         return <div>
         <Modal open={this.props.shouldDisplay} onClose={(e: any) => this.props.onFormCancel()}>
-            <Header as='h2' icon textAlign='center'>
-                <Icon name='delete' circular size='tiny' />
+            <Header as="h2" icon textAlign="center">
+                <Icon name="delete" circular size="tiny" />
                 <Header.Content>
                     Delete build
                 </Header.Content>
@@ -21,7 +21,7 @@ export class ConfirmDeleteBuild extends React.Component<IConfirmDeleteBuildProps
             </Modal.Content>
             <Modal.Actions>
             <Button primary onClick={(e: any) => this.props.onFormCancel()}>Cancel</Button>
-            <Button negative labelPosition='right' icon='delete' content='Delete' onClick={(e: any) => this.props.onFormSubmit(this.props.buildId)} />
+            <Button negative labelPosition="right" icon="delete" content="Delete" onClick={(e: any) => this.props.onFormSubmit(this.props.buildId)} />
           </Modal.Actions>
         </Modal>
         <Dimmer active={this.props.isSubmitting} page>
@@ -29,7 +29,7 @@ export class ConfirmDeleteBuild extends React.Component<IConfirmDeleteBuildProps
                 <p>Deleting...</p>
             </Loader>
         </Dimmer>
-        </div>
+        </div>;
     }
 }
 

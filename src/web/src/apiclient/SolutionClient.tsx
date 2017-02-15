@@ -1,4 +1,4 @@
-import * as ApiClient from '../../../api/ApiClient';
+import * as ApiClient from "../../../api/ApiClient";
 
 export class SolutionClient {
 
@@ -8,7 +8,7 @@ export class SolutionClient {
         this.client = client;
     }
 
-    getAll(): Promise<ApiClient.GlobalJsonResultOfIEnumerableOfSolutionDto> {
-        return this.client.getAll('');
+    public getAll(): Promise<ApiClient.GlobalJsonResultOfIEnumerableOfSolutionDto> {
+        return this.client.getAll("");
     }
 }

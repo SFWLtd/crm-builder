@@ -1,3 +1,3 @@
 ﻿export interface INavigationState {
-    selectedNavigationId: string
+    selectedNavigationId: string;
 }

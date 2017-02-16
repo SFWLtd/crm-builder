@@ -102,6 +102,7 @@
     <Compile Include="Authentication\IClientStore.cs" />
     <Compile Include="Authentication\InMemoryClientStore.cs" />
     <Compile Include="Builds\Build.cs" />
+    <Compile Include="Installation\Versions\RemoveAllExistingBuilds.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Componentization\CreatableDomainComponent.cs" />
     <Compile Include="Componentization\DomainComponent.cs" />

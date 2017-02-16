@@ -1,12 +1,12 @@
-﻿import { IAuthenticationState } from './AuthenticationState';
-import { INavigationState } from './NavigationState';
-import { NavigationIds } from '../constants/NavigationIds';
-import * as ApiClient from '../../../api/ApiClient';
-import { IAsyncActionState } from './AsyncActionState';
-import { IInstallationState } from './InstallationState';
-import { ISolutionsState } from './SolutionsState'; 
-import { IBuildState, IBuildSummary } from './BuildState';
-import { ILoadingState } from './LoadingState';
+﻿import * as ApiClient from "../../../api/ApiClient";
+import { NavigationIds } from "../constants/NavigationIds";
+import { IAsyncActionState } from "./AsyncActionState";
+import { IAuthenticationState } from "./AuthenticationState";
+import { IBuildState, IBuildSummary } from "./BuildState";
+import { IInstallationState } from "./InstallationState";
+import { ILoadingState } from "./LoadingState";
+import { INavigationState } from "./NavigationState";
+import { ISolutionsState } from "./SolutionsState";
 
 export interface IAppState {
     authenticationState: IAuthenticationState;
@@ -19,98 +19,98 @@ export interface IAppState {
 export const defaultAppState: IAppState = {
     authenticationState: {
         authenticationType: ApiClient.AuthenticationType.Dynamics365,
-        crmUrl: { hasBeenTouched: false, value: '' },
-        domain: { hasBeenTouched: false, value: '' },
-        username: { hasBeenTouched: false, value: '' },
-        password: { hasBeenTouched: false, value: '' },
-        emailAddress: { hasBeenTouched: false, value: '' },
-        lastErrorMessage: '',
+        crmUrl: { hasBeenTouched: false, value: "" },
+        domain: { hasBeenTouched: false, value: "" },
+        emailAddress: { hasBeenTouched: false, value: "" },
+        hasBeenSubmitted: false,
+        lastErrorMessage: "",
+        logOutStatus: {
+            hasCompleted: false,
+            hasStarted: false,
+            result: null,
+        },
         loginStatus: {
             hasCompleted: false,
             hasStarted: false,
             result: null,
         },
-        hasBeenSubmitted: false,
+        password: { hasBeenTouched: false, value: "" },
         shouldValidateForm: false,
-        logOutStatus: {
-            hasCompleted: false,
-            hasStarted: false,
-            result: null
-        }
-    },
-    navigationState: {
-        selectedNavigationId: NavigationIds.Builds
-    },
-    installationState: {
-        hasLoadedState: false,
-        status: {
-            hasCompleted: false,
-            hasStarted: false,
-            result: null
-        },
-        installation: {
-            hasCompleted: false,
-            hasStarted: false,
-            result: null
-        },
-        description: null,
-        message: null
-    },
-    solutionsState: {
-        availableSolutions: {
-            hasStarted: false,
-            hasCompleted: false,
-            result: null
-        }
+        username: { hasBeenTouched: false, value: "" },
     },
     buildState: {
         builds: {
             hasCompleted: false,
             hasStarted: false,
-            result: null
+            result: null,
         },
         confirmDeleteDialog: {
+            buildId: "",
             show: false,
-            buildId: '',
             submission: {
                 hasCompleted: false,
                 hasStarted: false,
-                result: null
-            }
+                result: null,
+            },
         },
         editBuildFormState: {
+            authenticationType: ApiClient.AuthenticationType.Dynamics365,
+            buildVersioningType: ApiClient.BuildVersioningType.JulianDate,
+            crmUrl: { hasBeenTouched: false, value: "" },
             currentBuild: {
                 hasCompleted: false,
                 hasStarted: false,
-                result: null
+                result: null,
             },
-            buildVersioningType: ApiClient.BuildVersioningType.JulianDate,
+            domain: { hasBeenTouched: false, value: "" },
+            emailAddress: { hasBeenTouched: false, value: "" },
             name: {
                 hasBeenTouched: false,
-                value: ''
+                value: "",
             },
-            versionMajor: {
-                hasBeenTouched: false,
-                value: 0
-            },
-            versionMinor: {
-                hasBeenTouched: false,
-                value: 0
-            },
-            authenticationType: ApiClient.AuthenticationType.Dynamics365,
-            crmUrl: { hasBeenTouched: false, value: '' },
-            domain: { hasBeenTouched: false, value: '' },
-            username: { hasBeenTouched: false, value: '' },
-            password: { hasBeenTouched: false, value: '' },
-            emailAddress: { hasBeenTouched: false, value: '' },
-            solutionId: { hasBeenTouched: false, value: ''},
+            password: { hasBeenTouched: false, value: "" },
             shouldValidate: false,
             show: false,
+            solutionId: { hasBeenTouched: false, value: ""},
             submission: {
                 hasCompleted: false,
                 hasStarted: false,
-                result: null
-            }
-        }
-    }
+                result: null,
+            },
+            username: { hasBeenTouched: false, value: "" },
+            versionMajor: {
+                hasBeenTouched: false,
+                value: 0,
+            },
+            versionMinor: {
+                hasBeenTouched: false,
+                value: 0,
+            },
+        },
+    },
+    installationState: {
+        description: null,
+        hasLoadedState: false,
+        installation: {
+            hasCompleted: false,
+            hasStarted: false,
+            result: null,
+        },
+        message: null,
+        status: {
+            hasCompleted: false,
+            hasStarted: false,
+            result: null,
+        },
+    },
+    navigationState: {
+        selectedNavigationId: NavigationIds.Builds,
+    },
+    solutionsState: {
+        availableSolutions: {
+            hasCompleted: false,
+            hasStarted: false,
+            result: null,
+        },
+    },
 };

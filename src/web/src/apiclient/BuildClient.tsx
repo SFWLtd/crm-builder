@@ -1,5 +1,5 @@
-import * as ApiClient from '../../../api/ApiClient';
-import { IEditBuildProps } from '../presentation/EditBuild';
+import * as ApiClient from "../../../api/ApiClient";
+import { IEditBuildProps } from "../presentation/EditBuild";
 
 export class BuildClient {
 
@@ -9,7 +9,7 @@ export class BuildClient {
         this.client = client;
     }
 
-    addNew(props: IEditBuildProps): Promise<ApiClient.GlobalJsonResultOfBuildDto> {
+    public addNew(props: IEditBuildProps): Promise<ApiClient.GlobalJsonResultOfBuildDto> {
         let request = new ApiClient.NewBuildRequest();
         request.buildVersioningType = props.buildVersioningType;
         request.name = props.name;
@@ -23,18 +23,18 @@ export class BuildClient {
         request.domain = props.domain;
         request.password = props.password;
 
-        return this.client.newBuild(request, '');
+        return this.client.newBuild(request, "");
     }
 
-    fetch(buildId: string): Promise<ApiClient.GlobalJsonResultOfBuildDto> {
+    public fetch(buildId: string): Promise<ApiClient.GlobalJsonResultOfBuildDto> {
         return this.client.getBuild(buildId);
     }
 
-    fetchAll(): Promise<ApiClient.GlobalJsonResultOfIEnumerableOfBuildDto> {
-        return this.client.getBuilds('');
+    public fetchAll(): Promise<ApiClient.GlobalJsonResultOfIEnumerableOfBuildDto> {
+        return this.client.getBuilds("");
     }
 
-    edit(props: IEditBuildProps): Promise<ApiClient.GlobalJsonResultOfBuildDto> {
+    public edit(props: IEditBuildProps): Promise<ApiClient.GlobalJsonResultOfBuildDto> {
         let request = new ApiClient.UpdateBuildRequest();
         request.buildVersioningType = props.buildVersioningType;
         request.name = props.name;
@@ -47,16 +47,15 @@ export class BuildClient {
         request.userName = props.username;
         request.domain = props.domain;
         request.password = props.password;
-        
         request.id = props.editBuildId;
 
-        return this.client.updateBuild(request, '');
+        return this.client.updateBuild(request, "");
     }
 
-    delete(id: string): Promise<ApiClient.GlobalJsonResultOfEmptyResult> {
+    public delete(id: string): Promise<ApiClient.GlobalJsonResultOfEmptyResult> {
         let request = new ApiClient.DeleteBuildRequest();
         request.id = id;
 
-        return this.client.deleteBuild(request, '');
+        return this.client.deleteBuild(request, "");
     }
 }

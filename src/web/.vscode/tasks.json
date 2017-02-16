@@ -1,0 +1,24 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+	"command": "npm",
+	"isShellCommand": true,
+	"args": ["run-script", "lint"],
+	"showOutput": "silent",
+	"problemMatcher": {
+		"owner": "tslint",
+		"fileLocation": [
+			"relative",
+			"${workspaceRoot}"
+		],
+		"severity": "error",
+		"pattern": {
+			"regexp": "^(\\S.*)\\[(\\d+), (\\d+)\\]:\\s+(.*)$",
+			"file": 1,
+			"line": 2,
+			"column": 3,
+			"message": 4
+		}
+	}
+}

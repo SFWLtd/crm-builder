@@ -1,20 +1,20 @@
-﻿import * as React from 'react';
-import AuthenticationForm from '../containers/AuthenticationForm';
-import Navigation from '../containers/Navigation';
-import Installation from '../containers/Installation';
-import BuildsOverview from '../containers/BuildsOverview';
-import { Container, Dimmer, Loader } from 'semantic-ui-react';
+﻿import * as React from "react";
+import { Container, Dimmer, Loader } from "semantic-ui-react";
+import AuthenticationForm from "../containers/AuthenticationForm";
+import BuildsOverview from "../containers/BuildsOverview";
+import Installation from "../containers/Installation";
+import Navigation from "../containers/Navigation";
 
 export class App extends React.Component<IAppProps, undefined> {
 
-    componentDidMount() {
+    public componentDidMount() {
         this.props.load();
     }
 
-    render() {
+    public render() {
 
         return <div>
-            <Container textAlign='center'>
+            <Container textAlign="center">
                 <Dimmer active={this.props.isLoading} page>
                     <Loader>
                         <p>Checking log in status...</p>
@@ -38,7 +38,7 @@ export class App extends React.Component<IAppProps, undefined> {
                     <div>
                         <Navigation />
                         <br/>
-                        <Container textAlign='left'>
+                        <Container textAlign="left">
                             <BuildsOverview/>
                         </Container>
                     </div>

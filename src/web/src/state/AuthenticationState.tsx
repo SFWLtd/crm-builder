@@ -1,6 +1,6 @@
-﻿import { IFormInputState } from './FormInputState';
-import { IAsyncActionState } from './AsyncActionState';
-import * as ApiClient from '../../../api/ApiClient';
+﻿import * as ApiClient from "../../../api/ApiClient";
+import { IAsyncActionState } from "./AsyncActionState";
+import { IFormInputState } from "./FormInputState";
 
 export interface IAuthenticationState {
     authenticationType: number;

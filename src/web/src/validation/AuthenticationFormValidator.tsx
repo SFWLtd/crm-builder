@@ -1,19 +1,16 @@
-﻿import { IAuthenticationFormProps } from '../presentation/AuthenticationForm';
-import * as ApiClient from '../../../api/ApiClient';
-import { Validate } from './Validate';
+﻿import * as ApiClient from "../../../api/ApiClient";
+import { IAuthenticationFormProps } from "../presentation/AuthenticationForm";
+import { Validate } from "./Validate";
 
 export class AuthenticationFormValidator {
 
-    constructor() {
-    }
-
-    isValid(props: IAuthenticationFormProps) {
-        let dynamics365SubmissionIsValid = props.authenticationTypeSelectedValue == ApiClient.AuthenticationType.Dynamics365
+    public isValid(props: IAuthenticationFormProps) {
+        let dynamics365SubmissionIsValid = props.authenticationTypeSelectedValue === ApiClient.AuthenticationType.Dynamics365 as number
             && this.validateCrmUrl(props.crmUrl)
             && this.validateEmailAddress(props.emailAddress)
             && this.validatePassword(props.password);
 
-        let otherSubmissionIsValid = (props.authenticationTypeSelectedValue == ApiClient.AuthenticationType.Ifd || props.authenticationTypeSelectedValue == ApiClient.AuthenticationType.OnPremise)
+        let otherSubmissionIsValid = (props.authenticationTypeSelectedValue === ApiClient.AuthenticationType.Ifd as number || props.authenticationTypeSelectedValue === ApiClient.AuthenticationType.OnPremise as number)
             && this.validateCrmUrl(props.crmUrl)
             && this.validateDomain(props.domain)
             && this.validateUsername(props.username)
@@ -22,23 +19,23 @@ export class AuthenticationFormValidator {
         return dynamics365SubmissionIsValid || otherSubmissionIsValid;
     }
 
-    validateCrmUrl(crmUrl: string): boolean {
+    public validateCrmUrl(crmUrl: string): boolean {
         return Validate.thisString(crmUrl).url();
     }
 
-    validateEmailAddress(emailAddress: string): boolean {
+    public validateEmailAddress(emailAddress: string): boolean {
         return Validate.thisString(emailAddress).email();
     }
 
-    validateUsername(username: string): boolean {
+    public validateUsername(username: string): boolean {
         return Validate.thisString(username).length(1, 100);
     }
 
-    validateDomain(domain: string): boolean {
+    public validateDomain(domain: string): boolean {
         return Validate.thisString(domain).length(1, 100);
     }
 
-    validatePassword(password: string): boolean {
+    public validatePassword(password: string): boolean {
         return Validate.thisString(password).length(1, 100);
     }
 }

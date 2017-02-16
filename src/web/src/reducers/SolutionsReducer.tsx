@@ -1,14 +1,13 @@
-import { IAction } from '../actions/IAction';
-import { SolutionActions } from '../actions/SolutionActions';
-import { ISolutionsState } from '../state/SolutionsState';
-import * as ApiClient from '../../../api/ApiClient';
+import * as ApiClient from "../../../api/ApiClient";
+import { IAction } from "../actions/IAction";
+import { SolutionActions } from "../actions/SolutionActions";
+import { ISolutionsState } from "../state/SolutionsState";
 
 const solutionsReducer = (state: ISolutionsState, action: IAction): ISolutionsState => {
 
     let newState = state;
 
-    switch (action.type)
-    {
+    switch (action.type) {
         case SolutionActions.StartGetAvailableSolutions:
             newState.availableSolutions.hasStarted = true;
             newState.availableSolutions.hasCompleted = false;

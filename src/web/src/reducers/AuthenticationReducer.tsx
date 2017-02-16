@@ -1,6 +1,6 @@
-﻿import { IAuthenticationState } from '../state/AuthenticationState';
-import { IAction } from '../actions/IAction';
-import { AuthenticationActions } from '../actions/AuthenticationActions';
+﻿import { AuthenticationActions } from "../actions/AuthenticationActions";
+import { IAction } from "../actions/IAction";
+import { IAuthenticationState } from "../state/AuthenticationState";
 
 const authenticationReducer = (state: IAuthenticationState, action: IAction): IAuthenticationState => {
 
@@ -41,15 +41,15 @@ const authenticationReducer = (state: IAuthenticationState, action: IAction): IA
             newState.password.hasBeenTouched = true;
             break;
         case AuthenticationActions.ResetFormFields:
-            newState.crmUrl.value = '';
+            newState.crmUrl.value = "";
             newState.crmUrl.hasBeenTouched = false;
-            newState.emailAddress.value = '';
+            newState.emailAddress.value = "";
             newState.emailAddress.hasBeenTouched = false;
-            newState.domain.value = '';
+            newState.domain.value = "";
             newState.domain.hasBeenTouched = false;
-            newState.username.value = '';
+            newState.username.value = "";
             newState.username.hasBeenTouched = false;
-            newState.password.value = '';
+            newState.password.value = "";
             newState.password.hasBeenTouched = false;
             newState.hasBeenSubmitted = false;
             newState.shouldValidateForm = false;

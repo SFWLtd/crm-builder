@@ -1,7 +1,7 @@
-﻿import { combineReducers } from 'redux';
-import { IInstallationState } from '../state/InstallationState';
-import { IAction } from '../actions/IAction';
-import { InstallationActions } from '../actions/InstallationActions';
+﻿import { combineReducers } from "redux";
+import { IAction } from "../actions/IAction";
+import { InstallationActions } from "../actions/InstallationActions";
+import { IInstallationState } from "../state/InstallationState";
 
 const installationReducer = (state: IInstallationState, action: IAction): IInstallationState => {
 
@@ -17,8 +17,8 @@ const installationReducer = (state: IInstallationState, action: IAction): IInsta
             newState.status.hasStarted = false;
             newState.status.result = action.value;
             newState.hasLoadedState = true;
-            newState.message = '';
-            newState.description = '';
+            newState.message = "";
+            newState.description = "";
             break;
         case InstallationActions.Install:
             newState.installation.hasStarted = true;
@@ -28,8 +28,8 @@ const installationReducer = (state: IInstallationState, action: IAction): IInsta
             newState.installation.hasCompleted = true;
             newState.installation.hasStarted = false;
             newState.installation.result = action.value;
-            newState.message = '';
-            newState.description = '';
+            newState.message = "";
+            newState.description = "";
             break;
         case InstallationActions.SetInstallationMessage:
             newState.message = action.value;
@@ -41,6 +41,6 @@ const installationReducer = (state: IInstallationState, action: IAction): IInsta
     }
 
     return (Object as any).assign({}, state, {}, { newState });
-}
+};
 
 export default installationReducer;

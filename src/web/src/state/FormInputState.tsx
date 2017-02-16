@@ -1,4 +1,4 @@
 ﻿export interface IFormInputState {
-    value: string | number,
-    hasBeenTouched: boolean
+    value: string | number;
+    hasBeenTouched: boolean;
 }

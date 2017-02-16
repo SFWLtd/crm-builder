@@ -1,5 +1,5 @@
-﻿import * as ApiClient from '../../../api/ApiClient';
-import { IAuthenticationFormProps } from '../presentation/AuthenticationForm';
+﻿import * as ApiClient from "../../../api/ApiClient";
+import { IAuthenticationFormProps } from "../presentation/AuthenticationForm";
 
 export class AuthenticationClient {
 
@@ -9,7 +9,7 @@ export class AuthenticationClient {
         this.client = client;
     }
 
-    newSession(props: IAuthenticationFormProps): Promise<ApiClient.GlobalJsonResultOfBoolean> {
+    public newSession(props: IAuthenticationFormProps): Promise<ApiClient.GlobalJsonResultOfBoolean> {
 
         let request = new ApiClient.NewSessionRequest();
         request.authenticationType = props.authenticationTypeSelectedValue;
@@ -19,14 +19,14 @@ export class AuthenticationClient {
         request.userName = props.username;
         request.password = props.password;
 
-        return this.client.newSession(request, '');
+        return this.client.newSession(request, "");
     }
 
-    checkSessionExists(): Promise<ApiClient.GlobalJsonResultOfBoolean> {
-        return this.client.checkSessionExists('');
+    public checkSessionExists(): Promise<ApiClient.GlobalJsonResultOfBoolean> {
+        return this.client.checkSessionExists("");
     }
 
-    endSession(): Promise<ApiClient.GlobalJsonResultOfEmptyResult> {
-        return this.client.endSession('');
+    public endSession(): Promise<ApiClient.GlobalJsonResultOfEmptyResult> {
+        return this.client.endSession("");
     }
 }

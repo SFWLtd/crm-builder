@@ -1,12 +1,13 @@
-﻿import { connect } from 'react-redux';
-import { IAppState } from '../state/AppState';
-import * as AppPresenter from '../presentation/App';
-import * as AppActions from '../actions/AppActions';
+﻿import { connect } from "react-redux";
+import * as AppActions from "../actions/AppActions";
+import * as AppPresenter from "../presentation/App";
+import { IAppState } from "../state/AppState";
 
 const mapStateToProps = (state: IAppState): AppPresenter.IAppProps => {
     return {
+        isCheckingInstallationState: !state.installationState.hasLoadedState && state.installationState.status.hasStarted,
         isLoading: state.authenticationState.loginStatus.hasStarted,
-        isLoggedIn: state.authenticationState.loginStatus.hasCompleted 
+        isLoggedIn: state.authenticationState.loginStatus.hasCompleted
             && state.authenticationState.loginStatus.result.successful
             && state.authenticationState.loginStatus.result.result,
         isUpToDate: state.installationState.status.hasCompleted
@@ -15,19 +16,18 @@ const mapStateToProps = (state: IAppState): AppPresenter.IAppProps => {
             && state.installationState.status.result.result.isInstalled
             && state.installationState.hasLoadedState
             && !state.installationState.status.result.result.requiresUpdate,
-        isCheckingInstallationState: !state.installationState.hasLoadedState && state.installationState.status.hasStarted
     };
 };
 
 const mapDispatchToProps = (dispatch: any): AppPresenter.IAppProps => {
     return {
-        load: () => dispatch(AppActions.load(dispatch))
+        load: () => dispatch(AppActions.load(dispatch)),
     };
 };
 
 const App = connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 )(AppPresenter.App);
 
 export default App;

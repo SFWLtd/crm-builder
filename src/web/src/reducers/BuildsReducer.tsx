@@ -1,14 +1,13 @@
-import { IAction } from '../actions/IAction';
-import { BuildActions } from '../actions/BuildActions';
-import { IBuildState } from '../state/BuildState';
-import * as ApiClient from '../../../api/ApiClient';
+import * as ApiClient from "../../../api/ApiClient";
+import { BuildActions } from "../actions/BuildActions";
+import { IAction } from "../actions/IAction";
+import { IBuildState } from "../state/BuildState";
 
 const buildReducer = (state: IBuildState, action: IAction): IBuildState => {
 
     let newState = state;
 
-    switch (action.type)
-    {
+    switch (action.type) {
         case BuildActions.StartFetchingBuilds:
             newState.builds.hasStarted = true;
             newState.builds.hasCompleted = false;
@@ -67,7 +66,7 @@ const buildReducer = (state: IBuildState, action: IAction): IBuildState => {
         case BuildActions.BlurTargetEnvironmentEmail:
             newState.editBuildFormState.emailAddress.hasBeenTouched = true;
             break;
-        case BuildActions.SetTargetEnvironmentUsername: 
+        case BuildActions.SetTargetEnvironmentUsername:
             newState.editBuildFormState.username.value = action.value;
             break;
         case BuildActions.BlurTargetEnvironmentUsername:
@@ -105,25 +104,25 @@ const buildReducer = (state: IBuildState, action: IAction): IBuildState => {
             newState.editBuildFormState.shouldValidate = true;
             break;
         case BuildActions.ResetForm:
-            newState.editBuildFormState.name.value = '';
+            newState.editBuildFormState.name.value = "";
             newState.editBuildFormState.buildVersioningType = ApiClient.BuildVersioningType.JulianDate;
             newState.editBuildFormState.name.hasBeenTouched = false;
             newState.editBuildFormState.versionMajor.value = 0;
             newState.editBuildFormState.versionMajor.hasBeenTouched = false;
             newState.editBuildFormState.versionMinor.value = 0;
             newState.editBuildFormState.versionMinor.hasBeenTouched = false;
-            newState.editBuildFormState.solutionId.value = '';
+            newState.editBuildFormState.solutionId.value = "";
             newState.editBuildFormState.solutionId.hasBeenTouched = false;
             newState.editBuildFormState.authenticationType = ApiClient.AuthenticationType.Dynamics365;
-            newState.editBuildFormState.crmUrl.value = '';
+            newState.editBuildFormState.crmUrl.value = "";
             newState.editBuildFormState.crmUrl.hasBeenTouched = false;
-            newState.editBuildFormState.emailAddress.value = '';
+            newState.editBuildFormState.emailAddress.value = "";
             newState.editBuildFormState.emailAddress.hasBeenTouched = false;
-            newState.editBuildFormState.username.value = '';
+            newState.editBuildFormState.username.value = "";
             newState.editBuildFormState.username.hasBeenTouched = false;
-            newState.editBuildFormState.domain.value = '';
+            newState.editBuildFormState.domain.value = "";
             newState.editBuildFormState.domain.hasBeenTouched = false;
-            newState.editBuildFormState.password.value = '';
+            newState.editBuildFormState.password.value = "";
             newState.editBuildFormState.password.hasBeenTouched = false;
             newState.editBuildFormState.submission.hasStarted = false;
             newState.editBuildFormState.submission.hasCompleted = false;
@@ -146,9 +145,9 @@ const buildReducer = (state: IBuildState, action: IAction): IBuildState => {
             break;
         case BuildActions.CloseDeleteConfirmationDialog:
             newState.confirmDeleteDialog.show = false;
-            newState.confirmDeleteDialog.buildId = '';
+            newState.confirmDeleteDialog.buildId = "";
             break;
-        case BuildActions.StartDeletingBuild: 
+        case BuildActions.StartDeletingBuild:
             newState.confirmDeleteDialog.submission.hasStarted = true;
             newState.confirmDeleteDialog.submission.hasCompleted = false;
             newState.confirmDeleteDialog.submission.result = null;
@@ -162,6 +161,6 @@ const buildReducer = (state: IBuildState, action: IAction): IBuildState => {
     }
 
     return (Object as any).assign({}, state, {}, { newState });
-};  
+};
 
 export default buildReducer;

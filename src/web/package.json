@@ -50,6 +50,7 @@
     "tsconfig-glob": "^0.4.3",
     "tslint": "^4.3.1",
     "typescript": "^2.1.5",
-    "typings": "^1.4.0"
+    "typings": "^1.4.0",
+    "webpack": "^2.2.1"
   }
 }

@@ -147,6 +147,7 @@ typings/
 
 # VSCode
 .vscode/
+!.vscode/tasks.json
 
 # Npm debug
 npm-debug.log

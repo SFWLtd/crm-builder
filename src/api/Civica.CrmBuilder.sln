@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Core", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Core.Tests", "Civica.CrmBuilder.Core.Tests\Civica.CrmBuilder.Core.Tests.csproj", "{F2C468C8-B121-47E5-A267-09ECED1AE9B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.WebHost", "Civica.CrmBuilder.WebHost\Civica.CrmBuilder.WebHost.csproj", "{1D009E10-2E6B-4A6B-AFED-2A23FB59268F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{F2C468C8-B121-47E5-A267-09ECED1AE9B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2C468C8-B121-47E5-A267-09ECED1AE9B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2C468C8-B121-47E5-A267-09ECED1AE9B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D009E10-2E6B-4A6B-AFED-2A23FB59268F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D009E10-2E6B-4A6B-AFED-2A23FB59268F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D009E10-2E6B-4A6B-AFED-2A23FB59268F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D009E10-2E6B-4A6B-AFED-2A23FB59268F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,6 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Civica.CrmBuilder.Domain.Tests</RootNamespace>
     <AssemblyName>Civica.CrmBuilder.Domain.Tests</AssemblyName>
+	<ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -129,7 +130,7 @@
       <Project>{081EEBCA-BE07-4618-9ECF-1E8880562996}</Project>
       <Name>Civica.CrmBuilder.DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Civica.CrmBuilder.Domain\Civica.CrmBuilder.Services.csproj">
+    <ProjectReference Include="..\Civica.CrmBuilder.Services\Civica.CrmBuilder.Services.csproj">
       <Project>{d31a19da-eaf3-45c3-bc02-f4741408f849}</Project>
       <Name>Civica.CrmBuilder.Services</Name>
     </ProjectReference>

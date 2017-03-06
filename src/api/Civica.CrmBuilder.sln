@@ -11,11 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.CodeGen",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Entities", "Civica.CrmBuilder.Entities\Civica.CrmBuilder.Entities.csproj", "{1DD387CB-6475-4EA9-933E-1E44D48BA065}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Services", "Civica.CrmBuilder.Domain\Civica.CrmBuilder.Services.csproj", "{D31A19DA-EAF3-45C3-BC02-F4741408F849}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Services", "Civica.CrmBuilder.Services\Civica.CrmBuilder.Services.csproj", "{D31A19DA-EAF3-45C3-BC02-F4741408F849}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B40A5C80-7BEA-4963-AFE3-FC373A052F64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Services.Tests", "Civica.CrmBuilder.Domain.Tests\Civica.CrmBuilder.Services.Tests.csproj", "{6854858F-65FC-4FEC-93C9-E0335B9F227C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Services.Tests", "Civica.CrmBuilder.Services.Tests\Civica.CrmBuilder.Services.Tests.csproj", "{6854858F-65FC-4FEC-93C9-E0335B9F227C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Core", "Civica.CrmBuilder.Core\Civica.CrmBuilder.Core.csproj", "{1522E461-C092-4720-BBAE-EC0443F8E780}"
 EndProject

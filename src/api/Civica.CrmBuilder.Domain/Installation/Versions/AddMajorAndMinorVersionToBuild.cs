@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Civica.CrmBuilder.Domain.Installation.Components;
-using Civica.CrmBuilder.Entities;
-using Civica.CrmPlusPlus.Sdk.Client;
-using Civica.CrmPlusPlus.Sdk.Querying;
+using Civica.CrmBuilder.DataAccess.Actions;
+using Civica.CrmBuilder.Services.Installation.Components;
 
-namespace Civica.CrmBuilder.Domain.Installation.Versions
+namespace Civica.CrmBuilder.Services.Installation.Versions
 {
     public class AddMajorAndMinorVersionToBuild : InstallationVersion
     {
@@ -20,42 +14,26 @@ namespace Civica.CrmBuilder.Domain.Installation.Versions
 
         public void RegisterComponents()
         {
-            var createVersioningProperties = new InstallationComponent(
-                "Creating major and minor version properties",
-                CreateMajorAndMinorVersionProperties(),
-                UpdateExistingBuildsToHaveDefaultMajorAndMinorVersions(),
-                client => client.DoNothing());
-
-            base.RegisterNextComponent(createVersioningProperties);
+            RegisterNextComponent(CreateMajorVersionProperty());
+            RegisterNextComponent(CreateMinorVersionProperty());
         }
 
-        private Action<ICrmPlusPlusCustomizationClient> CreateMajorAndMinorVersionProperties()
+        private InstallationComponent CreateMajorVersionProperty()
         {
-            return (ICrmPlusPlusCustomizationClient client) =>
-            {
-                client.CreateProperty<Entities.Build, int>(e => e.VersionMajor);
-                client.CreateProperty<Entities.Build, int>(e => e.VersionMinor);
-            };
+            return new InstallationComponent(
+                "Creating major version property",
+                BuildInstallationActions.CreateMajorVersionField(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
         }
 
-        private Action<ICrmPlusPlusEntityClient> UpdateExistingBuildsToHaveDefaultMajorAndMinorVersions()
+        private InstallationComponent CreateMinorVersionProperty()
         {
-            var existingBuildsQuery = Query.ForEntity<Entities.Build>()
-                .Include(e => e.VersionMajor)
-                .Include(e => e.VersionMinor);
-
-            return (ICrmPlusPlusEntityClient client) =>
-            {
-                var builds = client.RetrieveMultiple(existingBuildsQuery);
-
-                foreach (var build in builds)
-                {
-                    build.VersionMajor = 0;
-                    build.VersionMinor = 0;
-
-                    client.Update(build);
-                }
-            };
+            return new InstallationComponent(
+                "Creating minor version property",
+                BuildInstallationActions.CreateMinorVersionField(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Civica.CrmBuilder.Core.Protection;
 using Xunit;
 
-namespace Civica.CrmBuilder.Domain.Tests.Protection
+namespace Civica.CrmBuilder.Services.Tests.Protection
 {
     public class ProtectorTests
     {

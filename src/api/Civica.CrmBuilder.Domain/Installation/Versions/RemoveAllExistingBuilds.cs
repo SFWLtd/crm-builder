@@ -1,9 +1,8 @@
 ﻿using System;
-using Civica.CrmBuilder.Domain.Installation.Components;
-using Civica.CrmBuilder.Entities;
-using Civica.CrmPlusPlus.Sdk.Querying;
+using Civica.CrmBuilder.DataAccess.Actions;
+using Civica.CrmBuilder.Services.Installation.Components;
 
-namespace Civica.CrmBuilder.Domain.Installation.Versions
+namespace Civica.CrmBuilder.Services.Installation.Versions
 {
     public class RemoveAllExistingBuilds : InstallationVersion
     {
@@ -21,17 +20,9 @@ namespace Civica.CrmBuilder.Domain.Installation.Versions
         private InstallationComponent RemoveExistingBuilds()
         {
             return new InstallationComponent("Removing any existing builds",
-                a => a.DoNothing(),
-                a =>
-                {
-                    var query = Query.ForEntity<Build>();
-                    var builds = a.RetrieveMultiple(query);
-                    foreach (var build in builds)
-                    {
-                        a.Delete(build);
-                    }
-                },
-                a => a.DoNothing());
+                OtherActions.DoNothing(),
+                BuildActions.DeleteAllBuilds(),
+                OtherActions.DoNothing());
         }
     }
 }

@@ -200,9 +200,17 @@
       <Project>{1522E461-C092-4720-BBAE-EC0443F8E780}</Project>
       <Name>Civica.CrmBuilder.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Civica.CrmBuilder.Domain\Civica.CrmBuilder.Domain.csproj">
+    <ProjectReference Include="..\Civica.CrmBuilder.DataAccess\Civica.CrmBuilder.DataAccess.csproj">
+      <Project>{081EEBCA-BE07-4618-9ECF-1E8880562996}</Project>
+      <Name>Civica.CrmBuilder.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Civica.CrmBuilder.Domain\Civica.CrmBuilder.Services.csproj">
       <Project>{d31a19da-eaf3-45c3-bc02-f4741408f849}</Project>
-      <Name>Civica.CrmBuilder.Domain</Name>
+      <Name>Civica.CrmBuilder.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Civica.CrmBuilder.Entities\Civica.CrmBuilder.Entities.csproj">
+      <Project>{1DD387CB-6475-4EA9-933E-1E44D48BA065}</Project>
+      <Name>Civica.CrmBuilder.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

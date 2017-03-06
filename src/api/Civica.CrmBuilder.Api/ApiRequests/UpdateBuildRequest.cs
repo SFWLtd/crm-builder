@@ -1,10 +1,13 @@
-﻿using Civica.CrmBuilder.Core.Enums;
+﻿using System;
+using Civica.CrmBuilder.Core.Enums;
 using Civica.CrmBuilder.Core.Mapping;
-using Civica.CrmBuilder.Domain.Dtos;
+using Civica.CrmBuilder.Core.Protection;
+using Civica.CrmBuilder.Core.Validation;
+using Civica.CrmBuilder.Entities;
 
 namespace Civica.CrmBuilder.Api.ApiRequests
 {
-    public class UpdateBuildRequest : IMappableTo<AuthenticationDto>
+    public class UpdateBuildRequest : IMappableTo<Build>
     {
         public string Id { get; set; }
 
@@ -30,16 +33,23 @@ namespace Civica.CrmBuilder.Api.ApiRequests
 
         public string Url { get; set; }
 
-        public AuthenticationDto Map()
+        public Build Map()
         {
-            return new AuthenticationDto
+            Guard.This(Id).AgainstNonGuidFormat();
+
+            return new Build(Guid.Parse(Id))
             {
-                AuthenticationType = AuthenticationType,
-                Url = Url,
-                Domain = Domain,
-                EmailAddress = EmailAddress,
-                Password = Password,
-                UserName = UserName
+                Name = Name,
+                TargetEnvironmentAuthenticationType = AuthenticationType,
+                TargetEnvironmentCrmUrl = Url,
+                TargetEnvironmentDomain = Domain,
+                TargetEnvironmentEmail = EmailAddress,
+                TargetEnvironmentUsername = UserName,
+                ProtectedTargetEnvironmentPassword = Protector.ProtectString(Password),
+                SolutionId = SolutionId,
+                VersionMajor = VersionMajor,
+                VersionMinor = VersionMinor,
+                BuildVersioningType = BuildVersioningType
             };
         }
     }

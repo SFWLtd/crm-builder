@@ -2,7 +2,8 @@
 using Autofac.Integration.WebApi;
 using Civica.CrmBuilder.Api.Controllers;
 using Civica.CrmBuilder.Api.Filters;
-using Civica.CrmBuilder.Domain;
+using Civica.CrmBuilder.DataAccess;
+using Civica.CrmBuilder.Services;
 
 namespace Civica.CrmBuilder.Api
 {
@@ -12,9 +13,12 @@ namespace Civica.CrmBuilder.Api
         {
             builder.RegisterType<AuthorizeClientFilter>()
                 .AsWebApiAuthorizationFilterFor<InstallationController>()
+                .AsWebApiAuthorizationFilterFor<BuildsController>()
+                .AsWebApiAuthorizationFilterFor<SolutionsController>()
                 .InstancePerDependency();
 
-            builder.RegisterModule<DomainModule>();
+            builder.RegisterModule<ServicesModule>();
+            builder.RegisterModule<DataAccessModule>();
 
             base.Load(builder);
         }

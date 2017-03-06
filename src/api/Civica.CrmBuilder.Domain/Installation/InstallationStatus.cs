@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Civica.CrmBuilder.Domain.Installation
+namespace Civica.CrmBuilder.Services.Installation
 {
     public class InstallationStatus
     {

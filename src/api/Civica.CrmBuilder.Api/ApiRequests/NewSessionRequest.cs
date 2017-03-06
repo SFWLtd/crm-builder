@@ -1,7 +1,7 @@
 ﻿using System;
 using Civica.CrmBuilder.Core.Enums;
 using Civica.CrmBuilder.Core.Mapping;
-using Civica.CrmBuilder.Domain.Authentication;
+using Civica.CrmBuilder.DataAccess.Authentication;
 
 namespace Civica.CrmBuilder.Api.ApiRequests
 {

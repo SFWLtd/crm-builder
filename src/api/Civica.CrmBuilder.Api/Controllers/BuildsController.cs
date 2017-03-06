@@ -1,94 +1,64 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using Civica.CrmBuilder.Api.ApiRequests;
-using Civica.CrmBuilder.Domain.Dtos;
+using Civica.CrmBuilder.DataAccess;
+using Civica.CrmBuilder.DataAccess.Actions;
+using Civica.CrmBuilder.Entities;
 
 namespace Civica.CrmBuilder.Api.Controllers
 {
     public class BuildsController : ApiController
     {
-        private readonly IBuildRepository buildRepo;
+        private readonly IDataAccessDispatcher dataAccessDispatcher;
 
-        public BuildsController(IBuildRepository buildRepo)
+        public BuildsController(IDataAccessDispatcher dataAccessDispatcher)
         {
-            this.buildRepo = buildRepo;
+            this.dataAccessDispatcher = dataAccessDispatcher;
         }
 
         [ActionName("GetBuild")]
         [HttpGet]
-        public GlobalJsonResult<BuildDto> GetBuild(string id)
+        public GlobalJsonResult<Build> GetBuild(string id)
         {
-            var build = buildRepo.Get(id);
+            var result = dataAccessDispatcher.Dispatch(BuildActions.GetBuild(id));
 
-            var result = new BuildDto();
-            result.PopulateFrom(build);
-
-            return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.OK, result);
+            return GlobalJsonResult<Build>.Success(System.Net.HttpStatusCode.OK, result);
         }
 
         [ActionName("GetBuilds")]
         [HttpGet]
-        public GlobalJsonResult<IEnumerable<BuildDto>> GetBuilds()
+        public GlobalJsonResult<IEnumerable<Build>> GetBuilds()
         {
-            var builds = buildRepo.GetAll()
-                .Select(b =>
-                {
-                    var result = new BuildDto();
-                    result.PopulateFrom(b);
+            var result = dataAccessDispatcher.Dispatch(BuildActions.GetAllBuilds());
 
-                    return result;
-                });
-
-            return GlobalJsonResult<IEnumerable<BuildDto>>.Success(System.Net.HttpStatusCode.OK, builds);
+            return GlobalJsonResult<IEnumerable<Build>>.Success(System.Net.HttpStatusCode.OK, result);
         }
 
         [ActionName("NewBuild")]
         [HttpPost]
-        public GlobalJsonResult<BuildDto> NewBuild([FromBody]NewBuildRequest request)
+        public GlobalJsonResult<Build> NewBuild([FromBody]NewBuildRequest request)
         {
-            var build = buildRepo.New();
-            build.CreateAs(a =>
-            {
-                a.SetName(request.Name);
-                a.SetBuildVersioningType(request.BuildVersioningType);
-                a.SetVersion(request.VersionMajor, request.VersionMinor);
-                a.SetSolution(request.SolutionId);
-                a.SetTargetEnvironment(request.Map());
-            });
+            var build = request.Map();
+            dataAccessDispatcher.Dispatch(BuildActions.CreateBuild(build));
 
-            var result = new BuildDto();
-            result.PopulateFrom(build);
-
-            return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.Created, result);
+            return GlobalJsonResult<Build>.Success(System.Net.HttpStatusCode.Created, build);
         }
 
         [ActionName("UpdateBuild")]
         [HttpPost]
-        public GlobalJsonResult<BuildDto> UpdateBuild([FromBody]UpdateBuildRequest request)
+        public GlobalJsonResult<Build> UpdateBuild([FromBody]UpdateBuildRequest request)
         {
-            var build = buildRepo.Get(request.Id);
-            build.DoThis(a =>
-            {
-                a.SetName(request.Name);
-                a.SetBuildVersioningType(request.BuildVersioningType);
-                a.SetVersion(request.VersionMajor, request.VersionMinor);
-                a.SetSolution(request.SolutionId);
-                a.SetTargetEnvironment(request.Map());
-            });
+            var build = request.Map();
+            dataAccessDispatcher.Dispatch(BuildActions.UpdateBuild(build));
 
-            var result = new BuildDto();
-            result.PopulateFrom(build);
-
-            return GlobalJsonResult<BuildDto>.Success(System.Net.HttpStatusCode.OK, result);
+            return GlobalJsonResult<Build>.Success(System.Net.HttpStatusCode.OK, build);
         }
 
         [ActionName("DeleteBuild")]
         [HttpPost]
         public GlobalJsonResult<EmptyResult> DeleteBuild([FromBody]DeleteBuildRequest request)
         {
-            buildRepo.Delete(request.Id);
+            dataAccessDispatcher.Dispatch(BuildActions.DeleteBuild(request.Id));
 
             return GlobalJsonResult<EmptyResult>.Success(System.Net.HttpStatusCode.NoContent);
         }

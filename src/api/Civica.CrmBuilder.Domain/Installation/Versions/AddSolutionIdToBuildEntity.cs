@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Civica.CrmBuilder.Domain.Installation.Components;
+using Civica.CrmBuilder.DataAccess.Actions;
+using Civica.CrmBuilder.Services.Installation.Components;
 
-namespace Civica.CrmBuilder.Domain.Installation.Versions
+namespace Civica.CrmBuilder.Services.Installation.Versions
 {
     public class AddSolutionIdToBuildEntity : InstallationVersion
     {
@@ -23,9 +20,9 @@ namespace Civica.CrmBuilder.Domain.Installation.Versions
         private InstallationComponent CreateSolutionIdProperty()
         {
             return new InstallationComponent("Creating solution id property",
-                client => client.CreateProperty<Entities.Build, string>(e => e.SolutionId),
-                client => client.DoNothing(),
-                client => client.DoNothing());
+                BuildInstallationActions.CreateSolutionIdField(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Civica.CrmBuilder.Domain.Installation.Components;
+using Civica.CrmBuilder.Services.Installation.Components;
 
-namespace Civica.CrmBuilder.Domain.Installation.Versions
+namespace Civica.CrmBuilder.Services.Installation.Versions
 {
     public abstract class InstallationVersion
     {

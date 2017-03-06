@@ -2,15 +2,15 @@
 using System.Web.Http;
 using Civica.CrmBuilder.Api.ApiRequests;
 using Civica.CrmBuilder.Api.ApiResults;
-using Civica.CrmBuilder.Domain.Installation;
+using Civica.CrmBuilder.Services.Installation;
 
 namespace Civica.CrmBuilder.Api.Controllers
 {
     public class InstallationController : ApiController
     {
-        private readonly IInstallation installation;
+        private readonly IInstallationService installation;
 
-        public InstallationController(IInstallation installation)
+        public InstallationController(IInstallationService installation)
         {
             this.installation = installation;
         }

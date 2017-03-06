@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Civica.CrmBuilder.Domain.Versioning
+namespace Civica.CrmBuilder.Services.Versioning
 {
     public interface IVersionable
     {

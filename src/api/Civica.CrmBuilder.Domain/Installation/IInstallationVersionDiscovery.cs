@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Civica.CrmBuilder.Domain.Installation.Versions;
+using Civica.CrmBuilder.Services.Installation.Versions;
 
-namespace Civica.CrmBuilder.Domain.Installation
+namespace Civica.CrmBuilder.Services.Installation
 {
     public interface IInstallationVersionDiscovery
     {

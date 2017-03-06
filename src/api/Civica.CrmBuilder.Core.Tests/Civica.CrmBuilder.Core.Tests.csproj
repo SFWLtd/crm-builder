@@ -112,6 +112,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protection\ProtectorTests.cs" />
+    <Compile Include="Time\SystemTimeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Civica.CrmBuilder.Core\Civica.CrmBuilder.Core.csproj">

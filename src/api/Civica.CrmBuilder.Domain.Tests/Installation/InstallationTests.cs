@@ -2,28 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using Civica.CrmBuilder.Core.Constants;
-using Civica.CrmBuilder.Domain.Installation;
-using Civica.CrmBuilder.Domain.Installation.Components;
-using Civica.CrmBuilder.Domain.Installation.Versions;
+using Civica.CrmBuilder.DataAccess;
+using Civica.CrmBuilder.DataAccess.Actions;
+using Civica.CrmBuilder.Entities;
+using Civica.CrmBuilder.Services.Installation;
+using Civica.CrmBuilder.Services.Installation.Components;
+using Civica.CrmBuilder.Services.Installation.Versions;
 using Civica.CrmPlusPlus;
 using Civica.CrmPlusPlus.Sdk;
-using Civica.CrmPlusPlus.Sdk.Client;
-using Civica.CrmPlusPlus.Sdk.DefaultEntities;
-using Civica.CrmPlusPlus.Sdk.Querying;
-using Civica.CrmPlusPlus.Sdk.Settings;
 using FakeItEasy;
 using Xunit;
 
-namespace Civica.CrmBuilder.Domain.Tests.Installation
+namespace Civica.CrmBuilder.Services.Tests.Installation
 {
     public class InstallationTests
     {
-        private readonly ICrmPlusPlus crmPlusPlus;
         private readonly IInstallationVersionDiscovery discovery;
 
         public InstallationTests()
         {
-            crmPlusPlus = A.Fake<ICrmPlusPlus>();
             discovery = A.Fake<IInstallationVersionDiscovery>();
         }
 
@@ -32,10 +29,12 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
         {
             var version = CrmConstants.InitialSolutionVersion;
 
-            A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
-                .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = version } });
+            var dispatcher = A.Fake<IDataAccessDispatcher>();
 
-            new Domain.Installation.Installation(discovery, () => crmPlusPlus).GetStatus();
+            A.CallTo(() => dispatcher.Dispatch(A<DataAccessAction<Solution>>._))
+                .Returns(new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = version });
+
+            new InstallationService(discovery, dispatcher).GetStatus();
         }
 
         [Fact]
@@ -46,10 +45,12 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             A.CallTo(() => discovery.Discover())
                 .Returns(new List<InstallationVersion> { new TestInstallationVersion(version, new Dictionary<int, InstallationComponent>()) });
 
-            A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
-                .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = version.ToString() } });
+            var dispatcher = A.Fake<IDataAccessDispatcher>();
 
-            new Domain.Installation.Installation(discovery, () => crmPlusPlus).GetStatus();
+            A.CallTo(() => dispatcher.Dispatch(A<DataAccessAction<Solution>>._))
+                .Returns(new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = version.ToString() });
+
+            new InstallationService(discovery, dispatcher).GetStatus();
         }
 
         [Fact]
@@ -57,10 +58,12 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
         {
             var version = new Version(int.MaxValue, int.MaxValue, int.MaxValue, int.MaxValue);
 
-            A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
-                .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = version.ToString() } });
+            var dispatcher = A.Fake<IDataAccessDispatcher>();
 
-            Assert.Throws<ArgumentException>(() => new Domain.Installation.Installation(discovery, () => crmPlusPlus).GetStatus());
+            A.CallTo(() => dispatcher.Dispatch(A<DataAccessAction<Solution>>._))
+                .Returns(new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = version.ToString() });
+
+            Assert.Throws<ArgumentException>(() => new InstallationService(discovery, dispatcher).GetStatus());
         }
 
         [Fact]
@@ -71,10 +74,12 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             A.CallTo(() => discovery.Discover())
                 .Returns(new List<InstallationVersion> { new TestInstallationVersion(version, new Dictionary<int, InstallationComponent>()) });
 
-            A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
-                .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = version.ToString() } });
+            var dispatcher = A.Fake<IDataAccessDispatcher>();
 
-            var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).GetStatus();
+            A.CallTo(() => dispatcher.Dispatch(A<DataAccessAction<Solution>>._))
+                .Returns(new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = version.ToString() });
+
+            var result = new InstallationService(discovery, dispatcher).GetStatus();
 
             Assert.False(result.IsInstalled);
             Assert.False(result.RequiresUpdate);
@@ -88,10 +93,12 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             A.CallTo(() => discovery.Discover())
                 .Returns(new List<InstallationVersion> { new TestInstallationVersion(version, new Dictionary<int, InstallationComponent>()) });
 
-            A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
-                .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = version.ToString() } });
+            var dispatcher = A.Fake<IDataAccessDispatcher>();
 
-            var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).GetStatus();
+            A.CallTo(() => dispatcher.Dispatch(A<DataAccessAction<Solution>>._))
+                .Returns(new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = version.ToString() });
+
+            var result = new InstallationService(discovery, dispatcher).GetStatus();
 
             Assert.True(result.IsInstalled);
             Assert.False(result.RequiresUpdate);
@@ -110,10 +117,12 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
                     new TestInstallationVersion(latestVersion, new Dictionary<int, InstallationComponent>()),
                 });
 
-            A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
-                .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
+            var dispatcher = A.Fake<IDataAccessDispatcher>();
 
-            var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).GetStatus();
+            A.CallTo(() => dispatcher.Dispatch(A<DataAccessAction<Solution>>._))
+                .Returns(new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() });
+
+            var result = new InstallationService(discovery, dispatcher).GetStatus();
 
             Assert.True(result.IsInstalled);
             Assert.True(result.RequiresUpdate);
@@ -127,9 +136,9 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
 
             var componentDescription = "dhjskldsa";
             var componentInstall = new InstallationComponent(componentDescription,
-                client => client.DoNothing(),
-                client => client.DoNothing(),
-                client => client.DoNothing()); // Does nothing on installation or rollback
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
 
             var components = new Dictionary<int, InstallationComponent>();
             components.Add(0, componentInstall);
@@ -141,17 +150,13 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
                     new TestInstallationVersion(latestVersion, components),
                 });
 
-            A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
-                .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
 
-            var customizationClient = A.Fake<ICrmPlusPlusCustomizationClient>();
-            A.CallTo(() => customizationClient.Solution)
-                .Returns(new Solution { Name = "TestSolution" });
+            var dispatcher = A.Fake<IDataAccessDispatcher>();
 
-            A.CallTo(() => crmPlusPlus.GetCustomizationClientForSolution(A<PublisherSettings>._, A<SolutionSettings>._))
-                .Returns(customizationClient);
+            A.CallTo(() => dispatcher.Dispatch(A<DataAccessAction<Solution>>._))
+                .Returns(new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() });
 
-            var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).StartInstallation();
+            var result = new InstallationService(discovery, dispatcher).StartInstallation();
 
             Assert.True(result.IsSuccess);
             Assert.Equal(componentDescription, result.NextComponentDescription);
@@ -169,13 +174,13 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             var firstComponentDescription = "dhjskldsa";
             var secondComponentDescription = "DLAOIEHJK";
             var firstComponent = new InstallationComponent(firstComponentDescription,
-                client => client.DoNothing(),
-                client => client.DoNothing(),
-                client => client.DoNothing()); // Does nothing on installation or rollback
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());  // Does nothing on installation or rollback
             var secondComponent = new InstallationComponent(secondComponentDescription,
-                client => client.DoNothing(),
-                client => client.DoNothing(),
-                client => client.DoNothing());
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
 
             var components = new Dictionary<int, InstallationComponent>();
             components.Add(0, firstComponent);
@@ -188,17 +193,12 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
                     new TestInstallationVersion(latestVersion, components),
                 });
 
-            A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
-                .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
+            var dispatcher = A.Fake<IDataAccessDispatcher>();
 
-            var customizationClient = A.Fake<ICrmPlusPlusCustomizationClient>();
-            A.CallTo(() => customizationClient.Solution)
-                .Returns(new Solution { Name = "TestSolution" });
+            A.CallTo(() => dispatcher.Dispatch(A<DataAccessAction<Solution>>._))
+                .Returns(new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() });
 
-            A.CallTo(() => crmPlusPlus.GetCustomizationClientForSolution(A<PublisherSettings>._, A<SolutionSettings>._))
-                .Returns(customizationClient);
-
-            var installation = new Domain.Installation.Installation(discovery, () => crmPlusPlus);
+            var installation = new InstallationService(discovery, dispatcher);
             var startInstallationResult = installation.StartInstallation();
             var result = installation.InstallNextComponent(startInstallationResult.NextComponentId.Value, startInstallationResult.NextComponentVersion);
 
@@ -221,13 +221,13 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             var firstComponentDescription = "dhjskldsa";
             var secondComponentDescription = "DLAOIEHJK";
             var firstComponent = new InstallationComponent(firstComponentDescription,
-                client => client.DoNothing(),
-                client => client.DoNothing(),
-                client => client.DoNothing()); // Does nothing on installation or rollback
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());  // Does nothing on installation or rollback
             var secondComponent = new InstallationComponent(secondComponentDescription,
-                client => client.DoNothing(),
-                client => client.DoNothing(),
-                client => client.DoNothing());
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
 
             var firstNewVersionComponents = new Dictionary<int, InstallationComponent>();
             firstNewVersionComponents.Add(0, firstComponent);
@@ -243,17 +243,12 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
                     new TestInstallationVersion(secondNewVersion, secondNewVersionComponents),
                 });
 
-            A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
-                .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
+            var dispatcher = A.Fake<IDataAccessDispatcher>();
 
-            var customizationClient = A.Fake<ICrmPlusPlusCustomizationClient>();
-            A.CallTo(() => customizationClient.Solution)
-                .Returns(new Solution { Name = "TestSolution" });
+            A.CallTo(() => dispatcher.Dispatch(A<DataAccessAction<Solution>>._))
+                .Returns(new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() });
 
-            A.CallTo(() => crmPlusPlus.GetCustomizationClientForSolution(A<PublisherSettings>._, A<SolutionSettings>._))
-                .Returns(customizationClient);
-
-            var installation = new Domain.Installation.Installation(discovery, () => crmPlusPlus);
+            var installation = new InstallationService(discovery, dispatcher);
             var startInstallationResult = installation.StartInstallation();
             var result = installation.InstallNextComponent(startInstallationResult.NextComponentId.Value, startInstallationResult.Version);
 
@@ -276,13 +271,13 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             var firstComponentDescription = "dhjskldsa";
             var secondComponentDescription = "DLAOIEHJK";
             var firstComponent = new InstallationComponent(firstComponentDescription,
-                client => client.DoNothing(),
-                client => client.DoNothing(),
-                client => client.DoNothing()); // Does nothing on installation or rollback
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());  // Does nothing on installation or rollback
             var secondComponent = new InstallationComponent(secondComponentDescription,
-                client => client.DoNothing(),
-                client => client.DoNothing(),
-                client => client.DoNothing());
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
 
             var firstNewVersionComponents = new Dictionary<int, InstallationComponent>();
             firstNewVersionComponents.Add(0, firstComponent);
@@ -298,112 +293,17 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
                     new TestInstallationVersion(secondNewVersion, secondNewVersionComponents),
                 });
 
-            A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
-                .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
+            var dispatcher = A.Fake<IDataAccessDispatcher>();
 
-            var customizationClient = A.Fake<ICrmPlusPlusCustomizationClient>();
-            A.CallTo(() => customizationClient.Solution)
-                .Returns(new Solution { Name = "TestSolution" });
+            A.CallTo(() => dispatcher.Dispatch(A<DataAccessAction<Solution>>._))
+                .Returns(new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() });
 
-            A.CallTo(() => crmPlusPlus.GetCustomizationClientForSolution(A<PublisherSettings>._, A<SolutionSettings>._))
-                .Returns(customizationClient);
-
-            var installation = new Domain.Installation.Installation(discovery, () => crmPlusPlus);
+            var installation = new Services.Installation.InstallationService(discovery, dispatcher);
             var startInstallationResult = installation.StartInstallation();
             var result = installation.InstallNextComponent(startInstallationResult.NextComponentId.Value, startInstallationResult.NextComponentVersion);
 
-            A.CallTo(() => crmPlusPlus.EntityClient.Update(A<Solution>._))
+            A.CallTo(() => dispatcher.Dispatch(A<DataAccessAction>._))
                 .MustHaveHappened();
-        }
-
-        [Fact]
-        public void InstallNextComponent_ForTwoNewVersionsWithTwoComponents_ButSolutionUpdateFailsAfterFirstComponentInstalled_RollsBackComponentInstallation_AndStatesFailure()
-        {
-            var currentVersion = new Version("0.0.0.1");
-            var firstNewVersion = new Version("0.0.0.2");
-            var secondNewVersion = new Version("0.0.0.3");
-
-            var firstComponentDescription = "dhjskldsa";
-            var secondComponentDescription = "DLAOIEHJK";
-
-            A.CallTo(() => crmPlusPlus.EntityClient.Update(A<Solution>._))
-                .Throws<Exception>();
-
-            var rollbacks = new List<bool>();
-            var firstComponent = new InstallationComponent(firstComponentDescription,
-                client => client.DoNothing(),
-                client => client.DoNothing(),
-                client => rollbacks.Add(true)); // Notifies that rollback was called on installation component
-            var secondComponent = new InstallationComponent(secondComponentDescription,
-                client => client.DoNothing(),
-                client => client.DoNothing(),
-                client => client.DoNothing());
-
-            var firstNewVersionComponents = new Dictionary<int, InstallationComponent>();
-            firstNewVersionComponents.Add(0, firstComponent);
-
-            var secondNewVersionComponents = new Dictionary<int, InstallationComponent>();
-            secondNewVersionComponents.Add(0, secondComponent);
-
-            A.CallTo(() => discovery.Discover())
-                .Returns(new List<InstallationVersion>
-                {
-                    new TestInstallationVersion(currentVersion, new Dictionary<int, InstallationComponent>()),
-                    new TestInstallationVersion(firstNewVersion, firstNewVersionComponents),
-                    new TestInstallationVersion(secondNewVersion, secondNewVersionComponents),
-                });
-
-            A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
-                .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
-
-            var installation = new Domain.Installation.Installation(discovery, () => crmPlusPlus);
-            var startInstallationResult = installation.StartInstallation();
-            var result = installation.InstallNextComponent(startInstallationResult.NextComponentId.Value, startInstallationResult.NextComponentVersion);
-
-            Assert.Equal(1, rollbacks.Count);
-            Assert.False(result.IsSuccess);
-            Assert.False(result.MoreToInstall);
-        }
-
-        [Fact]
-        public void InstallNextComponent_WithComponentThatFailsToInstall_ShouldSayUnsuccessful()
-        {
-            var currentVersion = new Version("0.0.0.1");
-            var latestVersion = new Version("0.0.0.2");
-
-            var customizationClient = A.Fake<ICrmPlusPlusCustomizationClient>();
-            A.CallTo(() => customizationClient.CreateEntity<TestEntity>())
-                .Throws<Exception>();
-
-            A.CallTo(() => crmPlusPlus.GetCustomizationClientForSolution(A<PublisherSettings>._, A<SolutionSettings>._))
-                .Returns(customizationClient);
-
-            var componentDescription = "dhjskldsa";
-            var componentInstall = new InstallationComponent(componentDescription,
-                client => client.CreateEntity<TestEntity>(), // This will throw an error
-                client => client.DoNothing(),
-                client => client.DoNothing()); // Does nothing on rollback
-
-            var components = new Dictionary<int, InstallationComponent>();
-            components.Add(0, componentInstall);
-
-            A.CallTo(() => discovery.Discover())
-                .Returns(new List<InstallationVersion>
-                {
-                    new TestInstallationVersion(currentVersion, new Dictionary<int, InstallationComponent>()),
-                    new TestInstallationVersion(latestVersion, components),
-                });
-
-            A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
-                .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
-
-            var installation = new Domain.Installation.Installation(discovery, () => crmPlusPlus);
-            var startInstallationResult = installation.StartInstallation();
-            var result = installation.InstallNextComponent(startInstallationResult.NextComponentId.Value, startInstallationResult.NextComponentVersion);
-
-            Assert.False(result.IsSuccess);
-            Assert.False(result.MoreToInstall);
-            Assert.NotNull(result.ErrorMessage);
         }
 
         [Fact]
@@ -420,10 +320,12 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
                     new TestInstallationVersion(latestVersion, new Dictionary<int, InstallationComponent>()),
                 });
 
-            A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
-                .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
+            var dispatcher = A.Fake<IDataAccessDispatcher>();
 
-            var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).InstallNextComponent(0, unknownVersion);
+            A.CallTo(() => dispatcher.Dispatch(A<DataAccessAction<Solution>>._))
+                .Returns(new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() });
+
+            var result = new InstallationService(discovery, dispatcher).InstallNextComponent(0, unknownVersion);
 
             Assert.False(result.IsSuccess);
             Assert.False(result.MoreToInstall);
@@ -438,9 +340,9 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
             var latestVersion = new Version("0.0.0.2");
 
             var component = new InstallationComponent("dshajdkh",
-                client => client.DoNothing(),
-                client => client.DoNothing(),
-                client => client.DoNothing()); // Does nothing on installation or rollback
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing()); // Does nothing on installation or rollback
 
             var installationComponents = new Dictionary<int, InstallationComponent>();
             installationComponents.Add(0, component);
@@ -452,16 +354,17 @@ namespace Civica.CrmBuilder.Domain.Tests.Installation
                     new TestInstallationVersion(latestVersion, installationComponents),
                 });
 
-            A.CallTo(() => crmPlusPlus.EntityClient.RetrieveMultiple(A<Query<Solution>>._))
-                .Returns(new List<Solution> { new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() } });
+            var dispatcher = A.Fake<IDataAccessDispatcher>();
 
-            var result = new Domain.Installation.Installation(discovery, () => crmPlusPlus).InstallNextComponent(int.MaxValue, latestVersion);
+            A.CallTo(() => dispatcher.Dispatch(A<DataAccessAction<Solution>>._))
+                .Returns(new Solution { Name = "TestSolution", DisplayName = "Test Solution", Version = currentVersion.ToString() });
+
+            var result = new InstallationService(discovery, dispatcher).InstallNextComponent(int.MaxValue, latestVersion);
 
             Assert.False(result.IsSuccess);
             Assert.False(result.MoreToInstall);
             Assert.NotNull(result.ErrorMessage);
         }
-
 
         private class TestInstallationVersion : InstallationVersion
         {

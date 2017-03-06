@@ -100,6 +100,7 @@
     <Compile Include="Mapping\MappingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protection\Protector.cs" />
+    <Compile Include="Time\SystemTime.cs" />
     <Compile Include="Validation\Guard.cs" />
     <Compile Include="Validation\GuardDateTimeExtensions.cs" />
     <Compile Include="Validation\GuardGuidExtensions.cs" />

@@ -1,23 +1,21 @@
-﻿using System;
-using System.Linq.Expressions;
-using Civica.CrmPlusPlus.Sdk.Client;
+﻿using Civica.CrmBuilder.DataAccess;
 
-namespace Civica.CrmBuilder.Domain.Installation.Components
+namespace Civica.CrmBuilder.Services.Installation.Components
 {
     public class InstallationComponent
     {
         public string Description { get; }
 
-        public Action<ICrmPlusPlusCustomizationClient> InstallationAction { get; }
+        public DataAccessAction InstallationAction { get; }
 
-        public Action<ICrmPlusPlusEntityClient> DataChangeAction { get; }
+        public DataAccessAction DataChangeAction { get; }
 
-        public Action<ICrmPlusPlusCustomizationClient> RollbackAction { get; }
+        public DataAccessAction RollbackAction { get; }
 
-        public InstallationComponent(string activeDescription, 
-            Action<ICrmPlusPlusCustomizationClient> installationAction,
-            Action<ICrmPlusPlusEntityClient> dataChangeAction,
-            Action<ICrmPlusPlusCustomizationClient> rollbackAction)
+        public InstallationComponent(string activeDescription,
+            DataAccessAction installationAction,
+            DataAccessAction dataChangeAction,
+            DataAccessAction rollbackAction)
         {
             Description = activeDescription;
             InstallationAction = installationAction;

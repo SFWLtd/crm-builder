@@ -1,5 +1,5 @@
 ﻿using System;
-using Civica.CrmBuilder.Domain.Installation;
+using Civica.CrmBuilder.Services.Installation;
 using Civica.CrmBuilder.Core.Mapping;
 
 namespace Civica.CrmBuilder.Api.ApiResults

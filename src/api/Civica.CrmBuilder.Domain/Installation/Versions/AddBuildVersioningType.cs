@@ -1,9 +1,8 @@
 ﻿using System;
-using Civica.CrmBuilder.Core.Enums;
-using Civica.CrmBuilder.Domain.Installation.Components;
-using Civica.CrmBuilder.Entities;
+using Civica.CrmBuilder.DataAccess.Actions;
+using Civica.CrmBuilder.Services.Installation.Components;
 
-namespace Civica.CrmBuilder.Domain.Installation.Versions
+namespace Civica.CrmBuilder.Services.Installation.Versions
 {
     public class AddBuildVersioningType : InstallationVersion
     {
@@ -16,11 +15,11 @@ namespace Civica.CrmBuilder.Domain.Installation.Versions
         private void RegisterComponents()
         {
             var createBuildVersioningTypeOption = new InstallationComponent("Adding build versioning type option",
-                client => client.CreateProperty<Entities.Build, BuildVersioningType>(e => e.BuildVersioningType),
-                client => client.DoNothing(),
-                client => client.DoNothing());
+                BuildInstallationActions.CreateBuildVersioningTypeField(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
 
-            base.RegisterNextComponent(createBuildVersioningTypeOption);
+            RegisterNextComponent(createBuildVersioningTypeOption);
         }
     }
 }

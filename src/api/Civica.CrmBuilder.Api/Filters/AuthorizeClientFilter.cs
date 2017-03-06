@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using Autofac.Integration.WebApi;
-using Civica.CrmBuilder.Domain.Authentication;
+using Civica.CrmBuilder.DataAccess.Authentication;
 
 namespace Civica.CrmBuilder.Api.Filters
 {

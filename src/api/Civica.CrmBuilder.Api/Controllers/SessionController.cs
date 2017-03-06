@@ -1,8 +1,6 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Civica.CrmBuilder.Api.ApiRequests;
-using Civica.CrmBuilder.Api.ApiResults;
-using Civica.CrmBuilder.Domain.Authentication;
+using Civica.CrmBuilder.DataAccess.Authentication;
 
 namespace Civica.CrmBuilder.Api.Controllers
 {

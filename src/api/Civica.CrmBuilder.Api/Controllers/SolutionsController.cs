@@ -1,34 +1,27 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
-using Civica.CrmBuilder.Domain.Dtos;
-using Civica.CrmBuilder.Domain.Solutions;
+using Civica.CrmBuilder.DataAccess;
+using Civica.CrmBuilder.DataAccess.Actions;
+using Civica.CrmBuilder.Entities;
 
 namespace Civica.CrmBuilder.Api.Controllers
 {
     public class SolutionsController : ApiController
     {
-        private readonly ISolutionRepository solutionRepo;
+        private readonly IDataAccessDispatcher dataAccessDispatcher;
 
-        public SolutionsController(ISolutionRepository solutionRepo)
+        public SolutionsController(IDataAccessDispatcher dataAccessDispatcher)
         {
-            this.solutionRepo = solutionRepo;
+            this.dataAccessDispatcher = dataAccessDispatcher;
         }
 
         [ActionName("GetAll")]
         [HttpGet]
-        public GlobalJsonResult<IEnumerable<SolutionDto>> GetAll()
+        public GlobalJsonResult<IEnumerable<Solution>> GetAll()
         {
-            var solutions = solutionRepo.GetAll();
+            var result = dataAccessDispatcher.Dispatch(SolutionActions.GetAll());
 
-            var result = solutions.Select(s =>
-            {
-                var dto = new SolutionDto();
-                dto.PopulateFrom(s);
-                return dto;
-            });
-
-            return GlobalJsonResult<IEnumerable<SolutionDto>>.Success(System.Net.HttpStatusCode.OK, result);
+            return GlobalJsonResult<IEnumerable<Solution>>.Success(System.Net.HttpStatusCode.OK, result);
         }
     }
 }

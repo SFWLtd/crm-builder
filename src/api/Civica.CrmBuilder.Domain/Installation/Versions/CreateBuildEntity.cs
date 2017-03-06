@@ -1,8 +1,8 @@
 ﻿using System;
-using Civica.CrmBuilder.Domain.Installation.Components;
-using Civica.CrmBuilder.Entities;
+using Civica.CrmBuilder.DataAccess.Actions;
+using Civica.CrmBuilder.Services.Installation.Components;
 
-namespace Civica.CrmBuilder.Domain.Installation.Versions
+namespace Civica.CrmBuilder.Services.Installation.Versions
 {
     public class CreateBuildEntity : InstallationVersion
     {
@@ -15,17 +15,17 @@ namespace Civica.CrmBuilder.Domain.Installation.Versions
         private void RegisterComponents()
         {
             var createEntity = new InstallationComponent("Creating build entity",
-                client => client.CreateEntity<Entities.Build>(),
-                client => client.DoNothing(),
-                client => client.Delete<Entities.Build>());
+                BuildInstallationActions.CreateEntity(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
 
             var createName = new InstallationComponent("Creating build entity name",
-                client => client.CreateProperty<Entities.Build, string>(p => p.Name),
-                client => client.DoNothing(),
-                client => client.DoNothing()); // Rollback is covered by deletion of entity in first component
+                BuildInstallationActions.CreateNameField(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing()); // Rollback is covered by deletion of entity in first component
 
-            base.RegisterNextComponent(createEntity);
-            base.RegisterNextComponent(createName);
+            RegisterNextComponent(createEntity);
+            RegisterNextComponent(createName);
         }
     }
 }

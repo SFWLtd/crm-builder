@@ -11,15 +11,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.CodeGen",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Entities", "Civica.CrmBuilder.Entities\Civica.CrmBuilder.Entities.csproj", "{1DD387CB-6475-4EA9-933E-1E44D48BA065}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Domain", "Civica.CrmBuilder.Domain\Civica.CrmBuilder.Domain.csproj", "{D31A19DA-EAF3-45C3-BC02-F4741408F849}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Services", "Civica.CrmBuilder.Domain\Civica.CrmBuilder.Services.csproj", "{D31A19DA-EAF3-45C3-BC02-F4741408F849}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B40A5C80-7BEA-4963-AFE3-FC373A052F64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Domain.Tests", "Civica.CrmBuilder.Domain.Tests\Civica.CrmBuilder.Domain.Tests.csproj", "{6854858F-65FC-4FEC-93C9-E0335B9F227C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Services.Tests", "Civica.CrmBuilder.Domain.Tests\Civica.CrmBuilder.Services.Tests.csproj", "{6854858F-65FC-4FEC-93C9-E0335B9F227C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Core", "Civica.CrmBuilder.Core\Civica.CrmBuilder.Core.csproj", "{1522E461-C092-4720-BBAE-EC0443F8E780}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Core.Tests", "Civica.CrmBuilder.Core.Tests\Civica.CrmBuilder.Core.Tests.csproj", "{F2C468C8-B121-47E5-A267-09ECED1AE9B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.DataAccess", "Civica.CrmBuilder.DataAccess\Civica.CrmBuilder.DataAccess.csproj", "{081EEBCA-BE07-4618-9ECF-1E8880562996}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.DataAccess.Tests", "Civica.CrmBuilder.DataAccess.Tests\Civica.CrmBuilder.DataAccess.Tests.csproj", "{DC18F603-9FFB-4610-8F95-3C95910219E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +59,14 @@ Global
 		{F2C468C8-B121-47E5-A267-09ECED1AE9B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2C468C8-B121-47E5-A267-09ECED1AE9B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2C468C8-B121-47E5-A267-09ECED1AE9B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{081EEBCA-BE07-4618-9ECF-1E8880562996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{081EEBCA-BE07-4618-9ECF-1E8880562996}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{081EEBCA-BE07-4618-9ECF-1E8880562996}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{081EEBCA-BE07-4618-9ECF-1E8880562996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC18F603-9FFB-4610-8F95-3C95910219E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC18F603-9FFB-4610-8F95-3C95910219E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC18F603-9FFB-4610-8F95-3C95910219E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC18F603-9FFB-4610-8F95-3C95910219E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,5 +75,6 @@ Global
 		{AD41119D-797C-45FF-A973-A635040C2D5C} = {23E93A74-1530-49D6-AAFE-3BC1932838E0}
 		{6854858F-65FC-4FEC-93C9-E0335B9F227C} = {B40A5C80-7BEA-4963-AFE3-FC373A052F64}
 		{F2C468C8-B121-47E5-A267-09ECED1AE9B7} = {B40A5C80-7BEA-4963-AFE3-FC373A052F64}
+		{DC18F603-9FFB-4610-8F95-3C95910219E7} = {B40A5C80-7BEA-4963-AFE3-FC373A052F64}
 	EndGlobalSection
 EndGlobal

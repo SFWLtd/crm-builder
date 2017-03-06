@@ -1,8 +1,9 @@
 ﻿using System;
-using Civica.CrmBuilder.Core.Enums;
-using Civica.CrmBuilder.Domain.Installation.Components;
+using Civica.CrmBuilder.DataAccess.Actions;
+using Civica.CrmBuilder.DataAccess.Actions.Installation;
+using Civica.CrmBuilder.Services.Installation.Components;
 
-namespace Civica.CrmBuilder.Domain.Installation.Versions
+namespace Civica.CrmBuilder.Services.Installation.Versions
 {
     public class CreateBuildRunAndBuildRunMessageEntities : InstallationVersion
     {
@@ -15,9 +16,12 @@ namespace Civica.CrmBuilder.Domain.Installation.Versions
         private void RegisterComponents()
         {
             RegisterNextComponent(CreateBuildRunMessageEntity());
-            RegisterNextComponent(CreateBuildRunMessageProperties());
+            RegisterNextComponent(CreateBuildRunMessageMessageProperty());
+            RegisterNextComponent(CreateBuildRunMessageOrderProperty());
             RegisterNextComponent(CreateBuildRunEntity());
-            RegisterNextComponent(CreateBuildRunProperties());
+            RegisterNextComponent(CreateBuildRunStartTimeProperty());
+            RegisterNextComponent(CreateBuildRunFinishTimeProperty());
+            RegisterNextComponent(CreateBuildRunStatusProperty());
             RegisterNextComponent(CreateBuildRunToBuildRunMessageRelationship());
             RegisterNextComponent(CreateBuildToBuildRunRelationship());
         }
@@ -25,62 +29,73 @@ namespace Civica.CrmBuilder.Domain.Installation.Versions
         private InstallationComponent CreateBuildRunMessageEntity()
         {
             return new InstallationComponent("Creating build run message entity",
-                client => client.CreateEntity<Entities.BuildRunMessage>(),
-                client => client.DoNothing(),
-                client => client.Delete<Entities.BuildRunMessage>());
+                BuildRunMessageInstallationActions.CreateEntity(),
+                OtherActions.DoNothing(),
+                BuildRunMessageInstallationActions.DeleteEntity());
         }
 
-        private InstallationComponent CreateBuildRunMessageProperties()
+        private InstallationComponent CreateBuildRunMessageMessageProperty()
         {
-            return new InstallationComponent("Creating build run message properties",
-                client =>
-                {
-                    client.CreateProperty<Entities.BuildRunMessage, string>(e => e.Message);
-                    client.CreateProperty<Entities.BuildRunMessage, int>(e => e.Order);
-                },
-                client => client.DoNothing(),
-                client => client.DoNothing());
+            return new InstallationComponent("Creating build run message message property",
+                BuildRunMessageInstallationActions.CreateMessageProperty(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
+        }
+
+        private InstallationComponent CreateBuildRunMessageOrderProperty()
+        {
+            return new InstallationComponent("Creating build run message order property",
+                BuildRunMessageInstallationActions.CreateOrderProperty(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
         }
 
         private InstallationComponent CreateBuildRunEntity()
         {
             return new InstallationComponent("Creating build run entity",
-                client => client.CreateEntity<Entities.BuildRun>(),
-                client => client.DoNothing(),
-                client => client.Delete<Entities.BuildRun>());
+                BuildRunInstallationActions.CreateEntity(),
+                OtherActions.DoNothing(),
+                BuildRunInstallationActions.DeleteEntity());
         }
 
-        private InstallationComponent CreateBuildRunProperties()
+        private InstallationComponent CreateBuildRunStartTimeProperty()
         {
-            return new InstallationComponent("Creating build run properties",
-                client =>
-                {
-                    client.CreateProperty<Entities.BuildRun, DateTime>(e => e.StartTime);
-                    client.CreateProperty<Entities.BuildRun, DateTime>(e => e.FinishTime);
-                    client.CreateProperty<Entities.BuildRun, BuildRunStatus>(e => e.Status);
-                },
-                client => client.DoNothing(),
-                client => client.DoNothing());
+            return new InstallationComponent("Creating build run start time property",
+                BuildRunInstallationActions.CreateStartTimeProperty(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
+        }
+
+        private InstallationComponent CreateBuildRunFinishTimeProperty()
+        {
+            return new InstallationComponent("Creating build run finish time property",
+                BuildRunInstallationActions.CreateFinishTimeProperty(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
+        }
+
+        private InstallationComponent CreateBuildRunStatusProperty()
+        {
+            return new InstallationComponent("Creating build run status property",
+                BuildRunInstallationActions.CreateStatusProperty(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
         }
 
         private InstallationComponent CreateBuildRunToBuildRunMessageRelationship()
         {
             return new InstallationComponent("Creating relationship between build run and build run message entities",
-                client => client.CreateOneToManyRelationship<Entities.BuildRun, Entities.BuildRunMessage>(
-                    brm => brm.BuildRun,
-                    CrmPlusPlus.Sdk.EntityAttributes.Metadata.AttributeRequiredLevel.ApplicationRequired, "buil"),
-                client => client.DoNothing(),
-                client => client.DoNothing());
+                BuildRunInstallationActions.CreateRelationshipWithBuildRunMessageEntity(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
         }
 
         private InstallationComponent CreateBuildToBuildRunRelationship()
         {
             return new InstallationComponent("Creating relationship between build and build run entities",
-                client => client.CreateOneToManyRelationship<Entities.Build, Entities.BuildRun>(
-                    br => br.Build,
-                    CrmPlusPlus.Sdk.EntityAttributes.Metadata.AttributeRequiredLevel.ApplicationRequired, "buil"),
-                client => client.DoNothing(),
-                client => client.DoNothing());
+                BuildInstallationActions.CreateRelationshipWithBuildRunEntity(),
+                OtherActions.DoNothing(),
+                OtherActions.DoNothing());
         }
     }
 }

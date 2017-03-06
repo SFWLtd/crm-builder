@@ -4,7 +4,7 @@ import { IFormInputState } from "./FormInputState";
 
 export interface IBuildState {
     editBuildFormState: IEditBuildFormState;
-    builds: IAsyncActionState<ApiClient.GlobalJsonResultOfIEnumerableOfBuildDto>;
+    builds: IAsyncActionState<ApiClient.GlobalJsonResultOfIEnumerableOfBuild>;
     confirmDeleteDialog: IConfirmDeleteDialog;
 }
 
@@ -15,7 +15,7 @@ export interface IBuildSummary {
 }
 
 export interface IEditBuildFormState {
-    currentBuild: IAsyncActionState<ApiClient.GlobalJsonResultOfBuildDto>;
+    currentBuild: IAsyncActionState<ApiClient.GlobalJsonResultOfBuild>;
     show: boolean;
     name: IFormInputState;
     buildVersioningType: ApiClient.BuildVersioningType;
@@ -29,7 +29,7 @@ export interface IEditBuildFormState {
     password: IFormInputState;
     emailAddress: IFormInputState;
     shouldValidate: boolean;
-    submission: IAsyncActionState<ApiClient.GlobalJsonResultOfBuildDto>;
+    submission: IAsyncActionState<ApiClient.GlobalJsonResultOfBuild>;
 }
 
 export interface IConfirmDeleteDialog {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Civica.CrmBuilder.Core.Mapping;
+using Civica.CrmBuilder.Core.Protection;
 using Civica.CrmBuilder.Core.Validation;
 using Civica.CrmBuilder.Entities;
 using Civica.CrmPlusPlus.Sdk;
@@ -20,7 +21,10 @@ namespace Civica.CrmBuilder.DataAccess.Actions
                     .ForEntity<Build>(id)
                     .IncludeAllColumns(true);
 
-                return crm.EntityClient.Retrieve(retrieval);
+                var build = crm.EntityClient.Retrieve(retrieval);
+                build.Password = Protector.UnprotectString(build.Password);
+
+                return build;
             });
         }
 
@@ -36,6 +40,7 @@ namespace Civica.CrmBuilder.DataAccess.Actions
             return new DataAccessAction((ICrmPlusPlus crm) =>
             {
                 build.Validate();
+                build.Password = Protector.ProtectString(build.Password);
 
                 crm.EntityClient.Create(build);
             });
@@ -46,6 +51,8 @@ namespace Civica.CrmBuilder.DataAccess.Actions
             return new DataAccessAction((ICrmPlusPlus crm) =>
             {
                 build.Validate();
+                build.Password = Protector.ProtectString(build.Password);
+
                 crm.EntityClient.Update(build);
             });
         }
@@ -58,7 +65,12 @@ namespace Civica.CrmBuilder.DataAccess.Actions
 
                 return crm.EntityClient
                     .RetrieveMultiple(query)
-                    .OrderByDescending(e => e.CreatedOn);
+                    .OrderByDescending(e => e.CreatedOn)
+                    .Select(e =>
+                    {
+                        e.Password = Protector.UnprotectString(e.Password);
+                        return e;
+                    });
             });
         }
 

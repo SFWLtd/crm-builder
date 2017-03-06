@@ -4,7 +4,7 @@ using Civica.CrmPlusPlus.Sdk;
 
 namespace Civica.CrmBuilder.DataAccess
 {
-    public class DataAccessDispatcher
+    public class DataAccessDispatcher : IDataAccessDispatcher
     {
         private readonly IClientStore clientStore;
 

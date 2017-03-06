@@ -20,6 +20,8 @@ namespace Civica.CrmBuilder.DataAccess
                 return ((CrmClient)client).Crm;
             })
             .As<ICrmPlusPlus>();
+
+            builder.RegisterType<DataAccessDispatcher>().As<IDataAccessDispatcher>();
         }
     }
 }

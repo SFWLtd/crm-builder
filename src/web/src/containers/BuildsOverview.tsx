@@ -9,7 +9,7 @@ const mapStateToProps = (state: IAppState): BuildsPresenter.IBuildsOverviewProps
     return {
         builds: state.buildState.builds.result !== null && state.buildState.builds.result.successful
             ? state.buildState.builds.result.result
-            : new Array<ApiClient.BuildDto>(),
+            : new Array<ApiClient.Build>(),
         isFetchingBuildForEdit: state.buildState.editBuildFormState.currentBuild.hasStarted,
         isFetchingBuilds: state.buildState.builds.hasStarted,
         navigationIsActive: state.navigationState.selectedNavigationId === NavigationIds.Builds

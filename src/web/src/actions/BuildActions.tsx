@@ -49,7 +49,7 @@ export const startFetchingBuilds = (dispatch: any): IAction => {
     dispatch(SolutionActions.startGetAllSolutions(dispatch)); // also retrieve available solutions asynchronously
 
     let client = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
-    client.fetchAll().then((result: ApiClient.GlobalJsonResultOfIEnumerableOfBuildDto) => {
+    client.fetchAll().then((result: ApiClient.GlobalJsonResultOfIEnumerableOfBuild) => {
         dispatch(finishFetchingBuilds(result));
     });
 
@@ -59,7 +59,7 @@ export const startFetchingBuilds = (dispatch: any): IAction => {
     };
 };
 
-export const finishFetchingBuilds = (result: ApiClient.GlobalJsonResultOfIEnumerableOfBuildDto): IAction => {
+export const finishFetchingBuilds = (result: ApiClient.GlobalJsonResultOfIEnumerableOfBuild): IAction => {
     return {
         type: BuildActions.FinishFetchingBuilds,
         value: result,
@@ -78,11 +78,11 @@ export const startBuildSubmit = (props: IEditBuildProps, dispatch: any): IAction
         let client = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
 
         if (!props.isEdit) {
-            client.addNew(props).then((result: ApiClient.GlobalJsonResultOfBuildDto) => {
+            client.addNew(props).then((result: ApiClient.GlobalJsonResultOfBuild) => {
                 dispatch(finishBuildSubmit(dispatch, result));
             });
         } else {
-            client.edit(props).then((result: ApiClient.GlobalJsonResultOfBuildDto) => {
+            client.edit(props).then((result: ApiClient.GlobalJsonResultOfBuild) => {
                 dispatch(finishBuildSubmit(dispatch, result));
             });
         }
@@ -94,7 +94,7 @@ export const startBuildSubmit = (props: IEditBuildProps, dispatch: any): IAction
     };
 };
 
-export const finishBuildSubmit = (dispatch: any, result: ApiClient.GlobalJsonResultOfBuildDto): IAction => {
+export const finishBuildSubmit = (dispatch: any, result: ApiClient.GlobalJsonResultOfBuild): IAction => {
 
     if (result.successful) {
         dispatch(closeBuildForm(dispatch));
@@ -269,7 +269,7 @@ export const closeBuildForm = (dispatch: any): IAction => {
 export const beginShowEditBuildForm = (dispatch: any, buildId: string): IAction => {
 
     let buildClient = new BuildClient(new ApiClient.BuildsClient(config.apiUrl));
-    buildClient.fetch(buildId).then((result: ApiClient.GlobalJsonResultOfBuildDto) => {
+    buildClient.fetch(buildId).then((result: ApiClient.GlobalJsonResultOfBuild) => {
         dispatch(finishShowEditBuildForm(dispatch, result));
     });
 
@@ -279,7 +279,7 @@ export const beginShowEditBuildForm = (dispatch: any, buildId: string): IAction 
     };
 };
 
-export const finishShowEditBuildForm = (dispatch: any, editableBuild: ApiClient.GlobalJsonResultOfBuildDto): IAction => {
+export const finishShowEditBuildForm = (dispatch: any, editableBuild: ApiClient.GlobalJsonResultOfBuild): IAction => {
 
     if (editableBuild.successful) {
         dispatch(resetForm());
@@ -287,13 +287,13 @@ export const finishShowEditBuildForm = (dispatch: any, editableBuild: ApiClient.
         dispatch(setBuildVersioningType(editableBuild.result.buildVersioningType));
         dispatch(setBuildMajorVersion(editableBuild.result.versionMajor));
         dispatch(setBuildMinorVersion(editableBuild.result.versionMinor));
-        dispatch(setSolutionId(editableBuild.result.selectedSolutionId));
-        dispatch(setTargetEnvironmentAuthenticationType(editableBuild.result.targetAuthenticationType));
-        dispatch(setTargetEnvironmentCrmUrl(editableBuild.result.targetCrmUrl));
-        dispatch(setTargetEnvironmentEmail(editableBuild.result.targetEmailAddress));
-        dispatch(setTargetEnvironmentDomain(editableBuild.result.targetDomain));
-        dispatch(setTargetEnvironmentUsername(editableBuild.result.targetUsername));
-        dispatch(setTargetEnvironmentPassword(editableBuild.result.targetPassword));
+        dispatch(setSolutionId(editableBuild.result.solutionId));
+        dispatch(setTargetEnvironmentAuthenticationType(editableBuild.result.targetEnvironmentAuthenticationType));
+        dispatch(setTargetEnvironmentCrmUrl(editableBuild.result.targetEnvironmentCrmUrl));
+        dispatch(setTargetEnvironmentEmail(editableBuild.result.targetEnvironmentEmail));
+        dispatch(setTargetEnvironmentDomain(editableBuild.result.targetEnvironmentDomain));
+        dispatch(setTargetEnvironmentUsername(editableBuild.result.targetEnvironmentUsername));
+        dispatch(setTargetEnvironmentPassword(editableBuild.result.password));
     }
 
     return {

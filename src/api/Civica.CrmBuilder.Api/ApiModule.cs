@@ -11,12 +11,6 @@ namespace Civica.CrmBuilder.Api
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<AuthorizeClientFilter>()
-                .AsWebApiAuthorizationFilterFor<InstallationController>()
-                .AsWebApiAuthorizationFilterFor<BuildsController>()
-                .AsWebApiAuthorizationFilterFor<SolutionsController>()
-                .InstancePerDependency();
-
             builder.RegisterModule<ServicesModule>();
             builder.RegisterModule<DataAccessModule>();
 

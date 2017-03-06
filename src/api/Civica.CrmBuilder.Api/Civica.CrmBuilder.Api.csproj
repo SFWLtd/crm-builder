@@ -228,7 +228,6 @@
     <Compile Include="ApiResults\RollbackResult.cs" />
     <Compile Include="Controllers\BuildsController.cs" />
     <Compile Include="Controllers\SolutionsController.cs" />
-    <Compile Include="Filters\AuthorizeClientFilter.cs" />
     <Compile Include="Controllers\InstallationController.cs" />
     <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\Metadata.cs" />

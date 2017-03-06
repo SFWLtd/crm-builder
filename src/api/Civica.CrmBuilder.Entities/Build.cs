@@ -70,7 +70,7 @@ namespace Civica.CrmBuilder.Entities
         [PropertyName("buil_targetenvpassword")]
         [PropertyInfo("Target environment password", AttributeRequiredLevel.None, "The target environment password")]
         [String(3999, StringFormatName.Text)]
-        public string ProtectedTargetEnvironmentPassword { get; set; }
+        public string Password { get; set; }
 
         [PropertyName("buil_solutionid")]
         [PropertyInfo("Solution Id", AttributeRequiredLevel.ApplicationRequired, "The id of the solution the build relates to")]
@@ -85,10 +85,18 @@ namespace Civica.CrmBuilder.Entities
             Guard.This(VersionMajor).AgainstInvalidRange(0, 999);
             Guard.This(VersionMinor).AgainstInvalidRange(0, 999);
             Guard.This(TargetEnvironmentCrmUrl).AgainstInvalidLength(1, 99);
-            Guard.This(TargetEnvironmentEmail).AgainstInvalidLength(1, 99);
-            Guard.This(TargetEnvironmentDomain).AgainstInvalidLength(1, 99);
-            Guard.This(TargetEnvironmentUsername).AgainstInvalidLength(1, 99);
             Guard.This(SolutionId).AgainstNonGuidFormat();
+
+            switch (TargetEnvironmentAuthenticationType)
+            {
+                case AuthenticationType.Dynamics365:
+                    Guard.This(TargetEnvironmentEmail).AgainstInvalidLength(1, 99);
+                    break;
+                default:
+                    Guard.This(TargetEnvironmentDomain).AgainstInvalidLength(1, 99);
+                    Guard.This(TargetEnvironmentUsername).AgainstInvalidLength(1, 99);
+                    break;
+            }
         }
     }
 }

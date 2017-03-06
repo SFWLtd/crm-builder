@@ -14,7 +14,7 @@ const mapStateToProps = (state: IAppState): EditBuildPresenter.IEditBuildProps =
         authenticationTypeSelectedValue: state.buildState.editBuildFormState.authenticationType,
         availableSolutions: state.solutionsState.availableSolutions.hasCompleted && state.solutionsState.availableSolutions.result.successful
             ? state.solutionsState.availableSolutions.result.result
-            : new Array<ApiClient.SolutionDto>(),
+            : new Array<ApiClient.Solution>(),
         buildVersioningType: state.buildState.editBuildFormState.buildVersioningType,
         crmUrl: state.buildState.editBuildFormState.crmUrl.value as string,
         crmUrlIsValid: !(state.buildState.editBuildFormState.shouldValidate && !validator.validateCrmUrl(state.buildState.editBuildFormState.crmUrl.value as string)

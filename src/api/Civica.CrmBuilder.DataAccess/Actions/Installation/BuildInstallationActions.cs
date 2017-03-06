@@ -111,7 +111,7 @@ namespace Civica.CrmBuilder.DataAccess.Actions
             return new DataAccessAction((ICrmPlusPlus crm) =>
             {
                 var customizationClient = crm.GetCustomizationClientForSolution(PublisherSettings.Default, SolutionSettings.Default);
-                customizationClient.CreateProperty<Build, string>(b => b.ProtectedTargetEnvironmentPassword);
+                customizationClient.CreateProperty<Build, string>(b => b.Password);
             });
         }
 

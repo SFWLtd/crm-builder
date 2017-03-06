@@ -19,7 +19,7 @@ export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefi
             return <div></div>;
         }
 
-        let builds = this.props.builds.map((build: ApiClient.BuildDto): JSX.Element => {
+        let builds = this.props.builds.map((build: ApiClient.Build): JSX.Element => {
             return <Segment key={build.id} attached>
                         <Item>
                             <Item.Content>
@@ -75,7 +75,7 @@ export class BuildsOverview extends React.Component<IBuildsOverviewProps, undefi
 export interface IBuildsOverviewProps {
     isFetchingBuilds?: boolean;
     fetchBuilds?: () => void;
-    builds?: ApiClient.BuildDto[];
+    builds?: ApiClient.Build[];
     navigationIsActive?: boolean;
     newBuild?: () => void;
     editBuild?: (buildId: string) => void;

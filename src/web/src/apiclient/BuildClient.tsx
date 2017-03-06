@@ -9,7 +9,7 @@ export class BuildClient {
         this.client = client;
     }
 
-    public addNew(props: IEditBuildProps): Promise<ApiClient.GlobalJsonResultOfBuildDto> {
+    public addNew(props: IEditBuildProps): Promise<ApiClient.GlobalJsonResultOfBuild> {
         let request = new ApiClient.NewBuildRequest();
         request.buildVersioningType = props.buildVersioningType;
         request.name = props.name;
@@ -26,15 +26,15 @@ export class BuildClient {
         return this.client.newBuild(request, "");
     }
 
-    public fetch(buildId: string): Promise<ApiClient.GlobalJsonResultOfBuildDto> {
+    public fetch(buildId: string): Promise<ApiClient.GlobalJsonResultOfBuild> {
         return this.client.getBuild(buildId);
     }
 
-    public fetchAll(): Promise<ApiClient.GlobalJsonResultOfIEnumerableOfBuildDto> {
+    public fetchAll(): Promise<ApiClient.GlobalJsonResultOfIEnumerableOfBuild> {
         return this.client.getBuilds("");
     }
 
-    public edit(props: IEditBuildProps): Promise<ApiClient.GlobalJsonResultOfBuildDto> {
+    public edit(props: IEditBuildProps): Promise<ApiClient.GlobalJsonResultOfBuild> {
         let request = new ApiClient.UpdateBuildRequest();
         request.buildVersioningType = props.buildVersioningType;
         request.name = props.name;

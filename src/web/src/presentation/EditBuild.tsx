@@ -53,7 +53,7 @@ export class EditBuild extends React.Component<IEditBuildProps, undefined> {
                                 <select className="ui dropdown" value={!this.props.selectedSolutionId ? "empty" : this.props.selectedSolutionId} onChange={(e) => { this.props.selectedSolutionIdOnChange((e as any).target.value); ; } }>
                                     <option value="empty">Please select a solution</option>
                                     {
-                                        this.props.availableSolutions.map((sol: ApiClient.SolutionDto) => {
+                                        this.props.availableSolutions.map((sol: ApiClient.Solution) => {
                                             return <option key={sol.id} value={sol.id}>{sol.displayName}</option>;
                                         })
                                     }
@@ -143,7 +143,7 @@ export interface IEditBuildProps {
     selectedSolutionIdIsValid?: boolean;
     selectedSolutionIdOnBlur?: () => void;
     selectedSolutionIdOnChange?: (solutionId: string) => void;
-    availableSolutions?: ApiClient.SolutionDto[];
+    availableSolutions?: ApiClient.Solution[];
     authenticationTypeSelectedValue?: number;
     authenticationTypeOnChange?: (value: number) => void;
     crmUrlOnChange?: (value: string) => void;

@@ -8,7 +8,7 @@ export class SolutionClient {
         this.client = client;
     }
 
-    public getAll(): Promise<ApiClient.GlobalJsonResultOfIEnumerableOfSolutionDto> {
+    public getAll(): Promise<ApiClient.GlobalJsonResultOfIEnumerableOfSolution> {
         return this.client.getAll("");
     }
 }

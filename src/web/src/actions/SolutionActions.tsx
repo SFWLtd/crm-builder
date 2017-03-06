@@ -12,7 +12,7 @@ export const startGetAllSolutions = (dispatch: any): IAction => {
 
     let client = new SolutionClient(new ApiClient.SolutionsClient(config.apiUrl));
     client.getAll()
-        .then((result: ApiClient.GlobalJsonResultOfIEnumerableOfSolutionDto) => {
+        .then((result: ApiClient.GlobalJsonResultOfIEnumerableOfSolution) => {
             dispatch(finishGetAvailableSolutions(dispatch, result));
         });
 
@@ -22,7 +22,7 @@ export const startGetAllSolutions = (dispatch: any): IAction => {
     };
 };
 
-export const finishGetAvailableSolutions = (dispatch: any, result: ApiClient.GlobalJsonResultOfIEnumerableOfSolutionDto): IAction => {
+export const finishGetAvailableSolutions = (dispatch: any, result: ApiClient.GlobalJsonResultOfIEnumerableOfSolution): IAction => {
     return {
         type: SolutionActions.FinishGetAvailableSolutions,
         value: result,

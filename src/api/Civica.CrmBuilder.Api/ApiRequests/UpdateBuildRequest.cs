@@ -45,7 +45,7 @@ namespace Civica.CrmBuilder.Api.ApiRequests
                 TargetEnvironmentDomain = Domain,
                 TargetEnvironmentEmail = EmailAddress,
                 TargetEnvironmentUsername = UserName,
-                ProtectedTargetEnvironmentPassword = Protector.ProtectString(Password),
+                Password = Password,
                 SolutionId = SolutionId,
                 VersionMajor = VersionMajor,
                 VersionMinor = VersionMinor,

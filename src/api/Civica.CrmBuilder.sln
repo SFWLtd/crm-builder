@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Core", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.Core.Tests", "Civica.CrmBuilder.Core.Tests\Civica.CrmBuilder.Core.Tests.csproj", "{F2C468C8-B121-47E5-A267-09ECED1AE9B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.WebHost", "Civica.CrmBuilder.WebHost\Civica.CrmBuilder.WebHost.csproj", "{1D009E10-2E6B-4A6B-AFED-2A23FB59268F}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.DataAccess", "Civica.CrmBuilder.DataAccess\Civica.CrmBuilder.DataAccess.csproj", "{081EEBCA-BE07-4618-9ECF-1E8880562996}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civica.CrmBuilder.DataAccess.Tests", "Civica.CrmBuilder.DataAccess.Tests\Civica.CrmBuilder.DataAccess.Tests.csproj", "{DC18F603-9FFB-4610-8F95-3C95910219E7}"

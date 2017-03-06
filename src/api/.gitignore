@@ -198,10 +198,3 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
-
-# Generated typescript files
-*.ts
-
-# Project specific
-api/ApiClient.ts
-api/ApiClient.js
